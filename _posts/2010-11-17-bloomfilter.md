@@ -9,8 +9,6 @@ keywords: bloom filter, hash
 
 这篇是从[老blog](http://www.cppblog.com/huangwei1024/archive/2010/11/17/133869.html)里复制出来，用markdown格式更新了下，纯当练手。
 
-[TOC]
-
 ## 介绍
 ----------
 
@@ -30,7 +28,9 @@ Bloom Filter是一种简单的节省空间的随机化的数据结构，支持�
 - 有误判的概率，即存在False Position。
 - 无法获取集合中的元素数据。
 - 不支持删除操作。
- 
+
+<!--more-->
+
 ## 定义
 ----------
 
@@ -128,8 +128,12 @@ Bloom Filter决不会漏掉任何一个在黑名单中的可疑地址。而至�
 
 ## 引用
 ----
-[1]  Bloom filter; http://en.wikipedia.org/wiki/Bloom_filter
-[2]  Summary Cache: A Scalable Wide-Area Web Cache Sharing Protocol;http://pages.cs.wisc.edu/~cao/papers/summary-cache/
-[3]      Network Applications of Bloom Filters: A Survey;http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.127.9672&rep=rep1&type=pdf
-[4]      An Examination of Bloom Filters and their Applications;http://cs.unc.edu/~fabian/courses/CS600.624/slides/bloomslides.pdf
-[5]      数学之美系列二十一 － 布隆过滤器（Bloom Filter）;http://www.google.com.hk/ggblog/googlechinablog/2007/07/bloom-filter_7469.html
+[1]  Bloom filter; [http://en.wikipedia.org/wiki/Bloom_filter](http://en.wikipedia.org/wiki/Bloom_filter)
+
+[2]  Summary Cache: A Scalable Wide-Area Web Cache Sharing Protocol;[http://pages.cs.wisc.edu/~cao/papers/summary-cache/](http://pages.cs.wisc.edu/~cao/papers/summary-cache/)
+
+[3]      Network Applications of Bloom Filters: A Survey;[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.127.9672&rep=rep1&type=pdf](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.127.9672&rep=rep1&type=pdf)
+
+[4]      An Examination of Bloom Filters and their Applications;[http://cs.unc.edu/~fabian/courses/CS600.624/slides/bloomslides.pdf](http://cs.unc.edu/~fabian/courses/CS600.624/slides/bloomslides.pdf)
+
+[5]      数学之美系列二十一 － 布隆过滤器（Bloom Filter）;[http://www.google.com.hk/ggblog/googlechinablog/2007/07/bloom-filter_7469.html](http://www.google.com.hk/ggblog/googlechinablog/2007/07/bloom-filter_7469.html)
