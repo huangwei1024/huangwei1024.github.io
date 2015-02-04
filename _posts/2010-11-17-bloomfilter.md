@@ -128,12 +128,9 @@ Bloom Filter决不会漏掉任何一个在黑名单中的可疑地址。而至�
 
 ## 引用
 ----
-[1]  Bloom filter; [http://en.wikipedia.org/wiki/Bloom_filter](http://en.wikipedia.org/wiki/Bloom_filter)
-
-[2]  Summary Cache: A Scalable Wide-Area Web Cache Sharing Protocol;[http://pages.cs.wisc.edu/~cao/papers/summary-cache/](http://pages.cs.wisc.edu/~cao/papers/summary-cache/)
-
-[3]      Network Applications of Bloom Filters: A Survey;[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.127.9672&rep=rep1&type=pdf](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.127.9672&rep=rep1&type=pdf)
-
-[4]      An Examination of Bloom Filters and their Applications;[http://cs.unc.edu/~fabian/courses/CS600.624/slides/bloomslides.pdf](http://cs.unc.edu/~fabian/courses/CS600.624/slides/bloomslides.pdf)
-
-[5]      数学之美系列二十一 － 布隆过滤器（Bloom Filter）;[http://www.google.com.hk/ggblog/googlechinablog/2007/07/bloom-filter_7469.html](http://www.google.com.hk/ggblog/googlechinablog/2007/07/bloom-filter_7469.html)
+1. Bloom filter; [http://en.wikipedia.org/wiki/Bloom_filter](http://en.wikipedia.org/wiki/Bloom_filter)
+2. Summary Cache: A Scalable Wide-Area Web Cache Sharing Protocol;
+[http://www.google.com.hk/ggblog/googlechinablog/2007/07/bloom-filter_7469.html](http://www.google.com.hk/ggblog/googlechinablog/2007/07/bloom-filter_7469.html)
+3. Network Applications of Bloom Filters: A Survey;[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.127.9672&rep=rep1&type=pdf](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.127.9672&rep=rep1&type=pdf)
+4.   An Examination of Bloom Filters and their Applications;[http://cs.unc.edu/~fabian/courses/CS600.624/slides/bloomslides.pdf](http://cs.unc.edu/~fabian/courses/CS600.624/slides/bloomslides.pdf)
+5. 数学之美系列二十一 － 布隆过滤器（Bloom Filter）;[http://www.google.com.hk/ggblog/googlechinablog/2007/07/bloom-filter_7469.html](http://www.google.com.hk/ggblog/googlechinablog/2007/07/bloom-filter_7469.html)
