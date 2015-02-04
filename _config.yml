@@ -6,3 +6,7 @@ paginate: 5
 
 title: HuangWei's blog
 
+# mainland-cdn
+cdn:
+  link: http://dn-huangweipro.qbox.me
+
