@@ -36,8 +36,11 @@ Bloom Filter是一种简单的节省空间的随机化的数据结构，支持�
 
 Bloom Filter是一个有m位的位数组，初始全为0，并有k个各自独立的哈希函数。
 
+<center>
 ![图1]({{ site.cdn.link }}/static/img/bloom1.jpg)
+
 图1
+</center>
 
 ### 添加操作
 
@@ -51,8 +54,11 @@ Bloom Filter是一个有m位的位数组，初始全为0，并有k个各自独�
 ### 示例
 图2表示m=16，k=2的Bloom Filter， 和 的哈希值分别为(3, 6)和(10, 3)。
 
+<center>
 ![图2]({{ site.cdn.link }}/static/img/bloom2.jpg)
+
 图2
+</center>
 
 ## False Position
 ----------
@@ -60,8 +66,11 @@ Bloom Filter是一个有m位的位数组，初始全为0，并有k个各自独�
 如果某元素不在Bloom Filter中，但是它所有哈希值的位置均被设为1。这种情况就是False Position，也就是误判。
 借用示例，如下：
 
+<center>
 ![图3]({{ site.cdn.link }}/static/img/bloom3.jpg)
+
 图3
+</center>
 
 这个问题其实和哈希表中的冲突是相同的道理，哈希表中可以使用开散列和闭散列的方法，而Bloom Filter则允许这样的情况发生，它更关心于误判的发生概率。
 
@@ -80,8 +89,11 @@ False Position的概率为 $ F=(1-e^{-\frac{kn}{m}})^{k} $。
 假设m和n已知，为了最小化False Position，则 $ k=\left [ \ln 2\cdot \frac{m}{n} \right ] $。
 数据
 
+<center>
 ![图4]({{ site.cdn.link }}/static/img/bloom4.jpg)
+
 图4
+</center>
 
 ## 扩展
 ----------
@@ -104,8 +116,11 @@ Bloom Filter有个缺点，就是不支持删除操作，因为它不知道某�
 将Storage的数据都插入Filter，在Filter中查询都不存在时，那就不需要去Storage查询了。
 当False Position出现时，只是会导致一次多余的Storage查询。
 
+<center>
 ![图5]({{ site.cdn.link }}/static/img/bloom5.jpg)
+
 图5
+</center>
 
 - Google的BigTable也使用了Bloom Filter，以减少不存在的行或列在磁盘上的查询，大大提高了数据库的查询操作的性能。
 - 在Internet Cache Protocol中的Proxy-Cache很多都是使用Bloom Filter存储URLs，除了高效的查询外，还能很方便得传输交换Cache信息。
