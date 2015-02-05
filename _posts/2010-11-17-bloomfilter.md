@@ -55,7 +55,7 @@ Bloom Filter是一个有m位的位数组，初始全为0，并有k个各自独�
 图2表示m=16，k=2的Bloom Filter， 和 的哈希值分别为(3, 6)和(10, 3)。
 
 
-![图2]({{ site.cdn.link }}/static/img/bloom2.jpg)
+![图2](/static/img/bloom2.jpg)
 
 图2
 
@@ -67,7 +67,7 @@ Bloom Filter是一个有m位的位数组，初始全为0，并有k个各自独�
 借用示例，如下：
 
 
-![图3]({{ site.cdn.link }}/static/img/bloom3.jpg)
+![图3](/static/img/bloom3.jpg)
 
 图3
 
@@ -90,7 +90,7 @@ False Position的概率为 $ F=(1-e^{-\frac{kn}{m}})^{k} $。
 数据
 
 
-![图4]({{ site.cdn.link }}/static/img/bloom4.jpg)
+![图4](/static/img/bloom4.jpg)
 
 图4
 
@@ -117,7 +117,7 @@ Bloom Filter有个缺点，就是不支持删除操作，因为它不知道某�
 当False Position出现时，只是会导致一次多余的Storage查询。
 
 
-![图5]({{ site.cdn.link }}/static/img/bloom5.jpg)
+![图5](/static/img/bloom5.jpg)
 
 图5
 
