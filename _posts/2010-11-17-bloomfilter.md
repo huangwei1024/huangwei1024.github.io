@@ -78,11 +78,9 @@ Bloom Filter是一个有m位的位数组，初始全为0，并有k个各自独�
 宏观上，我们能得出以下结论：
 
 |参数表	|变量	|减少	|增加|
-|---------------------------|
-|哈希函数总数	|K	|  更少的哈希值计算|更多的计算|
-|||增加False Position的概率|位值0减少|
-|Bloom Filter 大小	|M	|更少的内存|更多的内存|
-|||增加False Position的概率|降低概率|
+|-------|-------|------|----|
+|哈希函数总数	|K	|  更少的哈希值计算<br/>增加False Position的概率|更多的计算<br/>位值0减少|
+|Bloom Filter 大小	|M	|更少的内存<br/>增加False Position的概率|更多的内存<br/>降低概率|
 |元素总数|	N|  降低False Position的概率| 增加概率|
 
 False Position的概率为 $ F=(1-e^{-\frac{kn}{m}})^{k} $。
