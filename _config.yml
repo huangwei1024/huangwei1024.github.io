@@ -1,6 +1,6 @@
 root: /
 permalink: /:year-:month/:title/
-markdown: rdiscount
+markdown: redcarpet
 pygments: true
 paginate: 5
 
