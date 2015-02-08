@@ -37,9 +37,7 @@ Bloom Filter是一种简单的节省空间的随机化的数据结构，支持�
 Bloom Filter是一个有m位的位数组，初始全为0，并有k个各自独立的哈希函数。
 
 
-![图1]({{ site.cdn.link }}/static/img/bloom1.jpg)
 
-图1
 
 
 ### 添加操作
