@@ -295,3 +295,39 @@ h3 {
     margin: 0 auto;
   }
 }
+
+.post-entry table {
+  margin-bottom: 20px;
+}
+.post-entry table > thead > tr > th,
+.post-entry table > tbody > tr > th,
+.post-entry table > tfoot > tr > th,
+.post-entry table > thead > tr > td,
+.post-entry table > tbody > tr > td,
+.post-entry table > tfoot > tr > td {
+  padding: 8px;
+  line-height: 1.428571429;
+  vertical-align: top;
+  /*border-top: 10px solid #ffffff;*/
+  border: 1px solid #ddd;
+}
+.post-entry table > thead > tr > th {
+  vertical-align: bottom;
+  /*border-bottom: 2px solid #ffffff;*/
+  border: 1px solid #ddd;
+}
+.post-entry table > caption + thead > tr:first-child > th,
+.post-entry table > colgroup + thead > tr:first-child > th,
+.post-entry table > thead:first-child > tr:first-child > th,
+.post-entry table > caption + thead > tr:first-child > td,
+.post-entry table > colgroup + thead > tr:first-child > td,
+.post-entry table > thead:first-child > tr:first-child > td {
+  border-top: 1px solid #ddd;
+}
+.post-entry table > tbody + tbody {
+  border-top: 2px solid #dddddd;
+}
+
+.post-entry table tr:nth-child(2n) {
+  background-color:#f8f8f8
+}
