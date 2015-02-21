@@ -299,6 +299,9 @@ h3 {
 .post-entry table {
   margin-bottom: 20px;
 }
+.post-entry table > thead {
+  background-color:#ffffff
+}
 .post-entry table > thead > tr > th,
 .post-entry table > tbody > tr > th,
 .post-entry table > tfoot > tr > th,
@@ -308,12 +311,10 @@ h3 {
   padding: 8px;
   line-height: 1.428571429;
   vertical-align: top;
-  /*border-top: 10px solid #ffffff;*/
   border: 1px solid #ddd;
 }
 .post-entry table > thead > tr > th {
   vertical-align: bottom;
-  /*border-bottom: 2px solid #ffffff;*/
   border: 1px solid #ddd;
 }
 .post-entry table > caption + thead > tr:first-child > th,
@@ -329,5 +330,5 @@ h3 {
 }
 
 .post-entry table tr:nth-child(2n) {
-  background-color:#f8f8f8
+  background-color:#ffffff
 }
