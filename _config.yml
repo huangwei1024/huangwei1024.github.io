@@ -1,10 +1,16 @@
 root: /
 permalink: /:year-:month/:title/
-markdown: redcarpet2
+markdown: kramdown
 pygments: true
 paginate: 5
+
 redcarpet:
   extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript"]
+
+kramdown:
+  input: GFM
+  #Insert HTML <br /> tags inside paragraphs where the original Markdown document had newlines (by default, Markdown ignores these newlines). default is true. Github is false.
+  hard_wrap: false
 
 title: HuangWei's blog
 

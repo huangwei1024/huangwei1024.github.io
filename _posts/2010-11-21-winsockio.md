@@ -27,26 +27,26 @@ keywords: windows, socket, io, iocp, select, overlapped, WSAEventSelect, WSAAsyn
 <tr>
 <td>
 
-```cpp
+<pre class="prettyprint lang-cpp">
 int recv(
 SOCKET s,
 char* buf,
 int len,
 int flags
 );	
-```
+</pre>
 
 </td>
 <td>
 
-```cpp
+<pre class="prettyprint lang-cpp">
 int send(
 SOCKET s,
 const char* buf,
 int len,
 int flags
 );
-```
+</pre>
 
 </td>
 </tr>
@@ -78,7 +78,7 @@ IN OUT u_long FAR * argp
 
 ### Select模型
 
-```
+```cpp
 int select(
 int nfds,
 fd_set* readfds,
