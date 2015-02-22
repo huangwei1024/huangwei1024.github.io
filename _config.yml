@@ -3,6 +3,8 @@ permalink: /:year-:month/:title/
 markdown: redcarpet2
 pygments: true
 paginate: 5
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript"]
 
 title: HuangWei's blog
 
