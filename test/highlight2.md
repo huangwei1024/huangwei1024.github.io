@@ -59,3 +59,18 @@ a = CA.new()
 a:release()
 
 ```
+
+```
+def not_found():
+    return None
+```
+
+~~~
+def not_found():
+    return None
+~~~
+
+~~~python
+def not_found():
+    return None
+~~~
