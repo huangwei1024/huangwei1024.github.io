@@ -7,7 +7,7 @@ description: Windows Socket IO 的所有模型。
 keywords: windows, socket, io, iocp, select, overlapped, WSAEventSelect, WSAAsynSelect
 ---
 
-##套接字架构
+## 套接字架构
 ----------
 
 ![图1]({{ site.cdn.link }}/static/img/winsock1.gif)
