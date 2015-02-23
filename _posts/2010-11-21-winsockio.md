@@ -95,7 +95,7 @@ Timeval结构里可以设置超时的时间。
 
 Select函数返回值表示集合中有事件触发的sock总数，其余操作使用fd_set的宏来完成。
 
-```
+```cpp
 #ifndef FD_SETSIZE
 #define FD_SETSIZE      64
 #endif /* FD_SETSIZE */
@@ -111,7 +111,7 @@ FD_ZERO(*set)
 
 Select模型流程如下：
 
-```
+```cpp
 fd_set fdread;
 timeval tv = {1, 0};
 while (1) {
@@ -138,7 +138,7 @@ while (1) {
 
 WSAAsynSelect是Windows特有的，可以在一个套接字上接收以Windows消息为基础的网络事件通知。该模型的实现方法是通过调用WSAAsynSelect函数自动将套接字设置（转变）为非阻塞模式，并向Windows注册一个或多个网络事件lEvent，并提供一个通知时使用的窗口句柄hWnd。当注册的事件发生时，对应的窗口将收到一个基于消息的通知wMsg。
 
-```
+```cpp
 int WSAAsyncSelect(
 SOCKET s,
 HWND hWnd,
@@ -149,7 +149,7 @@ long lEvent
 
 WSAAsyncSelect模型流程如下：
 
-```
+```cpp
 #define WM_SOCKET WM_USER+1
 int WINAPI WinMain(HINSTANCE hINstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
     SOCKET Listen;
@@ -216,7 +216,7 @@ WSAEventSelect模型类似WSAAsynSelect模型，但最主要的区别是网络�
 
 它需要由以下函数一起完成。
 
-```
+```cpp
 // 1. 创建事件对象来接收网络事件：
 WSAEVENT WSACreateEvent( void );
 // 2. 将事件对象与套接字关联，同时注册事件，使事件对象的工作状态从未传信转变未已传信。
@@ -231,7 +231,7 @@ int WSAEnumNetworkEvents( SOCKET s, WSAEVENT hEventObject, LPWSANETWORKEVENTS lp
 
 WSACreateEvent其实跟CreateEvent的效果类似，返回的WSAEVENT类型其实就是HANDLE类型，所以可以直接使用CreateEvent创建特殊的Event。
 
-sock和Event对象是对应的，当一个套接字有事件发生，WSAWaitForMultipleEvents返回相应的值，通过这个值来索引这个套接字。 但它也和select一样，在Event数组大小上也有限制，MAXIMUM_WAIT_OBJECTS的值为64。
+sock和Event对象是对应的，当一个套接字有事件发生，WSAWaitForMultipleEvents返回相应的值，通过这个值来索引这个套接字。 但它也和select一样，在Event数组大小上也有限制，MAXIMUM\_WAIT\_OBJECTS的值为64。
 
 有了Event对象的支持，signaled/non-signaled和manual reset/auto reset的概念也就可以应用到程序里，这样能使sock事件处理的方式比较丰富灵活。而且它也能严格按先后顺序处理sock事件。
 
@@ -254,7 +254,7 @@ sock和Event对象是对应的，当一个套接字有事件发生，WSAWaitForM
 
 重叠结构是不得不提的，之后的完成端口模型也需要用到。这个结构等同于OVERLAPPED。
 
-```
+```cpp
 typedef struct _WSAOVERLAPPED {
 DWORD Internal;
 DWORD InternalHigh;
@@ -266,7 +266,7 @@ WSAEVENT hEvent; // 只关注这个参数，用来关联WSAEvent对象
 
 使用重叠结构，我们常用的send, sendto, recv, recvfrom也都要被WSASend, WSASendto, WSARecv, WSARecvFrom替换掉了，是因为它们的参数中都有一个Overlapped参数。
 
-```
+```cpp
 int WSARecv(
 SOCKET s, // [in] 套接字
 LPWSABUF lpBuffers, // [in,out] 接收缓冲区，WSABUF的数组
@@ -279,11 +279,11 @@ LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine
 );
 ```
 
-没有错误且收取立刻完成时，返回值为0，否则是SOCKET_ERROR。常见的错误码是WSA_IO_PENDING，表示重叠操作正在进行。相应的其他函数也是类似参数，具体参考MDSN。
+没有错误且收取立刻完成时，返回值为0，否则是SOCKET\_ERROR。常见的错误码是WSA\_IO\_PENDING，表示重叠操作正在进行。相应的其他函数也是类似参数，具体参考MDSN。
 
 获取重叠操作的结果，由WSAWaitForMultipleEvents函数来完成。
 
-```
+```cpp
 BOOL WSAGetOverlappedResult(
 SOCKET s, // [in] 套接字
 LPWSAOVERLAPPED lpOverlapped, // [in] 要查询的重叠结构的指针
@@ -298,7 +298,7 @@ LPDWORD lpdwFlags // [out] 负责接收结果标志
 
 事件等待函数和WaitForMultipleObjects类似。
 
-```
+```cpp
 DWORD WSAWaitForMultipleEvents(
 DWORD cEvents, // [in] 等候事件的总数量
 const WSAEVENT* lphEvents, // [in] 事件数组的指针
@@ -319,7 +319,7 @@ BOOL fAlertable // [in] 在完成例程中会用到这个参数
 
 事件通知的重叠IO模型大致流程如下：
 
-```
+```cpp
 // 1. 建立并初始化buf和overlap
 WSAOVERLAPPED Overlap;
 WSABUF DataBuf;
@@ -356,7 +356,7 @@ dosomething(…);
 
 完成例程（Completion Routine），不是完成端口。它是使用APC（Asynchronous Procedure Calls）异步回调函数来实现，大致流程和事件通知模型差不多，只不过WSARecv注册时，加上了lpCompletionRoutine参数。
 
-```
+```cpp
 Void CALLBACK CompletionROUTINE(
 DWORD dwError, // [in] 标志咱们投递的重叠操作完成的状态
 DWORD cbTransferred, // [in] 重叠操作期间，实际传输的字节量是多大
@@ -373,7 +373,7 @@ ReadFileEx / WriteFileEx在发出IO请求的同时，提供一个回调函数（
 
 以下五个函数能够使线程进入告警状态：
 
-```
+```cpp
 SleepEx
 WaitForSingleObjectEx
 WaitForMultipleObjectsEx
@@ -409,7 +409,7 @@ MsgWaitForMultipleObjectsEx
 
 它需要以下函数的支持，CreateIoCompletionPort函数用于创建和绑定完成端口。
 
-```
+```cpp
 HANDLE CreateIoCompletionPort(
 HANDLE FileHandle, // [in] IO句柄对象，这里是套接字
 HANDLE ExistingCompletionPort, // [in] 完成端口
@@ -420,7 +420,7 @@ DWORD NumberOfConcurrentThreads // [in] 最大线程数，0为自动
 
 我们还需要类似WSAGetOverlappedResult的函数来获取完成端口的状态。
 
-```
+```cpp
 BOOL GetQueuedCompletionStatus(
 HANDLE CompletionPort, // [in] 完成端口
 LPDWORD lpNumberOfBytes, // [out] 此次IO操作的字节数
@@ -432,7 +432,7 @@ DWORD dwMilliseconds // [in] 超时设置
 
 还有PostQueuedCompletionStatus函数，能模拟一个完成的重叠I/O操作。我们可以当成类似PostMessage的函数，以此控制工作线程。
 
-```
+```cpp
 BOOL PostQueuedCompletionStatus(
 HANDLE CompletionPort, // [in] 完成端口
 DWORD dwNumberOfBytesTransferred, // [in] 此次IO操作的字节数
@@ -443,7 +443,7 @@ LPOVERLAPPED lpOverlapped // [in] 重叠结构指针
 
 完成端口模型大致流程如下：
 
-```
+```cpp
 // 1. 参数设空，就能创建完成端口
 HANDLE CompletionPort = CreateIoCompletionPort(INVALID_HANDLE_VALUE,NULL,NULL,0);
 // 2. 创建工作线程
@@ -451,7 +451,7 @@ DWORD dwThreadId;
 SYSTEM_INFO sysinfo;
 GetSystemInfo(&sysinfo);
 for (int i = 0; i < sysinfo.dwNumberOfProcessors; i++)
-CreateThread(NULL, 0, iocp_work_thread, CompletionPort, 0, &dwThreadId);
+    CreateThread(NULL, 0, iocp_work_thread, CompletionPort, 0, &dwThreadId);
 // 3. 建立并初始化buf和overlap（参照重叠IO）
 // 4. 将套接字绑定到完成端口
 CreateIoCompletionPort((HANDLE)Sock,CompletionPort,Sock,0);
@@ -460,7 +460,7 @@ CreateIoCompletionPort((HANDLE)Sock,CompletionPort,Sock,0);
 GetQueuedCompletionStatus(CompletionPort,&dwBytesTransferred,
 (DWORD*)&Sock,(LPOVERLAPPED*)&lpPerIOData,INFINITE);
 if (dwBytesTransferred == 0)
-closesocket(Sock);
+    closesocket(Sock);
 dosomething(…);
 ```
 
