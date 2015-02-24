@@ -2,7 +2,7 @@
 layout: post
 title: Windows Socket IO 模型
 categories: develop
-tags:  socket, windows
+tags:  socket windows
 description: Windows Socket IO 的所有模型。
 keywords: windows, socket, io, iocp, select, overlapped, WSAEventSelect, WSAAsynSelect
 ---
