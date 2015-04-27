@@ -18,3 +18,7 @@ title: HuangWei's blog
 cdn:
   link: http://dn-huangweipro.qbox.me
 
+comments :
+  provider : duoshuo
+  duoshuo : 
+    short_name : huangweipro
