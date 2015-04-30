@@ -1,9 +1,19 @@
-root: /
+# Where things are
+layouts:     ./_layouts
+
+# Handling Reading
+include:      [".htaccess"]
+exclude:      []
+keep_files:   [".git", ".svn"]
+encoding:     "utf-8"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+
 permalink: /:year-:month/:title/
-markdown: kramdown
-pygments: true
+markdown: redcarpet
+highlighter: pygments
 paginate: 5
 
+# Markdown Processors
 redcarpet:
   extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "with_toc_data", "tables", "highlight", "footnotes"]
 
