@@ -1,13 +1,4 @@
-# Where things are
-layouts:     ./_layouts
-
-# Handling Reading
-include:      [".htaccess"]
-exclude:      []
-keep_files:   [".git", ".svn"]
-encoding:     "utf-8"
-markdown_ext: "markdown,mkdown,mkdn,mkd,md"
-
+title: HuangWei's blog
 permalink: /:year-:month/:title/
 markdown: redcarpet
 highlighter: pygments
@@ -15,14 +6,9 @@ paginate: 5
 
 # Markdown Processors
 redcarpet:
-  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "with_toc_data", "tables", "highlight", "footnotes"]
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]
 
-kramdown:
-  input: GFM
-  #Insert HTML <br /> tags inside paragraphs where the original Markdown document had newlines (by default, Markdown ignores these newlines). default is true. Github is false.
-  hard_wrap: false
-
-title: HuangWei's blog
+#extensions: [no_intra_emphasis, fenced_code_blocks, autolink, strikethrough, with_toc_data, tables, highlight, footnotes]
 
 # mainland-cdn
 cdn:
