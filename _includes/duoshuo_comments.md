@@ -1,7 +1,7 @@
-<!-- ¶àËµÆÀÂÛ¿ò start -->
+<!-- å¤šè¯´è¯„è®ºæ¡† start -->
 <div class="ds-thread" data-thread-key="{{ page.id }}" data-title="{{ page.title }}" data-url="{{ page.url }}"></div>
-<!-- ¶àËµÆÀÂÛ¿ò end -->
-<!-- ¶àËµ¹«¹²JS´úÂë start (Ò»¸öÍøÒ³Ö»Ðè²åÈëÒ»´Î) -->
+<!-- å¤šè¯´è¯„è®ºæ¡† end -->
+<!-- å¤šè¯´å…¬å…±JSä»£ç  start (ä¸€ä¸ªç½‘é¡µåªéœ€æ’å…¥ä¸€æ¬¡) -->
 <script type="text/javascript">
 var duoshuoQuery = {short_name:"huangweipro"};
 	(function() {
@@ -13,5 +13,5 @@ var duoshuoQuery = {short_name:"huangweipro"};
 		 || document.getElementsByTagName('body')[0]).appendChild(ds);
 	})();
 	</script>
-<!-- ¶àËµ¹«¹²JS´úÂë end -->
+<!-- å¤šè¯´å…¬å…±JSä»£ç  end -->
 
