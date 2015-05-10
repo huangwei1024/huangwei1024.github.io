@@ -1,18 +1,18 @@
-#title: HuangWei's blog
-#permalink: /:year-:month/:title/
-#markdown: redcarpet
-#highlighter: pygments
-#paginate: 5
+title: HuangWei's blog
+permalink: /:year-:month/:title/
+markdown: redcarpet
+highlighter: pygments
+paginate: 5
 
 # Markdown Processors
-#redcarpet:
-#  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "with_toc_data", "tables", "highlight", "footnotes"]
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "with_toc_data", "tables", "highlight", "footnotes"]
 
 # mainland-cdn
-#cdn:
-#  link: http://dn-huangweipro.qbox.me
+cdn:
+  link: http://dn-huangweipro.qbox.me
 
-#comments :
-#  provider : duoshuo
-#  duoshuo : 
-#    short_name : huangweipro
+comments :
+  provider : duoshuo
+  duoshuo : 
+    short_name : huangweipro
