@@ -5,8 +5,8 @@ highlighter: pygments
 paginate: 5
 
 # Markdown Processors
-redcarpet:
-  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "with_toc_data", "tables", "highlight", "footnotes"]
+#redcarpet:
+#  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "with_toc_data", "tables", "highlight", "footnotes"]
 
 # mainland-cdn
 cdn:
