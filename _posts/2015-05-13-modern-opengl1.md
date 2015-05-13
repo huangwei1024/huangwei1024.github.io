@@ -11,19 +11,15 @@ keywords: 现代, OpenGL, 教程, 入门指南
     <img src="{{ site.cdn.link }}/static/img/opengl-tutorials/modern-opengl-01.png" width="60%">
 </p>
 
-# 译序
-
 ## 译序
 
-### 译序
-
 早前学OpenGL的时候还是1.x版本，用的都是`glVertex`，`glNormal`等固定管线API。后来工作需要接触DirectX9，shader也只是可选项而已，跟固定管线一起混用着。现在工作内容是手机游戏，又转到OpenGL ES，发现OpenGL的世界已经完全不同了，OpenGL ES 2.0版本开始就不再支持固定管线，只支持可编程管线。
+
+<!--more-->
 
 ![]({{ site.cdn.link }}/static/img/opengl-tutorials/pipe2.0.png)
 
 国内很多资料教程参差不齐，旧式接口满天飞。在[知乎](http://www.zhihu.com/question/22005157)看到这一系列教程，觉着挺好，就想着一边学顺便翻译下。毕竟手游市场的机遇和竞争压力都在同比猛涨，多了解OpenGL ES肯定没有坏处。浮躁功利的环境下更需要怀着一颗宁静致远的心去提高自身功底，长路漫漫，与君共勉。
-
-<!--more-->
 
 欢迎大家，这是现代OpenGL教程系列的第一篇。所有代码都是开源的，你可以在GitHub上下载：[https://github.com/tomdalling/opengl-series](https://github.com/tomdalling/opengl-series)
 
