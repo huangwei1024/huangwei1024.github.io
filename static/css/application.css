@@ -1,4 +1,4 @@
-/*
+﻿/*
  * application.less
  * by @hushaw
  * http://hushaw.github.io
@@ -26,8 +26,14 @@ pre {
 }
 h1,
 h2,
-h3 {
+h3,
+h4,
+h5 {
   font-family: Georgia, "Times New Roman", Times, "Kai", "Kaiti SC", "KaiTi", "BiauKai", "楷体", "楷体_GB2312", serif;
+  font-weight: 700;
+  text-shadow: #AAA 1px 1px 3px;
+  margin-top: 30px;
+  margin-bottom: 10px;
 }
 .page-container {
   max-width: 1000px;
@@ -188,7 +194,7 @@ h3 {
   line-height: 1.2em;
 }
 .page-list ul li span:after {
-  content: "»";
+  content: "?";
   margin: 0 10px;
 }
 .page-list ul li a {
