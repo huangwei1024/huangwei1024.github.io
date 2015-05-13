@@ -7,13 +7,15 @@ description: 现代OpenGL在Xcode，Visual C++和Linux下的入门指南
 keywords: 现代, OpenGL, 教程, 入门指南
 ---
 
-![]({{ site.cdn.link }}/static/img/opengl-tutorials/modern-opengl-01.png)
-
 <p align="center">
-    <img src="D:\huangwei1024.github.io\static\img\opengl-tutorials/modern-opengl-01.png" width="60%">
+    <img src="{{ site.cdn.link }}/static/img/opengl-tutorials/modern-opengl-01.png" width="60%">
 </p>
 
+# 译序
+
 ## 译序
+
+### 译序
 
 早前学OpenGL的时候还是1.x版本，用的都是`glVertex`，`glNormal`等固定管线API。后来工作需要接触DirectX9，shader也只是可选项而已，跟固定管线一起混用着。现在工作内容是手机游戏，又转到OpenGL ES，发现OpenGL的世界已经完全不同了，OpenGL ES 2.0版本开始就不再支持固定管线，只支持可编程管线。
 
@@ -87,7 +89,7 @@ Linux是基于[SpartanJ](http://www.reddit.com/user/SpartanJ)。我在Ubuntu 12.
 
 Shaders在现代OpenGL中是个很重要的概念。应用程序离不开它，除非你理解了，否则这些代码就没有任何意义。
 
-<mark>Shaders是一段GLSL小程序，运行在*GPU*上而非CPU</mark>。它们使用[OpenGL Shading Language (GLSL)](http://en.wikipedia.org/wiki/GLSL)语言编写，看书去像C或C++，但却是另外一种不同的语言。使用shader就像你写个普通程序一样：写代码，编译，最后链接在一起才生成最终的程序。
+<mark>Shaders是一段GLSL小程序，运行在**GPU**上而非CPU</mark>。它们使用[OpenGL Shading Language (GLSL)](http://en.wikipedia.org/wiki/GLSL)语言编写，看书去像C或C++，但却是另外一种不同的语言。使用shader就像你写个普通程序一样：写代码，编译，最后链接在一起才生成最终的程序。
 
 Shaders并不是个很好的名字，因为它不仅仅只做着色。只要记得它们是个用不同的语言写的，运行在显卡上的小程序就行。
 
