@@ -49,7 +49,7 @@ keywords: 现代, OpenGL, 教程, 入门指南
 - 向前兼容OpenGL 3.X和4.X
 - 兼容Android和iOS的OpenGL ES 2.0
 
-因为OpenGL和GLSL存在许多不同版本，本文代码不一定能做到100%上述兼容。我希望能兼容99%，并且不同版本之间只做轻微修改即可。
+因为OpenGL和GLSL存在许多不同版本，本文代码不一定能做到100%上述兼容。我希望能兼容99%，并且不同版本之间只要轻微修改即可。
 
 想要了解OpenGL和GLSL不同版本间的区别，这里很好得罗列了[兼容列表](http://web.eecs.umich.edu/~sugih/courses/eecs487/common/notes/APITables.xml)。
 
@@ -85,13 +85,13 @@ Linux是基于[SpartanJ](http://www.reddit.com/user/SpartanJ)。我在Ubuntu 12.
 
 ## 什么是Shaders？
 
-Shaders在现代OpenGL中是个很重要的概念。应用程序离不开它，除非你理解了，否则这些代码就没有任何意义。
+Shaders在现代OpenGL中是个很重要的概念。应用程序离不开它，除非你理解了，否则这些代码也没有任何意义。
 
-<mark>Shaders是一段GLSL小程序，运行在**GPU**上而非CPU</mark>。它们使用[OpenGL Shading Language (GLSL)](http://en.wikipedia.org/wiki/GLSL)语言编写，看书去像C或C++，但却是另外一种不同的语言。使用shader就像你写个普通程序一样：写代码，编译，最后链接在一起才生成最终的程序。
+<mark>Shaders是一段GLSL小程序，运行在**GPU**上而非CPU</mark>。它们使用[OpenGL Shading Language (GLSL)](http://en.wikipedia.org/wiki/GLSL)语言编写，看上去像C或C++，但却是另外一种不同的语言。使用shader就像你写个普通程序一样：写代码，编译，最后链接在一起才生成最终的程序。
 
 Shaders并不是个很好的名字，因为它不仅仅只做着色。只要记得它们是个用不同的语言写的，运行在显卡上的小程序就行。
 
-在旧版本的OpenGL中，shaders是可选的。在现代OpenGL中，为了能在屏幕上显示出物体，shaders是必须。
+在旧版本的OpenGL中，shaders是可选的。在现代OpenGL中，为了能在屏幕上显示出物体，shaders是必须的。
 
 为可能近距离了解shaders和图形渲染管线，我推荐Durian Software的相关文章[The Graphics Pipeline chapter](http://duriansoftware.com/joe/An-intro-to-modern-OpenGL.-Chapter-1:-The-Graphics-Pipeline.html)。
 
@@ -104,7 +104,7 @@ Shaders并不是个很好的名字，因为它不仅仅只做着色。只要记�
 |需要编译？|是|是|
 |需要链接？|是|是|
 
-那shaders实际上干了啥？这取决于是那种shader。
+那shaders实际上干了啥？这取决于是哪种shader。
 
 ## Vertex Shaders
 
@@ -139,7 +139,7 @@ Vertex Shader在本文中没有做任何事，后续我们会修改它来处理�
 
 <mark>Fragment shader的主要功能是计算每个需要绘制的像素点的颜色。</mark>
 
-一个"fragment"基本上就是一个像素，所以你可以认为片段着色器（fragment shader）就是像素着色器（pixel shader）。在本文中每个片段都是一像素，但这并不总是这样的。假如你更改了某个OpenGL设置，你可以得到比像素更小的片段，之后的文章我们会讲到这个。
+一个"fragment"基本上就是一个像素，所以你可以认为片段着色器（fragment shader）就是像素着色器（pixel shader）。在本文中每个片段都是一像素，但这并不总是这样的。你可以更改某个OpenGL设置，以便得到比像素更小的片段，之后的文章我们会讲到这个。
 
 本文所使用的fragment shader代码如下：
 
@@ -176,15 +176,15 @@ void main() {
 
 ## Vertex Buffer Objects (VBOs)
 
-第一步我们需要从内存里上传三角形的三个顶点到显存中。这就是VBO该干的事。<mark>VBO其实就是显存的“缓冲区（buffers）” - 一串包含各种二进制数据的字节。</mark>你能上传3D坐标，颜色，甚至是你喜欢的音乐和诗歌。VBO不关心这些数据是啥，因为它只是对内存进行复制。
+第一步我们需要从内存里上传三角形的三个顶点到显存中。这就是VBO该干的事。<mark>VBO其实就是显存的“缓冲区（buffers）” - 一串包含各种二进制数据的字节区域。</mark>你能上传3D坐标，颜色，甚至是你喜欢的音乐和诗歌。VBO不关心这些数据是啥，因为它只是对内存进行复制。
 
 ## Vertex Array Objects (VAOs)
 
 第二步我们要用VBO的数据在shaders中渲染三角形。请记住VBO只是一块数据，它不清楚这些数据的类型。而告诉OpenGL这缓冲区里是啥类型数据，这事就归VAO管。
 
-<mark>VAO对VBO和shader变量进行了连接。它描述了VBO所包含的数据类型，还有数据该传递给哪个shader变量。</mark>在OpenGL所有不准确的技术名词中，“Vertex Array Object”是最烂的一个，因为它根本没有解释VAO该干的事。
+<mark>VAO对VBO和shader变量进行了连接。它描述了VBO所包含的数据类型，还有该传递数据给哪个shader变量。</mark>在OpenGL所有不准确的技术名词中，“Vertex Array Object”是最烂的一个，因为它根本没有解释VAO该干的事。
 
-你回头看下本文的vertex shader（在文章的全面），你就能发现我们只有一个输入变量`vert`。在本文中，我们用VAO来说明“hi，OpenGL，这里的VBO有3D顶点，我想要你在vertex shader时，发三个顶点数据给vert变量。”
+你回头看下本文的vertex shader（在文章的前面），你就能发现我们只有一个输入变量`vert`。在本文中，我们用VAO来说明“hi，OpenGL，这里的VBO有3D顶点，我想要你在vertex shader时，发三个顶点数据给vert变量。”
 
 在后续的文章中，我们会用VAO来说“hi，OpenGL，这里的VBO有3D顶点，颜色，贴图坐标，我想要你在shader时，发顶点数据给vert变量，发颜色数据给vertColor变量，发贴图坐标给vertTexCoord变量。”
 
@@ -192,10 +192,10 @@ void main() {
 
 假如你在旧版本的OpenGL中使用了VBO但没有用到VAO，你可能会不认同VAO的描述。你会争论说“顶点属性”可以用`glVertexAttribPointer`将VBO和shaders连接起来，而不是用VAO。这取决于你是否认为顶点属性应该是VAO“内置（inside）”的（我是这么认为的），或者说它们是否是VAO外置的一个全局状态。3.2内核和我用的AIT驱动中，VAO不是可选项 - 没有VAO的封装`glEnableVertexAttribArray`, `glVertexAttribPointer`和`glDrawArrays`都会导致`GL_INVALID_OPERATION`错误。这就是为啥我认为顶点属性应该内置于VAO，而非全局状态的原因。[3.2内核手册](http://www.opengl.org/registry/doc/glspec32.core.20091207.pdf)也说VAO是必须的，但我只听说ATI驱动会抛错误。下面描述引用自[OpenGL 3.2内核手册](http://www.opengl.org/registry/doc/glspec32.core.20091207.pdf)
 
-    所有与顶点处理有关的数据定义都应该封装在VAO里。
-    一般VAO边界包含所有更改vertex array状态的命令，比如VertexAttribPointer和EnableVertexAttribArray；所有使用vertex array进行绘制的命令，比如DrawArrays和DrawElements；所有对vertex array状态进行查询的命令（见第6章）。
+> 所有与顶点处理有关的数据定义都应该封装在VAO里。
+> 一般VAO边界包含所有更改vertex array状态的命令，比如VertexAttribPointer和EnableVertexAttribArray；所有使用vertex array进行绘制的命令，比如DrawArrays和DrawElements；所有对vertex array状态进行查询的命令（见第6章）。
 
-不管怎样，我也知道为啥会有人认为顶点属性应该放在VAO外部。`glVertexAttribPointer`出现早于VAO，在这段时间里顶点属性一直被认为是全局状态。你应该能看出VAO是一种改变全局状态的有效方法。我更倾向于认为是这样：假如你没有创建VAO，那OpenGL通过了一个默认的全局VAO。所以当你使用`glVertexAttribPointer`时，你仍然是在VAO内修改得顶点属性，只不过现在从默认的VAO变成你自己创建的VAO。
+不管怎样，我也知道为啥会有人认为顶点属性应该放在VAO外部。`glVertexAttribPointer`出现早于VAO，在这段时间里顶点属性一直被认为是全局状态。你应该能看得出VAO是一种改变全局状态的有效方法。我更倾向于认为是这样：假如你没有创建VAO，那OpenGL通过了一个默认的全局VAO。所以当你使用`glVertexAttribPointer`时，你仍然是在VAO内修改顶点属性，只不过现在从默认的VAO变成你自己创建的VAO。
 
 这里有更多的讨论：[http://www.opengl.org/discussion_boards/showthread.php/174577-Questions-on-VAOs](http://www.opengl.org/discussion_boards/showthread.php/174577-Questions-on-VAOs)
 
@@ -213,7 +213,7 @@ if(!glfwInit())
     throw std::runtime_error("glfwInit failed");
 ```
 
-`glfwSetErrorCallback(OnError)`这一行告诉GLFW当错误发生时调用`OnError`函数。`OnError`函数会抛一个包含错误信息的异常，我们能从中了解哪里出错了。
+`glfwSetErrorCallback(OnError)`这一行告诉GLFW当错误发生时调用`OnError`函数。`OnError`函数会抛一个包含错误信息的异常，我们能从中发现哪里出错了。
 
 然后我们用GLFW创建一个窗口。
 
@@ -228,7 +228,7 @@ if(!gWindow)
     throw std::runtime_error("glfwCreateWindow failed. Can your hardware handle OpenGL 3.2?");
 ```
 
-该窗口包含一个向前兼容的OpenGL 3.2内核上下文。假如`glfwCreateWindow`失败了，你应该降低下OpenGL版本。
+该窗口包含一个向前兼容的OpenGL 3.2内核上下文。假如`glfwCreateWindow`失败了，你应该降低OpenGL版本。
 
 创建窗口最后一步，我们应该设置一个“当前”OpenGL上下文给刚创建的窗口：
 
@@ -301,23 +301,88 @@ VAO设置最复杂的部分就是下个函数：`glVertexAttribPointer`。让我
 ```cpp
 glVertexAttribPointer(gProgram->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 0, NULL);
 ```
+第一个参数，`gProgram->attrib("vert")`，这就是那个需要上传数据的shder变量。在这个例子中，我们需要发数据给`vert`shader变量。
 
+第二个参数，`3`表明每个顶点需要三个数字。
 
+第三个参数，`GL_FLOAT`说明三个数字是`GLfloat`类型。这非常重要，因为`GLdouble`类型的数据大小跟它是不同的。
 
+第四个参数，`GL_FALSE`说明我们不需要对浮点数进行“归一化”，假如我们使用了归一化，那这个值会被限定为最小0，最大1。我们不需要对我们的顶点进行限制，所以这个参数为false。
 
+第五个参数，`0`，该参数可以在顶点之间有间隔时使用，设置参数为0，表示数据之间没有间隔。
 
+第六个参数，`NULL`，假如我们的数据不是从缓冲区头部开始的话，可以设置这个参数来指定。设置该参数为NULL，表示我们的数据从VBO的第一个字节开始。
 
+现在VBO和VAO都设置完成，我们需要对它们进行解绑定，防止一不小心被哪里给更改了。
 
+```cpp
+glBindBuffer(GL_ARRAY_BUFFER, 0);
+glBindVertexArray(0);
+```
 
+到此，shader，VBO和VAO都准备好了。我们可以开始在`Render`函数里绘制了。
 
+首先，我们先清空下屏幕，让它变成纯黑色：
 
+```cpp
+glClearColor(0, 0, 0, 1); // black
+glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+```
 
+然后告诉OpenGL我们要开始使用VAO和shader了：
 
+```cpp
+glUseProgram(gProgram->object());
+glBindVertexArray(gVAO);
+```
 
+最后，我们绘制出三角形：
 
+```cpp
+glDrawArrays(GL_TRIANGLES, 0, 3);
+```
 
+调用`glDrawArrays`函数说明我们需要绘制三角形，从第0个顶点开始，有3个顶点被发送到shader。OpenGL会在当前VAO范围内确定该从哪里获取顶点。
 
+顶点将会从VBO中取出并发送到vertex shader。然后三角形内的每个像素会发送给fragment shader。接着fragment shader将每个像素变成白色。欢呼！
 
+现在绘制结束了，为了安全起见，我们需要将shader和VAO进行解绑定：
+
+```cpp
+glBindVertexArray(0);
+glUseProgram(0);
+```
+
+最后一件事，在我们看到三角形之前需要切换帧缓冲：
+
+```cpp
+glfwSwapBuffers(gWindow);
+```
+
+在帧缓冲被交换前，我们会绘制到一个不可见的离屏（off-screen）帧缓冲区。当我们调用`glfwSwapBuffers`时，离屏缓冲会变成屏幕缓冲，所以我们就能在窗口上看见内容了。
+
+## 进一步阅读
+
+在后续文章中，我们会对三角形进行贴图。之后，你会学到一点矩阵变换知识，就可以使用vertex shader来实现3D立方体旋转。
+
+在这之后，我们开始创建3D场景并提交多个物体。
+
+## 更多现代OpenGL资料
+
+不幸的是，我不得不跳过很多内容，防止本教程的篇幅过长。后面还有很多好的现代OpenGL资料能满足你的求知欲：
+
+- [An intro to modern OpenGL](http://duriansoftware.com/joe/An-intro-to-modern-OpenGL.-Table-of-Contents.html) by Joe Groff of Durian Software
+- [Learning Modern 3D Graphics Programming](http://www.arcsynthesis.org/gltut/) by Jason L. McKesson
+- [A collection of simple single file OpenGL examples](https://github.com/progschj/OpenGL-Examples) by Jakob Progsch
+- [OpenGL Step by Step](http://ogldev.atspace.co.uk/) by Etay Meiri
+- [All about OpenGL ES 2.x](http://db-in.com/blog/2011/01/all-about-opengl-es-2-x-part-13/) by Diney Bomfim
+- [The OpenGL Progamming book on Wikibooks](http://en.wikibooks.org/wiki/OpenGL_Programming)
+- [Tutorials on the OpenGL wiki](http://www.opengl.org/wiki/Tutorials)
+- [OpenGL 4 tutorials](http://www.swiftless.com/tutorials/opengl4/1-opengl-window.html) by Donald Urquhart (Swiftless)
+- [open.gl](http://open.gl/) by Alexander Overvoorde
+- [OpenGLBook.com](http://openglbook.com/) by Eddy Luten
+- [The official OpenGL SDK documentation](http://www.opengl.org/sdk/docs/)
+- [Compatibility tables for OpenGL, OpenGL ES, GLSL, and GLSL ES](http://web.eecs.umich.edu/~sugih/courses/eecs487/common/notes/APITables.xml) by Sugih Jamin
 
 
 
