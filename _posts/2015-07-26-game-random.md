@@ -2,9 +2,9 @@
 layout: post
 title: 游戏中的随机概率
 categories: develop dev-log
-tags: game random algorithm
+tags: game random algorithm distribution
 description: 游戏中的随机概率
-keywords: 游戏开发，随机，概率，统计，分布，算法
+keywords: 游戏开发，随机，概率，统计，正态分布，算法
 ---
 
 这段时间公司开发的游戏上线测试，许多玩家在抽卡时抱怨脸黑，很难抽到所需要的卡牌，而又有一部分玩家反应运气好能连着抽到紫卡，检查了下随机相关逻辑代码，并没有找出问题所在，玩家运气好与坏只是觉得真有可能是概率原因。
@@ -23,7 +23,7 @@ keywords: 游戏开发，随机，概率，统计，分布，算法
     <img src="{{ site.cdn.link }}/static/img/rnd1.png" width="60%" alt="按权值随机50000次">
 </p>
 
-上图绘制的是权值为5的卡牌的随机状态，红色的图是分布图，X轴是出现的次数，Y轴是相同卡牌再次出现的间隔。绿色的图是分布概率图，X轴是间隔数，Y轴是概率。按策划的想法，**5%概率**应该等同于**20次出现一次**，那上图很明显并不满足**20次出现一次**出现规则，实际间隔从近到远呈下坡形状分布，就是说相邻的概率最大，间隔最大超过160，这与玩家所吐槽的抽卡体验是一致的。但50000次随机总共出现了2508次，从统计的意义上来说又是符合**5%概率**的。所以这个问题，究其原因就是所谓的概率是统计意义上的还是分布意义上的。
+上图绘制的是权值为5的卡牌的随机状态，红色的图是分布图，X轴是出现的次数，Y轴是相同卡牌再次出现的间隔。绿色的图是分布概率图，X轴是间隔数，Y轴是概率。按策划的想法，**5%概率**应该等同于**20次出现一次**，那上图很明显并不满足**20次出现一次**出现规则，实际间隔从近到远呈下坡形状分布，就是说相邻的概率最大，间隔最大超过160，这与玩家所吐槽的抽卡体验是一致的。但50000次随机总共出现了2508次，从统计的意义上来说又是符合**5%概率**的。所以这个问题，究其原因就是所谓的概率是统计意义上的还是分布意义上的问题。
 
 ## 最原始的实现
 
@@ -52,6 +52,7 @@ for i in xrange(N):
     <img src="{{ site.cdn.link }}/static/img/rnd2.png" width="60%" alt="使用第二种实现的随机分布">
 </p>
 
+该图明显跟第一个实现的图不一样，上图表明了间隔基本上是落在[0, 40]的区间内，并且均匀分布在20那条蓝色对称线附近。这个才是最终想要的随机的效果。红色的线是正态分布曲线，是不是很相似？后面我会讲到。
 
 眼尖的会发现在第一个实现中我用的pool是`[0]*5 + [1]*95`，而第二个实现中我用的是`[0]*1 + [1]*19`。
 
@@ -65,7 +66,7 @@ for i in xrange(N):
 
 ## 更通用更优美的实现
 
-**20次出现一次**是以20为标准周期，当然不能每次都是间隔20出现，这样就太假了，根本没有随机感受可言，为了模拟随机并可以控制一定的出现频率，我选择正态分布来进行伪随机分布生成。
+**20次出现一次**是以20为标准周期，当然不能每次都是间隔20出现，这样就太假了，根本没有随机感受可言，为了模拟随机并可以控制一定的出现频率，我选择正态分布来进行伪随机分布生成，原因是分布会更自然一些。
 
 <p align="center">
     <img src="{{ site.cdn.link }}/static/img/rnd3_Normal_distribution.png" width="60%" alt="正态分布">
@@ -80,7 +81,7 @@ for i in xrange(N):
 
 用上面的例子来定下参数，$\mu=20, \sigma=20/3$，这样每次按正态分布随机，就能得到一个理想的随机分布和概率区间。
 
-C语言标准函数库中只有rand，如何生成符合正态分布的随机数可以参见[WiKi上的介绍](https://zh.wikipedia.org/wiki/%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83)。这里我直接使用Python中random库中的normalvariate函数，当然gauss函数也是一样的，[官方文档](https://docs.python.org/2/library/random.html)上说gauss函数会快些，[StackOverFlow](http://stackoverflow.com/questions/27749133/what-is-the-difference-between-random-normalvariate-and-random-gauss-in-pyth)上说gauss是非线程安全函数，所以会快些。我自己简单测试了下，在单线程情况下，gauss会快些，但只是快了一点点而已。
+C语言标准函数库中只有rand，如何生成符合正态分布的随机数可以参见[WiKi上的介绍](https://zh.wikipedia.org/wiki/%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83)。这里我直接使用Python中random库中的normalvariate函数，当然gauss函数也是一样的，[官方文档](https://docs.python.org/2/library/random.html)上说gauss函数会快些，[StackOverFlow](http://stackoverflow.com/questions/27749133/what-is-the-difference-between-random-normalvariate-and-random-gauss-in-pyth)上说gauss是非线程安全函数，所以会快。我自己简单测试了下，在单线程情况下，gauss是会快些，但只是快了一点点而已。
 
 首先，我直接生成权值为5的卡牌的间隔，检验下正态分布的随机效果。
 
@@ -94,9 +95,85 @@ delta = [int(random.normalvariate(mu, sigma)) for i in xrange(NN)]
     <img src="{{ site.cdn.link }}/static/img/rnd3.png" width="60%" alt="模拟正态分布的伪随机">
 </p>
 
-OK，接下来就是替换旧的随机算法了。
+这图是不是比第二个实现的图更好看一些，分布也更平滑一些呢。OK，接下来就是替换旧的随机算法了。
 
 ## 细节和优化
 
+刚才说了随机库中会有很多物品，都需要按照各自的权值随机，并各自出现频率符合正态分布。下面我们来说说细节。
+
+```py
+wtp = [1.*x/sum(wt) for x in wt]
+result = []
+p = [random.normalvariate(1./x, 1./x/3.) for x in wtp]
+for i in xrange(N):
+	minp = 1.e9
+	minj = -1
+	for j, pp in enumerate(p):
+		if pp < minp:
+			minp = pp
+			minj = j
+	result.append(minj)
+	for j, pp in enumerate(p):
+		p[j] -= minp
+	p[minj] = random.normalvariate(1./wtp[minj], 1./wtp[minj]/3.)
+```
+
+这里我使用了统一的随机种子，随机测试了500万次后，所得的结果与多个随机种子差别不大。
+
+简单解释下代码：初始化对所有物品按权值进行正态分布随机，每次取位置最小值的物品（也就是最先出现的），然后其它物品均减去该值，被取出的物品再单独进行一次正态分布随机，再次循环判断位置最小值。
+
+这里，每次都需要对所有物品进行求最小值和减法，都是需要遍历的运算，我们可以有如下优化。
+
+例如：(1,3,4) -> 取1减1, (0,2,3) -> 随机1, (1,2,3)，其实我们只是为了保持各物品之间位置的相对顺序即可，将对其它物品的减法变成对自己的加法，操作量级立马从$O(N)$缩为$O(1)$ 。
+
+如上面的例子：(1,3,4) -> 取1, (0,3,4) -> 随机1加1, (2,3,4)，这样的操作不会改变物品序列的正确性。
+
+熟悉最小堆的朋友，将查找最小值优化到$O(1)$应该也没啥问题吧。
+
+```py
+wtp = [1.*x/sum(wt) for x in wt]
+result = []
+p = [(random[i].normalvariate(1./x, 1./x/3.), i) for x in wtp]
+heapq.heapify(p)
+for i in xrange(N):
+	minp, minj = heapq.heappop(p)
+	result.append(minj)
+	heapq.heappush(p, (random[minj].normalvariate(1./wtp[minj], 1./wtp[minj]/3.)+minp, minj))
+```
+
+## 测试结果
+
+问题分析和算法实现就到这了，替换进我的游戏里看看什么效果，我已经迫不及待了。
+
+物品测试权值序列[10, 30, 50, 110, 150, 200, 250, 500]，随机测试500万次。
+
+<p align="center">
+    <img src="{{ site.cdn.link }}/static/img/rnd_rand.png" width="60%" alt="第一个随机实现">
+    <br/>第一个随机实现
+</p>
+
+第一个实现是只符合统计要求，不符合分布要求。
+
+<p align="center">
+    <img src="{{ site.cdn.link }}/static/img/rnd_weight.png" width="60%" alt="第二个随机实现">
+    <br/>第二个随机实现
+</p>
+
+第二个实现中对权值序列进行了GCD，可以看到只有绿色是符合分布要求的，而蓝色和青色退化成第一种实现。
+
+<p align="center">
+    <img src="{{ site.cdn.link }}/static/img/rnd_normal.png" width="60%" alt="基于正态分布的随机实现">
+    <br/>基于正态分布的随机实现
+</p>
+
+完美！
+
+## 玩家体验
+
+最好每个玩家有各自的随机种子，否则会造成体验上的误差。服从正态分布的全局随机序列，不同玩家任意的取走序列中一段或者一些值，就可能导致对于每个玩家而言，各自取出的随机序列不再服从正态分布。
+
+## 结束
+
+我只能感叹Python的库太强大了，matplotlib绘制出来的图形也挺漂亮的，感兴趣的童鞋可以查阅[用Python做科學計算](http://myshare.dscloud.me/scipydoc/)。
 
 
