@@ -10,11 +10,6 @@ keywords: Geek, Programmer, Game, Story
         {% for post in site.posts %}
         <li>
             <span>{{ post.date | date:"%Y年%m月%d日" }} </span>
-			<span>
-            {% for cat in post.categories %}
-            <a href="/categories.html#{{ cat }}-ref">{{ cat }}</a>
-            {% endfor %}
-			</span>
             <a href="{{ post.url }}">{{ post.title }}</a>
         </li>
         {% endfor %}
