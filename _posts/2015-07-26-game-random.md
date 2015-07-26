@@ -19,7 +19,9 @@ keywords: 游戏开发，随机，概率，统计，分布，算法
 
 而上述限时抽卡的例子中，我们的权值配置是5和95，模拟50000次随机（使用系统随机函数，如C的rand函数，Python的random库）得到如下结果：
 
-![按权值随机50000次]({{ site.cdn.link }}/static/img/rnd1.jpg)
+<p align="center">
+    <img src="{{ site.cdn.link }}/static/img/rnd1.png" width="60%" alt="按权值随机50000次">
+</p>
 
 上图绘制的是权值为5的卡牌的随机状态，红色的图是分布图，X轴是出现的次数，Y轴是相同卡牌再次出现的间隔。绿色的图是分布概率图，X轴是间隔数，Y轴是概率。按策划的想法，**5%概率**应该等同于**20次出现一次**，那上图很明显并不满足**20次出现一次**出现规则，实际间隔从近到远呈下坡形状分布，就是说相邻的概率最大，间隔最大超过160，这与玩家所吐槽的抽卡体验是一致的。但50000次随机总共出现了2508次，从统计的意义上来说又是符合**5%概率**的。所以这个问题，究其原因就是所谓的概率是统计意义上的还是分布意义上的。
 
@@ -45,7 +47,11 @@ for i in xrange(N):
 ```
 上面是打乱列表，然后依次取元素的方式，保证**20次出现一次**，而**5%概率**则是隐含在内的，生成效果如下图。
 
-![使用第二种实现的随机分布]({{ site.cdn.link }}/static/img/rnd2.png)
+
+<p align="center">
+    <img src="{{ site.cdn.link }}/static/img/rnd2.png" width="60%" alt="使用第二种实现的随机分布">
+</p>
+
 
 眼尖的会发现在第一个实现中我用的pool是`[0]*5 + [1]*95`，而第二个实现中我用的是`[0]*1 + [1]*19`。
 
@@ -61,11 +67,16 @@ for i in xrange(N):
 
 **20次出现一次**是以20为标准周期，当然不能每次都是间隔20出现，这样就太假了，根本没有随机感受可言，为了模拟随机并可以控制一定的出现频率，我选择正态分布来进行伪随机分布生成。
 
-![正态分布]({{ site.cdn.link }}/static/img/rnd3_Normal_distribution.png)
+<p align="center">
+    <img src="{{ site.cdn.link }}/static/img/rnd3_Normal_distribution.png" width="60%" alt="正态分布">
+</p>
 
 关于正态分布这里就不详细描述了，只需关心分布的两个参数即可，位置参数为$\mu$、尺度参数为$\sigma$。根据正态分布，两个标准差之内的比率合起来为95%；三个标准差之内的比率合起来为99%。
 
-![根据正态分布，两个标准差之内的比率合起来为95%；三个标准差之内的比率合起来为99%]({{ site.cdn.link }}/static/img/rnd4_normal_sigma.png)
+<p align="center">
+    <img src="{{ site.cdn.link }}/static/img/rnd4_normal_sigma.png" width="60%" alt="根据正态分布，两个标准差之内的比率合起来为95%；三个标准差之内的比率合起来为99%">
+</p>
+
 
 用上面的例子来定下参数，$\mu=20, \sigma=20/3$，这样每次按正态分布随机，就能得到一个理想的随机分布和概率区间。
 
@@ -79,10 +90,13 @@ mu, sigma = 20, 20/3.
 delta = [int(random.normalvariate(mu, sigma)) for i in xrange(NN)]
 ```
 
-![模拟正态分布的伪随机]({{ site.cdn.link }}/static/img/rnd3.png)
+<p align="center">
+    <img src="{{ site.cdn.link }}/static/img/rnd3.png" width="60%" alt="模拟正态分布的伪随机">
+</p>
 
 OK，接下来就是替换旧的随机算法了。
 
 ## 细节和优化
+
 
 
