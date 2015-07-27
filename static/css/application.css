@@ -1,4 +1,4 @@
-﻿/*
+/*
  * application.less
  * by @hushaw
  * http://hushaw.github.io
@@ -194,7 +194,7 @@ h5 {
   line-height: 1.2em;
 }
 .page-list ul li span:after {
-  content: "?";
+  content: "»";
   margin: 0 10px;
 }
 .page-list ul li a {
