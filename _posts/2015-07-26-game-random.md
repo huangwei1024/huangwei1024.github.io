@@ -20,7 +20,7 @@ keywords: 游戏开发，随机，概率，统计，正态分布，算法
 而上述限时抽卡的例子中，我们的权值配置是5和95，模拟50000次随机（使用系统随机函数，如C的rand函数，Python的random库）得到如下结果：
 
 <p align="center">
-    <img src="{{ site.cdn.link }}/static/img/rnd1.png" width="60%" alt="按权值随机50000次">
+    <img src="{{ site.cdn.link }}/static/img/rnd1.png" width="80%" alt="按权值随机50000次">
 </p>
 
 上图绘制的是权值为5的卡牌的随机状态，红色的图是分布图，X轴是出现的次数，Y轴是相同卡牌再次出现的间隔。绿色的图是分布概率图，X轴是间隔数，Y轴是概率。按策划的想法，**5%概率**应该等同于**20次出现一次**，那上图很明显并不满足**20次出现一次**出现规则，实际间隔从近到远呈下坡形状分布，就是说相邻的概率最大，间隔最大超过160，这与玩家所吐槽的抽卡体验是一致的。但50000次随机总共出现了2508次，从统计的意义上来说又是符合**5%概率**的。所以这个问题，究其原因就是所谓的概率是统计意义上的还是分布意义上的问题。
@@ -49,7 +49,7 @@ for i in xrange(N):
 
 
 <p align="center">
-    <img src="{{ site.cdn.link }}/static/img/rnd2.png" width="60%" alt="使用第二种实现的随机分布">
+    <img src="{{ site.cdn.link }}/static/img/rnd2.png" width="80%" alt="使用第二种实现的随机分布">
 </p>
 
 该图明显跟第一个实现的图不一样，上图表明了间隔基本上是落在[0, 40]的区间内，并且均匀分布在20那条蓝色对称线附近。这个才是最终想要的随机的效果。红色的线是正态分布曲线，是不是很相似？后面我会讲到。
@@ -92,7 +92,7 @@ delta = [int(random.normalvariate(mu, sigma)) for i in xrange(NN)]
 ```
 
 <p align="center">
-    <img src="{{ site.cdn.link }}/static/img/rnd3.png" width="60%" alt="模拟正态分布的伪随机">
+    <img src="{{ site.cdn.link }}/static/img/rnd3.png" width="80%" alt="模拟正态分布的伪随机">
 </p>
 
 这图是不是比第二个实现的图更好看一些，分布也更平滑一些呢。OK，接下来就是替换旧的随机算法了。
@@ -148,21 +148,21 @@ for i in xrange(N):
 物品测试权值序列[10, 30, 50, 110, 150, 200, 250, 500]，随机测试500万次。
 
 <p align="center">
-    <img src="{{ site.cdn.link }}/static/img/rnd_rand.png" width="60%" alt="第一个随机实现">
+    <img src="{{ site.cdn.link }}/static/img/rnd_rand.png" width="80%" alt="第一个随机实现">
     <br/>第一个随机实现
 </p>
 
 第一个实现是只符合统计要求，不符合分布要求。
 
 <p align="center">
-    <img src="{{ site.cdn.link }}/static/img/rnd_weight.png" width="60%" alt="第二个随机实现">
+    <img src="{{ site.cdn.link }}/static/img/rnd_weight.png" width="80%" alt="第二个随机实现">
     <br/>第二个随机实现
 </p>
 
 第二个实现中对权值序列进行了GCD，可以看到只有绿色是符合分布要求的，而蓝色和青色退化成第一种实现。
 
 <p align="center">
-    <img src="{{ site.cdn.link }}/static/img/rnd_normal.png" width="60%" alt="基于正态分布的随机实现">
+    <img src="{{ site.cdn.link }}/static/img/rnd_normal.png" width="80%" alt="基于正态分布的随机实现">
     <br/>基于正态分布的随机实现
 </p>
 
