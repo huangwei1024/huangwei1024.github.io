@@ -1,3 +1,8 @@
+---
+layout: page
+title: Cmd Markdown Sample Page
+---
+
 # 欢迎使用 Cmd Markdown 编辑阅读器
 
 ------
