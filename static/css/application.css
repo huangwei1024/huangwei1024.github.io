@@ -149,6 +149,24 @@ h5 {
   padding: 1.5em 0 0;
   font-size: 15px;
 }
+.page-content .post-entry sup a:before {
+  content: "[";
+}
+.page-content .post-entry sup a:after {
+  content: "]";
+}
+.page-content .post-entry .footnotes ol {
+  list-style-type:none;
+  counter-reset:sectioncounter;
+}
+.page-content .post-entry .footnotes ol li p:before {
+   content:"[" counter(sectioncounter) "]";
+   padding: 0 10px 0 0;
+   counter-increment:sectioncounter;
+}
+.page-content .post-entry .footnotes ol li p a {
+   content:"";
+}
 .page-content .post-entry blockquote p {
   font-size: 15px;
 }
