@@ -210,9 +210,10 @@ h5 {
   color: #555;
   font-weight: 500;
   line-height: 1.2em;
+  font-family: Consolas, Monaco, 'Courier New', Courier, 'Andale Mono', 'DejaVu Sans Mono', monospace;
 }
 .page-list ul li span:after {
-  content: "»";
+  content: ">>";
   margin: 0 10px;
 }
 .page-list ul li a {

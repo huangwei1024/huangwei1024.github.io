@@ -2,7 +2,7 @@
 layout: post
 title: 游戏中的随机概率
 categories: develop dev-log
-tags: game random algorithm distribution
+tags: game random distribution
 description: 游戏中的随机概率
 keywords: 游戏开发，随机，概率，统计，正态分布，算法
 ---

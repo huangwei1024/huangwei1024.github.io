@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 高效率生活
-categories: living
+categories: startup
 tags: effective summary
 description: 创业过程中的点点滴滴记录
 keywords: 高效, 程序员, 生活, 工具, 经验

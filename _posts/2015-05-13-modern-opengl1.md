@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 现代OpenGL教程 01 - 入门指南
-categories: develop
+categories: modern-opengl-tutorials
 tags: opengl tutorials
 description: 现代OpenGL在Xcode，Visual C++和Linux下的入门指南
 keywords: 现代, OpenGL, 教程, 入门指南

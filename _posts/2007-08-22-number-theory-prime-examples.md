@@ -1,8 +1,8 @@
 ---
 layout: post
 title: Number Theory 4.3 Prime Examples
-categories: algorithm acm
-tags: concrete_mathematics number_theory reading_notes
+categories: algorithm
+tags: concrete_mathematics number_theory reading_notes acm
 description: 具体数学 数论 4.3 素数 例子
 keywords: 具体数学, 数论, 素数
 ---

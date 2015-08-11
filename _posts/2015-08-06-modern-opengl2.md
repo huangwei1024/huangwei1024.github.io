@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 现代OpenGL教程 02 - 贴图
-categories: develop
+categories: modern-opengl-tutorials
 tags: opengl tutorials
 description: 现代OpenGL贴图
 keywords: 现代, OpenGL, 教程, 入门指南
