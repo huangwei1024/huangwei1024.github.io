@@ -54,11 +54,9 @@ keywords: 现代, OpenGL, 教程, 入门指南
 
 两个最重要的矩阵操作是：
 
-<mark>
-- matrix × matrix = combined matrix
-- matrix × coordinate = transformed coordinate 
-</mark> 
-
+- <mark>matrix × matrix = combined matrix</mark>
+- <mark>matrix × coordinate = transformed coordinate </mark>
+ 
 ## 矩阵 × 矩阵
 
 当你要对两个矩阵进行相乘时，它们的乘积是一个包含两者变换的新矩阵。
@@ -72,6 +70,8 @@ keywords: 现代, OpenGL, 教程, 入门指南
 ![]({{ site.cdn.link }}/static/img/opengl-tutorials/mat-x-mat-commutative.png)
 
 注意不同的顺序，结果也不同。下面动画说明顺序有多重要。相同的矩阵，不同的顺序。两个变换分别是沿Y轴上移，和旋转45°。
+
+![]({{ site.cdn.link }}/static/img/opengl-tutorials/rotate-translate.gif)
 
 ![]({{ site.cdn.link }}/static/img/opengl-tutorials/translate-rotate.gif)
 
