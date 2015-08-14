@@ -25,7 +25,7 @@ keywords: 现代, OpenGL, 教程, 入门指南
 
 这一系列文章中所使用的代码都存放在：[https://github.com/tomdalling/opengl-series](https://github.com/tomdalling/opengl-series)。你可以在页面中下载zip，加入你会git的话，也可以复制该仓库。
 
-本文代码你可以在<code>[source/02_textures](https://github.com/tomdalling/opengl-series/tree/master/source/02_textures)</code>目录里找到。使用OS X系统的，可以打开根目录里的`opengl-series.xcodeproj`，选择本文工程。使用Windows系统的，可以在Visual Studio 2013里打开`opengl-series.sln`，选择相应工程。
+本文代码你可以在<code>[source/03_matrices](https://github.com/tomdalling/opengl-series/tree/master/source/03_matrices)</code>目录里找到。使用OS X系统的，可以打开根目录里的`opengl-series.xcodeproj`，选择本文工程。使用Windows系统的，可以在Visual Studio 2013里打开`opengl-series.sln`，选择相应工程。
 
 工程里已包含所有依赖，所以你不需要再安装或者配置额外的东西。如果有任何编译或运行上的问题，请联系我。
 
