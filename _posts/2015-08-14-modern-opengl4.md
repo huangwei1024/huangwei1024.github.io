@@ -45,12 +45,14 @@ keywords: 现代, OpenGL, 教程, 相机，向量，输入
 
 下面用例子来说明向量代表的不同含义。
 
+<p align="center">
 |&nbsp;|方向|幅度|含义|
 |:-----:|:-----:|:-----:|:--:|
 |往北5千米|北|5千米|位置|
 |头上5厘米|上|5厘米|位置|
 |以50千米每小时开往西湖|西湖方向|50千米/每小时|速度|
 |地球引力为9.8m/s<sup>2</sup>|往地球质心|9.8m/s<sup>2</sup>|加速|
+</p>
 
 <mark>当编码时，向量只是一组数字。每个数字都是向量的“一维”。比如，一个三维3D向量就是有3个数字的数组，2D向量是有2个数字。</mark>因为我们是在3D中进行工作，所以大部分情况只要处理3D向量，但我们也需要用到4D。无论何时我说“向量”，那意味着是3D向量。我们使用GLM的向量数学库，2D，3D，4D的类型分别为`glm::vec2`
 ,`glm::vec3`,`glm::vec4`。
@@ -63,8 +65,9 @@ keywords: 现代, OpenGL, 教程, 相机，向量，输入
 
 比如：
 
-<p align="center">
 ![]({{ site.cdn.link }}/static/img/opengl-tutorials/vector_negation.gif)
+
+<p align="center">
 A=向北5千米
 -A=向南5千米
 </p>
@@ -82,8 +85,9 @@ glm::vec3 leftDirection = -rightDirection; //vector negation
 
 比如：
 
-<p align="center">
+
 ![]({{ site.cdn.link }}/static/img/opengl-tutorials/scalar_mult.gif)
+<p align="center">
 A=向北5千米
 0.5 × A=向北2.5千米
 2 × A=向北10千米
@@ -110,14 +114,19 @@ glm::vec3 displacement = distanceMoved * forwardDirection; //scalar multiplicati
 比如：
 
 > A = 往北1千米
+> 
 > B = 往西1千米
+> 
 > A + B = 往西北1.41千米
 
 向量减法相当于是加上一个负向量，比如：
 
 > A = 往北1千米
+> 
 > B = 往西1千米
+> 
 > A - B = 往西北1.41千米
+> 
 > A + (-B) = 往西北1.41千米
 
 我们使用向量加法来计算出相机位移后的的新位置，像这样：
