@@ -1,7 +1,7 @@
-_site
-.git
-
-
-_layouts/default副本.html
-
-blog.sublime-workspace
+.DS_Store
+Thumbs.db
+db.json
+*.log
+node_modules/
+public/
+.deploy*/
