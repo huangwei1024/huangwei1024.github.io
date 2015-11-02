@@ -67,6 +67,5 @@
   {% block comment_system %}{% endblock %}
   {% include '_scripts/baidushare.swig' %}
 
-
 </body>
 </html>

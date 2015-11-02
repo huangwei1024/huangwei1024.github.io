@@ -3,7 +3,7 @@
 # ---------------------------------------------------------------
 
 # Place your favicon.ico to /source directory.
-favicon: /favicon.ico
+favicon: /static/favicon.ico
 
 # Set default keywords (Use a comma to separate)
 keywords: huangwei1024, WisKey, 杭电acm, 网易游戏, 创业
@@ -83,6 +83,8 @@ social_icons:
   GitHub: github
   Twitter: twitter
   Weibo: weibo
+  DouBan: douban
+  ZhiHu: zhihu
 
 
 # Sidebar Avatar
@@ -92,6 +94,9 @@ social_icons:
 # Social links
 social:
   GitHub: https://github.com/huangwei1024
+  Weibo: http://weibo.com/hwiskey
+  DouBan: http://www.douban.com/people/WisKey/
+  ZhiHu: http://www.zhihu.com/people/huang-wei-1gb
   #Others:
 
 
@@ -170,6 +175,8 @@ duoshuo_shortname: huangweipro
 
 # Share
 duoshuo_share: true
+
+duoshuo_hotartical: true
 
 # Google Webmaster tools verification setting
 # See: https://www.google.com/webmasters/
