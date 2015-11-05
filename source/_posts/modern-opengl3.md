@@ -1,17 +1,10 @@
 ---
-
 layout: post
-
 title: 现代OpenGL教程 03 - 矩阵，深度缓冲，动画
-
 categories: modern-opengl-tutorials
-
 tags: [opengl, tutorials]
-
-
 keywords: 现代, OpenGL, 教程, 入门指南
 date: 2015-08-13
-
 ---
 
 

@@ -68,9 +68,12 @@ theme: next
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
-  type: git
+- type: git
   repo: https://gitcafe.com/huangwei1024/huangwei1024.git
   branch: gitcafe-pages
+- type: git
+  repo: https://github.com/huangwei1024/huangwei1024.github.io.git
+  branch: gh-pages
 
 
 # Sitemap 
