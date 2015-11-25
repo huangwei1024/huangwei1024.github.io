@@ -174,8 +174,7 @@ duoshuo_shortname: huangweipro
 
 # Share
 duoshuo_share: true
-
-duoshuo_hotartical: true
+duoshuo_hotartical: false
 
 # Google Webmaster tools verification setting
 # See: https://www.google.com/webmasters/
