@@ -72,6 +72,7 @@
                   {% endif %}
                 </a>
               </span>
+	      <br>
             {% endfor %}
           {% endif %}
         </div>

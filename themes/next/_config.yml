@@ -27,7 +27,7 @@ rss:
 # Remove leading slashes ( "/archives" -> "archives" )
 menu:
   home: /
-  about: /about
+  #about: /about
   archives: /archives
   tags: /tags
   #commonweal: /404.html
@@ -94,8 +94,8 @@ social_icons:
 social:
   GitHub: https://github.com/huangwei1024
   Weibo: http://weibo.com/hwiskey
-  DouBan: http://www.douban.com/people/WisKey/
-  ZhiHu: http://www.zhihu.com/people/huang-wei-1gb
+  #DouBan: http://www.douban.com/people/WisKey/
+  #ZhiHu: http://www.zhihu.com/people/huang-wei-1gb
   #Others:
 
 
@@ -232,5 +232,4 @@ images: http://dn-huangweipro.qbox.me/images
 
 # Theme version
 version: 0.4.5.2
-
 
