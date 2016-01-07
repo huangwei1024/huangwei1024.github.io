@@ -9,6 +9,10 @@
 </div>
 
 <div class="powered-by">
+{% include '../_scripts/analytics/cnzz.swig' %}
+</div>
+
+<div class="powered-by">
   {{ __('footer.powered', '<a class="theme-link" href="http://hexo.io">Hexo</a>') }}
 </div>
 
