@@ -62,7 +62,7 @@ date: 2015-08-13
 
 - <mark>matrix × matrix = combined matrix</mark>
 - <mark>matrix × coordinate = transformed coordinate </mark>
- 
+
 ## 矩阵 × 矩阵
 
 当你要对两个矩阵进行相乘时，它们的乘积是一个包含两者变换的新矩阵。
@@ -104,6 +104,7 @@ date: 2015-08-13
 这些被称为[齐次坐标](http://en.wikipedia.org/wiki/Homogeneous_coordinates)。在后续的教程里，我们会讲到有向光照，那里我们会学到有关“W”维度的表示。在这里，我们只需要将3D转换为4D。3D转换为4D只要将第四维坐标“W”设为1即可。比如，坐标(22,33,44)转换为：
 
 
+
 ![](/static/img/opengl-tutorials/homo-coord.png)
 
 当需要将4D坐标变为3D时，假如“W”维度是1，你可以直接忽略它，使用X，Y，Z的值即可。如果你发现“W”的值不为1，好吧，你就需要做些额外处理，或者这里出了个bug。
@@ -114,7 +115,7 @@ date: 2015-08-13
 
 我们用三角形来构造立方体，用两个三角形表示6个面的每个面。在旧版本的OpengGL中，我们可以使用1个正方形（`GL_QUADS`）来替代2个三角表示每个面，但`GL_QUADS`已经被现代版本的OpenGL给移除了。X，Y，Z坐标值域为-1到1，这意味着立方体是两个单位宽，立方体中心点在原点（原点坐标(0,0,0)）。我们将使用256×256的贴图给立方体每个面贴上。后序文章中都会使用这个数据，我们不需要改变太多。这里有立方体数据：
 
-```cpp
+``` cpp
 GLfloat vertexData[] = {
     //  X     Y     Z       U     V
     // bottom
@@ -169,13 +170,13 @@ GLfloat vertexData[] = {
 
 我们需要更改下`Render`函数中`glDrawArrays`调用，之前是用来绘制三角形的。立方体6个面，每个面有2个三角形，每个三角形有3个顶点，所以需要绘制的顶点数是：6 × 2 × 3 = 36。新的`glDrawArrays`调用像这样：
 
-```cpp
+``` cpp
 glDrawArrays(GL_TRIANGLES, 0, 6*2*3);
 ```
 
 最后，我们使用新的贴图“wooden-crate.jpg”，我们更改`LoadTexture`中的文件名，如下：
 
-```cpp
+``` cpp
 tdogl::Bitmap bmp = tdogl::Bitmap::bitmapFromFile(ResourcePath("wooden-crate.jpg"));
 ```
 
@@ -209,13 +210,13 @@ tdogl::Bitmap bmp = tdogl::Bitmap::bitmapFromFile(ResourcePath("wooden-crate.jpg
 
 首先，我们需要包含GLM头文件，用来创建不同类型的矩阵。
 
-```cpp
+``` cpp
 #include <glm/gtc/matrix_transform.hpp>
 ```
 
 接着，我们需要更新顶点着色器。我们创建一个相机矩阵变量叫做`camera`，并且每个顶点都会乘上这个相机矩阵。这样我们就将整个3D场景进行了变换。每个顶点都会被相机矩阵所变换。新的顶点着色器看上去应该是这样的：
 
-```cpp
+``` cpp
 #version 150
 
 uniform mat4 camera; //this is the new variable
@@ -228,7 +229,7 @@ out vec2 fragTexCoord;
 void main() {
     // Pass the tex coord straight through to the fragment shader
     fragTexCoord = vertTexCoord;
-    
+
     // Transform the input vertex with the camera matrix
     gl_Position = camera * vec4(vert, 1);
 }
@@ -236,7 +237,7 @@ void main() {
 
 现在我们需要在C++代码中设置`camera`着色器变量。在`LoadShaders`函数的地步，我们添加这样的代码：
 
-```cpp
+``` cpp
 gProgram->use();
 
 glm::mat4 camera = glm::lookAt(glm::vec3(3,3,3), glm::vec3(0,0,0), glm::vec3(0,1,0));
@@ -265,7 +266,7 @@ gProgram->stopUsing();
 
 让我们在顶点着色器中加入投影矩阵变量。更新后的代码看上去是这样的：
 
-```cpp
+``` cpp
 #version 150
 
 uniform mat4 projection; //this is the new variable
@@ -279,7 +280,7 @@ out vec2 fragTexCoord;
 void main() {
     // Pass the tex coord straight through to the fragment shader
     fragTexCoord = vertTexCoord;
-    
+
     // Apply camera and projection transformations to the vertex
     gl_Position = projection * camera * vec4(vert, 1);
 }
@@ -289,7 +290,7 @@ void main() {
 
 现在让我们在C++代码中设置`projection`着色器变量，方式和我们设置`camera`变量相同。在`LoadShaders`函数中，添加如下代码：
 
-```cpp
+``` cpp
 glm::mat4 projection = glm::perspective(glm::radians(50.0f), SCREEN_SIZE.x/SCREEN_SIZE.y, 0.1f, 10.0f);
 gProgram->setUniform("projection", projection);
 ```
@@ -322,7 +323,7 @@ OpenGL默认会将最新的绘制覆盖到之前的绘制上。假如一个物�
 
 在`AppMain`函数中，调用了`glewInit`之后，我们添加如下代码：
 
-```cpp
+``` cpp
 glEnable(GL_DEPTH_TEST);
 glDepthFunc(GL_LESS);
 ```
@@ -331,7 +332,7 @@ glDepthFunc(GL_LESS);
 
 最后一步我们需要在渲染每帧之后清理深度缓冲。假如我们不清理，旧的像素距离会保存在缓冲中，这样会影响到绘制新的一帧。在`Render`函数里，我们改变`glClear`来实现它：
 
-```cpp
+``` cpp
 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 ```
 
@@ -347,7 +348,7 @@ glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 让我们添加一个`model`矩阵变量到顶点着色器，就像我们添加相机和投影一样。最终版本的顶点着色器应该是这样的：
 
-```cpp
+``` cpp
 #version 150
 
 uniform mat4 projection;
@@ -362,7 +363,7 @@ out vec2 fragTexCoord;
 void main() {
     // Pass the tex coord straight through to the fragment shader
     fragTexCoord = vertTexCoord;
-    
+
     // Apply all matrix transformations to vert
     gl_Position = projection * camera * model * vec4(vert, 1);
 }
@@ -372,13 +373,14 @@ void main() {
 
 现在我们需要设置新的`model`着色器变量。不像相机和投影变量，模型变量需要每帧都被设置，所以我们把它放在`Render`函数里。在`gProgram->use()`之后添加这样的代码：
 
-```cpp
+``` cpp
 gProgram->setUniform("model", glm::rotate(glm::mat4(), glm::radians(45.0f), glm::vec3(0,1,0)));
 ```
 
 我们使用`glm::rotate`函数创建一个旋转矩阵。第一个参数是一个已存在的需要进行旋转的矩阵。在这我们不需要对已存在的矩阵进行旋转，所以我们传个新的`glm::mat4`对象就可以了。下一个参数是旋转的角度，或者说是要旋转多少度。现在让我给它设置个45°。最后一个参数是旋转的轴。想象下旋转像是将物体插在叉子上，然后转动叉子。叉子就是轴，角度就是你的转动。在我们的例子中，我们使用垂直的叉子，所以立方体像在一个平台上旋转。
 
 运行程序，你们看到立方体被旋转：
+
 
 
 ![](/static/img/opengl-tutorials/not-animated.png)
@@ -389,7 +391,7 @@ gProgram->setUniform("model", glm::rotate(glm::mat4(), glm::radians(45.0f), glm:
 
 首先，添加一个新的全局变量叫`gDegreesRotated`。
 
-```cpp
+``` cpp
 GLfloat gDegreesRotated = 0.0f;
 ```
 
@@ -397,7 +399,7 @@ GLfloat gDegreesRotated = 0.0f;
 
 让我们创建一个`Update`函数，用来每次增加`gDegreesRotated`：
 
-```cpp
+``` cpp
 void Update() {
     //rotate by 1 degree
     gDegreesRotated += 1.0f;
@@ -409,14 +411,14 @@ void Update() {
 
 我们需要每帧都调用一次`Update`函数。让我们把它加入到`AppMain`的循环中，在调用`Render`之前。
 
-```cpp
+``` cpp
 while(glfwGetWindowParam(GLFW_OPENED)){
     // process pending events
     glfwPollEvents();
 
     // update the rotation animation
     Update();
-    
+
     // draw one frame
     Render();
 }
@@ -424,7 +426,7 @@ while(glfwGetWindowParam(GLFW_OPENED)){
 
 现在我们需要基于`gDegreesRotated`变量来重新计算模型矩阵。在`Render`函数中我们修改相关代码来设置模型矩阵：
 
-```cpp
+``` cpp
 gProgram->setUniform("model", glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(0,1,0)));
 ```
 
@@ -436,7 +438,7 @@ gProgram->setUniform("model", glm::rotate(glm::mat4(), glm::radians(gDegreesRota
 
 为了使程序跑起来更正确，不依赖于FPS，动画应该*每秒*更新，而非*每帧*更新。最简单得方式就是对时间进行计数，并相对上次更新时间来正确更新。让我们改下`Update`函数，增加个变量`secondsElapsed`：
 
-```cpp
+``` cpp
 void Update(float secondsElapsed) {
     const GLfloat degreesPerSecond = 180.0f;
     gDegreesRotated += secondsElapsed * degreesPerSecond;
@@ -448,7 +450,7 @@ void Update(float secondsElapsed) {
 
 在`AppMain`循环中，我们需要计算离上次更新过去了多少秒。新的循环应该是这样：
 
-```cpp
+``` cpp
 double lastTime = glfwGetTime();
 while(glfwGetWindowParam(GLFW_OPENED)){
     // process pending events
@@ -458,7 +460,7 @@ while(glfwGetWindowParam(GLFW_OPENED)){
     double thisTime = glfwGetTime();
     Update((float)(thisTime - lastTime));
     lastTime = thisTime;
-    
+
     // draw one frame
     Render();
 }
