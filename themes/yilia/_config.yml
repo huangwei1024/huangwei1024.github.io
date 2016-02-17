@@ -18,7 +18,10 @@ subnav:
   #linkedin: "#"
 
 rss: /atom.xml
-cdn: 
+cdn: http://dn-huangweipro.qbox.me/
+
+# Set default keywords (Use a comma to separate)
+keywords: huangwei1024, WisKey, 杭电acm, 网易游戏, 创业
 
 # Content
 excerpt_link: more
