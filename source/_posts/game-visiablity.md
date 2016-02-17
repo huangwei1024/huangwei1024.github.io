@@ -9,8 +9,7 @@ date: 2015-04-28
 ---
 
 
-
-<link rel="stylesheet" href="http://dn-huangweipro.qbox.me/static/2dvisibilitydemo/jquery-ui-1.8.19.custom.css">
+<link rel="stylesheet" href="/static/2dvisibilitydemo/jquery-ui-1.8.19.custom.css">
 
 这篇文章是在没有搭建这个Blog之前帮jobbole翻译的，现在只是复制回来自己做个存档，[jobbole链接在这](http://blog.jobbole.com/86268/)。
 
@@ -21,8 +20,7 @@ date: 2015-04-28
 拖动圆点转一圈，看看玩家都能看到些什么：
 
 
-
-<div id="maze"><img class="placeholder" src="http://dn-huangweipro.qbox.me/static/2dvisibilitydemo/static-lightmap.png"></div>
+<div id="maze"><img class="placeholder" src="/static/2dvisibilitydemo/static-lightmap.png"></div>
 
 这个算法也能计算出给定光源所照亮的区域。对每条光线，我们可以构建出被照亮区域的光线图。如果我们给上面的迷宫放上24个灯呢？见光线图。
 
@@ -40,9 +38,9 @@ roguelike<span style="color: #888888;">（译注：类地下城RPG游戏统称�
 
 就是这样！该算法如下：
 
-1. 计算到墙体开始或结束的角度。
-2. 从中心点沿各个角度投出光线。
-3. 对这些光线所产生的三角形进行填充。
+1.  计算到墙体开始或结束的角度。
+2.  从中心点沿各个角度投出光线。
+3.  对这些光线所产生的三角形进行填充。
 
 ## 墙体跟踪
 
@@ -59,10 +57,9 @@ roguelike<span style="color: #888888;">（译注：类地下城RPG游戏统称�
 <div class="right"><div id="diagram-sweep-segments"></div></div>
 
 
-
 每当最近的墙面终止，或者有新的墙面比其它的都近时，我们创建了一个三角形表示可见区域。这些三角形的并集就是所述中心点的可视区域。
 
-``` py
+```py
 var endpoints;      # 端点列表，按角度排序
 var open = [];      # 墙面列表，按距离排序
 loop over endpoints: #遍历 endpoints
@@ -81,7 +78,6 @@ if the nearest wall changed: #假如最近的墙面改变:
 这里有一块试验场，有很多可用的方块。可以拖拽方块到网格内。点击play/pause按钮可以查看算法运行，或者移动中心点查看哪些是可见的，就像玩家四处查看一样。
 
 <div class="right"><div id="diagram-playground"></div></div>
-
 <div id="haxe:trace"></div>
 
 
@@ -107,17 +103,16 @@ if the nearest wall changed: #假如最近的墙面改变:
 <div class="right"><div id="grenade"></div></div>
 
 
-
 手榴弹扔进紫色区域将成功击中一名玩家。黄色和紫色区域是危险区域; 玩家可以从那里攻击AI单位。AI需要站在一个安全的区域（深蓝色）并且投掷了一枚手榴弹到紫色区域，然后寻找掩体。如何计算掩体？在AI准备投掷手雷的地方再次运行可见性算法，让橱柜和桌子挡住视线。
 
 ## 实现
 
 我已经用[HAXE 3](http://www.redblobgames.com/articles/visibility/Visibility.hx)来实现这个算法，使用Apache v2开源协议（类似MIT和BSD，它可以在商业项目中使用）。HAXE代码可以编译成JavaScript，ActionScript，C ++，Java，C#或PHP。我把它编译成JavaScript来制作这个网页，并为我的其他项目编译成Flash。我编译成以下语言：
 
-* [Actionscript](http://www.redblobgames.com/articles/visibility/as3-version.zip) ; 可读，因为Actionscript和Haxe并非截然不同
-* [Javascript](http://www.redblobgames.com/articles/visibility/output/_visibility.js)（用于此页面上的演示）; 大多是可读的。
-* [Java](http://www.redblobgames.com/articles/visibility/java-version.zip) ; 轻度可读，但不是很好。
-* [C#](http://www.redblobgames.com/articles/visibility/csharp-version.zip) ; 轻度可读，但不是很好。Roy Triesscheijn有一个更好的版本[在这里](http://roy-t.nl/index.php/2014/02/27/2d-lighting-and-shadows-preview/)。
+*   [Actionscript](http://www.redblobgames.com/articles/visibility/as3-version.zip) ; 可读，因为Actionscript和Haxe并非截然不同
+*   [Javascript](http://www.redblobgames.com/articles/visibility/output/_visibility.js)（用于此页面上的演示）; 大多是可读的。
+*   [Java](http://www.redblobgames.com/articles/visibility/java-version.zip) ; 轻度可读，但不是很好。
+*   [C#](http://www.redblobgames.com/articles/visibility/csharp-version.zip) ; 轻度可读，但不是很好。Roy Triesscheijn有一个更好的版本[在这里](http://roy-t.nl/index.php/2014/02/27/2d-lighting-and-shadows-preview/)。
 
 Wade Tritschler建议[手工移植](http://www.redblobgames.com/articles/visibility/#comment-850486470)，所产生的代码要比使用Haxe输出的代码更干净。我同意这个观点。如果你手写代码还可以更好得了解该算法。尽管该算法主要在CPU中进行，可以使用GPU为位图进行三角形渲染和合并位图输出。（布尔AND操作可变成位图乘法;布尔OR操作可变成位图添加和钳位。）在我的项目中该性能已经足够，所以我还没有构建GPU版本。如果你的游戏有CPU限制，可以考虑使用消减算法（而不是这里显示的添加算法），渲染四边形的每条线段的影子。它会增加GPU渲染负载，但它并不需要在CPU上排序。如果填充率是一个问题，考虑渲染一个比游戏画面分辨率低的光度图，然后扩大它。
 
@@ -126,11 +121,7 @@ Wade Tritschler建议[手工移植](http://www.redblobgames.com/articles/visibil
 [视觉和光线](http://ncase.me/sight-and-light/)覆盖了可见性的问题; 在我的[博客文章](http://simblob.blogspot.com/2012/07/2d-visibility.html)有更多的链接。[地平线问题](https://briangordon.github.io/2014/08/the-skyline-problem.html)类似2D可见性问题，但它在直角坐标系中，而不是极坐标。另外还有[美术馆问题](http://en.wikipedia.org/wiki/Art_gallery_problem)，关于放置多少个警卫就可以看到地图的每一个区域。我正Trello上创建了一份列表，[未来可能更新这个页面](https://trello.com/c/m0yhEv6U/37-visibility-version-2)。
 
 
-
-<script type="text/javascript" src="http://dn-huangweipro.qbox.me/static/2dvisibilitydemo/jquery-1.7.2.min.js"></script>
-
-<script type="text/javascript" src="http://dn-huangweipro.qbox.me/static/2dvisibilitydemo/jquery-ui-1.8.19.custom.min.js"></script>
-
-<script type="text/javascript" src="http://dn-huangweipro.qbox.me/static/2dvisibilitydemo/visibility.js"></script>
-
-<script type="text/javascript" src="http://dn-huangweipro.qbox.me/static/2dvisibilitydemo/demo-canvas.js"></script>
+<script type="text/javascript" src="/static/2dvisibilitydemo/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/static/2dvisibilitydemo/jquery-ui-1.8.19.custom.min.js"></script>
+<script type="text/javascript" src="/static/2dvisibilitydemo/visibility.js"></script>
+<script type="text/javascript" src="/static/2dvisibilitydemo/demo-canvas.js"></script>
