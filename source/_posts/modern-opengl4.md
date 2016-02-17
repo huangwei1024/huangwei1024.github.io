@@ -47,19 +47,22 @@ date: 2015-09-01
 ![](/static/img/opengl-tutorials/visual_rep_of_vector.gif)
 
 </br>
+
 下面用例子来说明向量代表的不同含义。
 
 
-|&nbsp;|方向|幅度|含义|
-|:-----:|:-----:|:-----:|:--:|
-|往北5千米|北|5千米|位置|
-|头上5厘米|上|5厘米|位置|
-|以50千米每小时开往西湖|西湖方向|50千米/每小时|速度|
-|地球引力为9.8m/s<sup>2</sup>|往地球质心|9.8m/s<sup>2</sup>|加速|
+
+|         &nbsp;          |  方向   |         幅度         |  含义  |
+| :---------------------: | :---: | :----------------: | :--: |
+|          往北5千米          |   北   |        5千米         |  位置  |
+|          头上5厘米          |   上   |        5厘米         |  位置  |
+|      以50千米每小时开往西湖       | 西湖方向  |      50千米/每小时      |  速度  |
+| 地球引力为9.8m/s<sup>2</sup> | 往地球质心 | 9.8m/s<sup>2</sup> |  加速  |
 
 </br>
 
 <mark>当编码时，向量只是一组数字。每个数字都是向量的“一维”。比如，一个三维3D向量就是有3个数字的数组，2D向量是有2个数字。</mark>因为我们是在3D中进行工作，所以大部分情况只要处理3D向量，但我们也需要用到4D。无论何时我说“向量”，那意味着是3D向量。我们使用GLM的向量数学库，2D，3D，4D的类型分别为`glm::vec2`
+
 ,`glm::vec3`,`glm::vec4`。
 
 3D向量表示顶点，坐标或者位置相当简单。<mark>3D向量的3个维度分别是X，Y，Z的值。</mark>当向量表示位置，方向和幅度时，都是从原点(0,0,0)开始计算的。比如，假设一个物体的XYZ坐标为(0,2,0)，则它的幅度是2，方向为“沿Y轴向上”。
@@ -73,13 +76,16 @@ date: 2015-09-01
 ![](/static/img/opengl-tutorials/vector_negation.gif)
 
 <p align="center">
+
 A=向北5千米</br>
+
 -A=向南5千米</br>
+
 </p>
 
 如果相机的方向是往右的，我们可以使用负向量来算出相机往左的方向。就像这样：
 
-```cpp
+``` cpp
 glm::vec3 rightDirection = gCamera.right();
 glm::vec3 leftDirection = -rightDirection; //vector negation
 ```
@@ -91,16 +97,22 @@ glm::vec3 leftDirection = -rightDirection; //vector negation
 比如：
 
 
+
 ![](/static/img/opengl-tutorials/scalar_mult.gif)
+
 <p align="center">
+
 A=向北5千米</br>
+
 0.5 × A=向北2.5千米</br>
+
 2 × A=向北10千米</br>
+
 </p>
 
 我们可以使用标量乘法来计算基于“移动速度”的相机位置，像这样：
 
-```cpp
+``` cpp
 const float moveSpeed = 2.0; //units per second
 float distanceMoved = moveSpeed * secondsElapsed;
 glm::vec3 forwardDirection = gCamera.forward();
@@ -110,6 +122,7 @@ glm::vec3 displacement = distanceMoved * forwardDirection; //scalar multiplicati
 ## 向量加法
 
 向量加法在2D图形表现下最容易理解。对两个向量进行加法，就是将它们的头部（箭头一段）连接尾部（非箭头一段）。加法顺序不重要。它的结果就是，从第一个向量尾部走向另外一个向量的头部。
+
 
 
 ![](/static/img/opengl-tutorials/vector-addition.gif)
@@ -136,7 +149,7 @@ glm::vec3 displacement = distanceMoved * forwardDirection; //scalar multiplicati
 
 我们使用向量加法来计算出相机位移后的的新位置，像这样：
 
-```cpp
+``` cpp
 glm::vec3 displacement = gCamera.forward() * moveSpeed * secondsElapsed;
 glm::vec3 oldPosition = gCamera.position();
 glm::vec3 newPosition = oldPosition + displacement; //vector addition
@@ -153,7 +166,7 @@ gCamera.setPosition(newPosition);
 
 让我们对相机进行往左移动12单位的操作。我们先设置一个方向为左的单位向量，然后使用标量乘法将它的幅度设为12，最后使用它来计算出新位置。代码看上去应该是这样的：
 
-```cpp
+``` cpp
 // `gCamera.right()` returns a unit vector, therefore `leftDirection` will also be a unit vector.
 // Negation only affects the direction, not the magnitude.
 glm::vec3 leftDirection = -gCamera.right();
@@ -165,7 +178,7 @@ glm::vec3 newPosition = oldPosition + displacement;
 
 任何一个向量都能变为单位向量。这个操作叫做*单位化*。我们可以用GLM来单位化一个向量：
 
-```cpp
+``` cpp
 glm::vec3 someRandomVector = glm::vec3(123,456,789);
 glm::vec3 unitVector = glm::normalize(someRandomVector);
 ```
@@ -188,7 +201,7 @@ glm::vec3 unitVector = glm::normalize(someRandomVector);
 
 现在让我们用`matrix`和`orientation`方法来实现如何让这所有属性组合成一个矩阵。
 
-```cpp
+``` cpp
 glm::mat4 Camera::matrix() const {
     glm::mat4 camera = glm::perspective(_fieldOfView, _viewportAspectRatio, _nearPlane, _farPlane);
     camera *= orientation();
@@ -221,7 +234,7 @@ glm::mat4 Camera::orientation() const {
 
 让我来看下`tdogl::Camera::up`方法的实现，这里有两个东西我们还没有提及。
 
-```cpp
+``` cpp
 glm::vec3 Camera::up() const {
     glm::vec4 up = glm::inverse(orientation()) * glm::vec4(0,1,0,1);
     return glm::vec3(up);
@@ -244,7 +257,7 @@ glm::vec3 Camera::up() const {
 
 在之前的文章中，我们分别设置了投影矩阵和相机矩阵两个着色器变量。在本文中，`tdogl::Camera`合并了这两个矩阵，所以让我们移除`projection`着色器变量，只用`camera`变量就足够了。下面是顶点着色器的更新：
 
-```cpp
+``` cpp
 #version 150
 
 uniform mat4 camera;
@@ -258,7 +271,7 @@ out vec2 fragTexCoord;
 void main() {
     // Pass the tex coord straight through to the fragment shader
     fragTexCoord = vertTexCoord;
-    
+
     // Apply all matrix transformations to vert
     gl_Position = camera * model * vec4(vert, 1);
 }
@@ -266,19 +279,19 @@ void main() {
 
 现在我们将`tdogl::Camera`整合到`main.cpp`中。首先包含头文件：
 
-```cpp
+``` cpp
 #include "tdogl/Camera.h"
 ```
 
 然后声明全局变量：
 
-```cpp
+``` cpp
 tdogl::Camera gCamera;
 ```
 
 在前一篇文章中，相机和投影矩阵是不会改变的，所以在`LoadShaders`函数中设置一次就好了。但在本文中，因为我们需要用鼠标和键盘来控制，所以设置相机矩阵要放在`Render`函数中并每帧都要设置一下。首先让我们移除旧代码：
 
-```cpp
+``` cpp
 static void LoadShaders() {
     std::vector<tdogl::Shader> shaders;
     shaders.push_back(tdogl::Shader::shaderFromFile(ResourcePath("vertex-shader.txt"), GL_VERTEX_SHADER));
@@ -305,13 +318,13 @@ static void LoadShaders() {
 
 然后，在`Render`函数中设置`camera`着色器变量：
 
-```cpp
+``` cpp
 // draws a single frame
 static void Render() {
     // clear everything
     glClearColor(0, 0, 0, 1); // black
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
+
     // bind the program (the shaders)
     gProgram->use();
 
@@ -323,7 +336,7 @@ static void Render() {
 
 在`AppMain`函数中设置相机的初始化位置和视窗纵横比。
 
-```cpp
+``` cpp
 gCamera.setPosition(glm::vec3(0,0,4));
 gCamera.setViewportAspectRatio(SCREEN_SIZE.x / SCREEN_SIZE.y);
 ```
@@ -336,7 +349,7 @@ gCamera.setViewportAspectRatio(SCREEN_SIZE.x / SCREEN_SIZE.y);
 
 我们先来实现键盘控制。每次我们更新屏幕时，我们先检查'W','A','S'或'D'按键是否被按下，如果有触发那就稍微移动下相机。函数`glfwGetKey`返回一个布尔值来表示这个按键是否按下。新的`Update`函数看上去是这样的：
 
-```cpp
+``` cpp
 // update the scene based on the time elapsed since last update
 void Update(float secondsElapsed) {
     //rotate the cube
@@ -363,13 +376,13 @@ void Update(float secondsElapsed) {
 
 当`S`键被按下时，我们可以看得更近些：
 
-```cpp
+``` cpp
 gCamera.offsetPosition(secondsElapsed * moveSpeed * -gCamera.forward());
 ```
 
 这一行代码做了好多事，让我们用更容易懂的方式重写一遍，新的函数叫`MoveCameraBackwards`。
 
-```cpp
+``` cpp
 void MoveCameraBackwards(float secondsElapsed) {
     //TODO: finish writing this function
 }
@@ -378,7 +391,8 @@ void MoveCameraBackwards(float secondsElapsed) {
 向后是一个方向，所以应该是个单位向量。在相机类中没有`backward`函数，但它有个`forward`函数。向后就是向前的反方向，所以我们只要对向前的单位向量取负数即可。
 
 
-```cpp
+
+``` cpp
 void MoveCameraBackwards(float secondsElapsed) {
     //`direction` is a unit vector, set to the "backwards" direction
     glm::vec3 direction = -gCamera.forward();
@@ -389,7 +403,7 @@ void MoveCameraBackwards(float secondsElapsed) {
 
 然后，我们应该知道将相机移多*远*。我们有相机的移动速度`moveSpeed`，我们还知道从上一帧到现在过去了多少时间`secondsElapsed`。对这两个值进行乘法，就能得到相机移动的距离。
 
-```cpp
+``` cpp
 void MoveCameraBackwards(float secondsElapsed) {
     //`direction` is a unit vector, set to the "backwards" direction
     glm::vec3 direction = -gCamera.forwards();
@@ -404,7 +418,8 @@ void MoveCameraBackwards(float secondsElapsed) {
 现在，我们知道了移动的距离和方向，我们就能构造一个位移向量。它的幅度就是`distance`，它的方向就是`direction`。因为`direction`是个单位向量，我们可以用标量乘法来设置幅度。
 
 
-```cpp
+
+``` cpp
 void MoveCameraBackwards(float secondsElapsed) {
     //`direction` is a unit vector, set to the "backwards" direction
     glm::vec3 direction = -gCamera.forwards(); //vector negation
@@ -421,7 +436,7 @@ void MoveCameraBackwards(float secondsElapsed) {
 
 最后，我们移动（或者说是置换）相机当前位置。用向量加法即可。最基础的公式`newPosition = oldPosition + displacement`。
 
-```cpp
+``` cpp
 void MoveCameraBackwards(float secondsElapsed) {
     //`direction` is a unit vector, set to the "backwards" direction
     glm::vec3 direction = -gCamera.forwards(); //vector negation
@@ -441,7 +456,7 @@ void MoveCameraBackwards(float secondsElapsed) {
 
 完成了！`MoveCameraBackwards`函数这么多行代码跟这一行代码是一样的：
 
-```cpp
+``` cpp
 gCamera.offsetPosition(secondsElapsed * moveSpeed * -gCamera.forward());
 ```
 
@@ -449,7 +464,7 @@ gCamera.offsetPosition(secondsElapsed * moveSpeed * -gCamera.forward());
 
 其余按键的工作方式都是相同的，无非是方向不同而已。让我们再添加`Z`和`X`键来实现相机上和下。
 
-```cpp
+``` cpp
 if(glfwGetKey(gWindow, 'Z')){
     gCamera.offsetPosition(secondsElapsed * moveSpeed * -glm::vec3(0,1,0));
 } else if(glfwGetKey(gWindow, 'X')){
@@ -467,7 +482,7 @@ if(glfwGetKey(gWindow, 'Z')){
 
 在我们捕获鼠标之前，让我们先实现用取消键（Esc）退出程序。我不想再点击关闭按钮了，因为鼠标隐藏，并且无法离开窗口。让我们在`AppMain`主循环下放加上些代码：
 
-```cpp
+``` cpp
 // run while the window is open
 double lastTime = glfwGetTime();
 while(!glfwWindowShouldClose(gWindow)){
@@ -478,7 +493,7 @@ while(!glfwWindowShouldClose(gWindow)){
     double thisTime = glfwGetTime();
     Update((float)(thisTime - lastTime));
     lastTime = thisTime;
-    
+
     // draw one frame
     Render();
 
@@ -495,7 +510,7 @@ while(!glfwWindowShouldClose(gWindow)){
 
 当我们用`glfwCreateWindow`打开窗口这样设置时，就可以捕获鼠标了：
 
-```cpp
+``` cpp
 // GLFW settings
 glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 glfwSetCursorPos(gWindow, 0, 0);
@@ -503,7 +518,7 @@ glfwSetCursorPos(gWindow, 0, 0);
 
 这段代码让鼠标消失了，并且将它移动到了像素坐标(0,0)。在`Update`中，我们会获取鼠标位置来更新相机，更新完后将鼠标坐标再次设为(0,0)。这种方式可以很方便的看出每帧鼠标移动了多少，还要在当鼠标要移出窗口时停住它。在`Update`函数下面添加以下代码：
 
-```cpp
+``` cpp
 //rotate camera based on mouse movement
 const float mouseSensitivity = 0.1f;
 double mouseX, mouseY;
@@ -524,13 +539,13 @@ glfwSetCursorPos(gWindow, 0, 0); //reset the mouse, so it doesn't go out of the 
 
 我们使用同样的方式来使用鼠标位置，并且每帧重置滚动值。首先我们创建一个全局变量来保存滚动值：
 
-```cpp
+``` cpp
 double gScrollY = 0.0;
 ```
 
 使用GLFW来接受滚轮消息，首先我们得创建个回调：
 
-```cpp
+``` cpp
 // records how far the y axis has been scrolled
 void OnScroll(GLFWwindow* window, double deltaX, double deltaY) {
   gScrollY += deltaY;
@@ -539,13 +554,13 @@ void OnScroll(GLFWwindow* window, double deltaX, double deltaY) {
 
 然后我们用GLFW在`AppMain`中注册下回调：
 
-```cpp
+``` cpp
 glfwSetScrollCallback(gWindow, OnScroll);
 ```
 
 当每帧我们渲染的时候，我们使用`gScrollY`值来更改视野。代码放在`Update`函数的下放：
 
-```cpp
+``` cpp
 const float zoomSensitivity = -0.2f;
 float fieldOfView = gCamera.fieldOfView() + zoomSensitivity * (float)gScrollY;
 if(fieldOfView < 5.0f) fieldOfView = 5.0f;
