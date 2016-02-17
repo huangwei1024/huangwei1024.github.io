@@ -12,12 +12,13 @@ date: 2015-08-11
 
 ----------
 
-
 各位好！今天，我将告诉你如何做这样的事情：（在框中四处移动你的鼠标）
 
 <iframe src="http://ncase.me/sight-and-light/draft7.html" height="370" width="850"></iframe>
 
 这种效果用于我新开发的开源游戏《[Nothing To Hide](http://nothingtohide.cc/)》。许多其他的 2D 游戏（如Monaco，Gish）也都有。如果按着本教程来实现……也许下个就是你的游戏！
+
+<!--more-->
 
 ![](http://ww4.sinaimg.cn/large/7cc829d3gw1eux6hz1uofj20nc06y3zz.jpg)
 
@@ -28,35 +29,51 @@ date: 2015-08-11
 接下来介绍数学知识。别担心，这里只是复习下入门的代数而已。
 
 我们需要找出射线和所有线段的最近交叉点。任何线段可以被写成参数形式：
+
 <pre class="brush: c; gutter: false">点 + 方向 * T</pre>
 
 这儿我们给出 4 组方程来描述射线和线段的 x 和 y 变量：
+
 <pre class="brush: c; gutter: false">射线 X = r_px+r_dx*T1
+
 射线 Y = r_py+r_dy*T1
+
 线段 X = s_px+s_dx*T2
+
 线段 Y = s_py+s_dy*T2</pre>
 
 注：在我们做任何事情之前，请检查以确保射线和线段不是平行的，也就是说，它们的方向是不一样的。如果它们是平行的，那就没有交集。好了，继续。
 
 如果射线和线段相交，其 x 和 y 变量是相同的：
+
 <pre class="brush: c; gutter: false">r_px+r_dx*T1 = s_px+s_dx*T2
+
 r_py+r_dy*T1 = s_py+s_dy*T2</pre>
 
 我们做个小小的符号移位来求解 T1 和 T2
+
 <pre class="brush: c; gutter: false">// Isolate T1 for both equations, getting rid of T1
+
 // 从两个等式中独立出T1，移去T1
+
  T1 = (s_px+s_dx*T2-r_px)/r_dx = (s_py+s_dy*T2-r_py)/r_dy
 
 // Multiply both sides by r_dx * r_dy
+
 // 两边同乘上 r_dx * r_dy
+
 s_px*r_dy + s_dx*T2*r_dy - r_px*r_dy = s_py*r_dx + s_dy*T2*r_dx - r_py*r_dx
 
 // Solve for T2!
+
 // 解出T2！
+
 T2 = (r_dx*(s_py-r_py) + r_dy*(r_px-s_px))/(s_dx*r_dy - s_dy*r_dx)
 
 // Plug the value of T2 to get T1
+
 // 代入T2，解出T1
+
 T1 = (s_px+s_dx*T2-r_px)/r_dx</pre>
 
 确保 T1&gt;0 并且 0&lt;T2&lt;1。如果不是，则可认为射线和线段没有交点，不可能有交集。但如果是，那太好了！你已经找到了一个交点。现在只要使用同一条射线与其它线段进行计算，就能找到最近的交点。（这个值就是最小T1值）

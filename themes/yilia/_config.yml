@@ -1,0 +1,61 @@
+# Header
+menu:
+  主页: /
+  所有文章: /archives
+  # 随笔: /tags/随笔
+
+# SubNav
+subnav:
+  github: "https://github.com/huangwei1024"
+  weibo: "http://weibo.com/hwiskey"
+  rss: "/atom.xml"
+  zhihu: "http://www.zhihu.com/people/huang-wei-1gb"
+  douban: "http://www.douban.com/people/WisKey/"
+  mail: "164305264@qq.com"
+  #facebook: "#"
+  #google: "#"
+  #twitter: "#"
+  #linkedin: "#"
+
+rss: /atom.xml
+cdn: 
+
+# Content
+excerpt_link: more
+fancybox: false
+mathjax: true
+
+# 是否开启动画效果
+animate: true
+
+# 是否在新窗口打开链接
+open_in_new: false
+
+# Miscellaneous
+google_analytics: 'UA-58636572-1'
+baidu_analytics: '37eed26af63c8a627a52667cb97cf2cf'
+favicon: static/favicon.ico
+
+#你的头像url
+avatar: http://dn-huangweipro.qbox.me/images/default_avatar.jpg
+#是否开启分享
+share_jia: true
+share_addthis: false
+#是否开启多说评论，填写你在多说申请的项目名称 duoshuo: duoshuo-key
+#若使用disqus，请在博客config文件中填写disqus_shortname，并关闭多说评论
+duoshuo: huangweipro
+#是否开启云标签
+tagcloud: true
+
+#是否开启友情链接
+#不开启——
+#friends: false
+#开启——
+friends: false
+
+
+#是否开启“关于我”。
+#不开启——
+#aboutme: false
+#开启——
+aboutme: '前网易码农<br/>现苦逼创业<br/>轻微完美主义强迫症<br/>努力提升个人魅力，强化自身修养'

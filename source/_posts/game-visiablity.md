@@ -26,6 +26,8 @@ date: 2015-04-28
 
 roguelike<span style="color: #888888;">（译注：类地下城RPG游戏统称）</span>社区已经收集了[好几种算法](http://roguebasin.roguelikedevelopment.org/index.php/Category:FOV)，尤其是网格类的。消减算法是从可见的一切区域开始，减去不可见区域；添加算法是从不可见区域开始，加上可见区域。我将描述一种可工作于线段的添加算法，不仅仅是固体分块或者网格。
 
+<!--more-->
+
 ## 光线投射
 
 一个简单地方法是从中心点投射光线，这是得到一个近似解的合理的第一步：
