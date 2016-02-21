@@ -1,7 +1,19 @@
-
-<script src="pixi.min.js"></script>
-<canvas id="canvas"></canvas>
-
+<!doctype>
+<html>
+    <head>
+        <style>
+        body{
+            margin:0;
+            background: #eee;
+        }
+        #canvas{
+            background: #1099bb;
+        }
+        </style>
+        <script src="pixi.min.js"></script>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
 
 <script>
 // DRAWING
@@ -9,24 +21,27 @@
 PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
 
 var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
-var renderer = PIXI.autoDetectRenderer(800, 400, canvas);
+var mouse = {
+	x: canvas.width/2,
+	y: canvas.height/2
+};
+var renderer = PIXI.autoDetectRenderer(800, 400, {view: canvas});
 // var renderer = PIXI.autoDetectRenderer(800, 400, {backgroundColor : 0x1099bb});
 // document.body.appendChild(renderer.view);
 
 // 创建舞台 Container
 var stage = new PIXI.Container();
 // 创建背景精灵
-var background = new PIXI.Sprite.fromImage('http://indienova.com/wp-uploads/2015/12/01.png');
+var background = new PIXI.Sprite.fromImage('./01.png');
 stage.addChild(background);
 
-var basicText = new PIXI.Text('Basic text in pixi');
+var basicText = new PIXI.Text('text in pixi, mouse' + mouse.x + ', ' + mouse.y);
 basicText.x = 30;
 basicText.y = 90;
 stage.addChild(basicText);
 
-function draw() {
-    
+function drawUpdate() {
+    basicText.text = 'text in pixi, mouse' + mouse.x + ', ' + mouse.y;
 }
 
 // DRAW LOOP
@@ -35,22 +50,25 @@ var updateCanvas = true;
 function drawLoop(){
     requestAnimationFrame(drawLoop);
     if(updateCanvas){
-    	draw();
+    	drawUpdate();
     	// render the container
     	renderer.render(stage);
     	updateCanvas = false;
     }
 }
-drawLoop();
+window.onload = function() {
+	drawLoop();
+	console.log("onload drawLoop");
+}
 
-// MOUSE	
-var Mouse = {
-	x: canvas.width/2,
-	y: canvas.height/2
-};
+// MOUSE
 canvas.onmousemove = function(event){	
-	Mouse.x = event.clientX;
-	Mouse.y = event.clientY;
+	mouse.x = event.clientX;
+	mouse.y = event.clientY;
 	updateCanvas = true;
 };
 </script>
+
+
+</body>
+</html>
