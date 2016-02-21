@@ -1,0 +1,56 @@
+
+<script src="pixi.min.js"></script>
+<canvas id="canvas"></canvas>
+
+
+<script>
+// DRAWING
+// 将默认的缩放模式定义为 Nearest
+PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
+
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+var renderer = PIXI.autoDetectRenderer(800, 400, canvas);
+// var renderer = PIXI.autoDetectRenderer(800, 400, {backgroundColor : 0x1099bb});
+// document.body.appendChild(renderer.view);
+
+// 创建舞台 Container
+var stage = new PIXI.Container();
+// 创建背景精灵
+var background = new PIXI.Sprite.fromImage('http://indienova.com/wp-uploads/2015/12/01.png');
+stage.addChild(background);
+
+var basicText = new PIXI.Text('Basic text in pixi');
+basicText.x = 30;
+basicText.y = 90;
+stage.addChild(basicText);
+
+function draw() {
+    
+}
+
+// DRAW LOOP
+window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
+var updateCanvas = true;
+function drawLoop(){
+    requestAnimationFrame(drawLoop);
+    if(updateCanvas){
+    	draw();
+    	// render the container
+    	renderer.render(stage);
+    	updateCanvas = false;
+    }
+}
+drawLoop();
+
+// MOUSE	
+var Mouse = {
+	x: canvas.width/2,
+	y: canvas.height/2
+};
+canvas.onmousemove = function(event){	
+	Mouse.x = event.clientX;
+	Mouse.y = event.clientY;
+	updateCanvas = true;
+};
+</script>
