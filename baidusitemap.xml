@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+    
+    
+    
+  <url>
+    <loc>http://huangwei.pro/2010-11/winsockio/</loc>
+    <lastmod>2016-04-14T08:48:03.569Z</lastmod>
+    <data>
+        <display>
+        <title>Windows Socket IO 模型</title>
+        <pubTime>2010-11-20T16:00:00.000Z</pubTime>
+        
+        <tag>socket</tag>
+         
+        <tag>windows</tag>
+         
+         
+           
+             
+              <breadCrumb title="develop" url="http://huangwei.pro/categories/develop/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2016-01/startup2/</loc>
+    <lastmod>2016-04-14T08:48:03.567Z</lastmod>
+    <data>
+        <display>
+        <title>创业小结（二）</title>
+        <pubTime>2016-01-24T16:00:00.000Z</pubTime>
+        
+        <tag>summary</tag>
+         
+         
+           
+             
+              <breadCrumb title="startup" url="http://huangwei.pro/categories/startup/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2015-09/think-pathfind-11/</loc>
+    <lastmod>2016-04-14T08:48:03.567Z</lastmod>
+    <data>
+        <display>
+        <title>关于寻路算法的一些思考（11）：寻路算法的其他应用</title>
+        <pubTime>2015-09-24T16:00:00.000Z</pubTime>
+        
+        <tag>game</tag>
+         
+        <tag>pathfinding</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2015-01/startup1/</loc>
+    <lastmod>2016-04-14T08:48:03.567Z</lastmod>
+    <data>
+        <display>
+        <title>创业小结（一）</title>
+        <pubTime>2015-01-24T16:00:00.000Z</pubTime>
+        
+        <tag>summary</tag>
+         
+         
+           
+             
+              <breadCrumb title="startup" url="http://huangwei.pro/categories/startup/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2016-02/pixi-test/</loc>
+    <lastmod>2016-04-14T08:48:03.566Z</lastmod>
+    <data>
+        <display>
+        <title>pixi.js初体验</title>
+        <pubTime>2016-02-20T16:00:00.000Z</pubTime>
+        
+        <tag>js</tag>
+         
+        <tag>pixi</tag>
+         
+         
+           
+             
+              <breadCrumb title="js" url="http://huangwei.pro/categories/js/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2015-01/secure-permutations-with-block-ciphers/</loc>
+    <lastmod>2016-04-14T08:48:03.566Z</lastmod>
+    <data>
+        <display>
+        <title>超酷算法：分组密码与安全排列</title>
+        <pubTime>2015-01-15T16:00:00.000Z</pubTime>
+        
+        <tag>security</tag>
+         
+        <tag>encryption</tag>
+         
+        <tag>permutation</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2014-07/python-30-x/</loc>
+    <lastmod>2016-04-14T08:48:03.566Z</lastmod>
+    <data>
+        <display>
+        <title>30 行 Python 代码搞定 X 算法</title>
+        <pubTime>2014-07-21T16:00:00.000Z</pubTime>
+        
+        <tag>game</tag>
+         
+        <tag>random</tag>
+         
+        <tag>distribution</tag>
+         
+        <tag>algorithm</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2007-08/number-theory-relative-primality/</loc>
+    <lastmod>2016-04-14T08:48:03.565Z</lastmod>
+    <data>
+        <display>
+        <title>Number Theory 4.5 Relative Primality</title>
+        <pubTime>2007-08-23T16:00:00.000Z</pubTime>
+        
+        <tag>number_theory</tag>
+         
+        <tag>concrete_mathematics</tag>
+         
+        <tag>reading_notes</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2007-08/number-theory-primes/</loc>
+    <lastmod>2016-04-14T08:48:03.565Z</lastmod>
+    <data>
+        <display>
+        <title>Number Theory 4.2 Primes</title>
+        <pubTime>2007-08-20T16:00:00.000Z</pubTime>
+        
+        <tag>number_theory</tag>
+         
+        <tag>concrete_mathematics</tag>
+         
+        <tag>reading_notes</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2007-08/number-theory-prime-examples/</loc>
+    <lastmod>2016-04-14T08:48:03.565Z</lastmod>
+    <data>
+        <display>
+        <title>Number Theory 4.3 Prime Examples</title>
+        <pubTime>2007-08-21T16:00:00.000Z</pubTime>
+        
+        <tag>acm</tag>
+         
+        <tag>number_theory</tag>
+         
+        <tag>concrete_mathematics</tag>
+         
+        <tag>reading_notes</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2007-08/number-theory-divisibility/</loc>
+    <lastmod>2016-04-14T08:48:03.564Z</lastmod>
+    <data>
+        <display>
+        <title>Number Theory 4.1 Divisibility</title>
+        <pubTime>2007-08-17T16:00:00.000Z</pubTime>
+        
+        <tag>number_theory</tag>
+         
+        <tag>concrete_mathematics</tag>
+         
+        <tag>reading_notes</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2015-09/modern-opengl4/</loc>
+    <lastmod>2016-04-14T08:48:03.564Z</lastmod>
+    <data>
+        <display>
+        <title>现代OpenGL教程 04 - 相机，向量，输入</title>
+        <pubTime>2015-08-31T16:00:00.000Z</pubTime>
+        
+        <tag>opengl</tag>
+         
+        <tag>tutorials</tag>
+         
+         
+           
+             
+              <breadCrumb title="modern-opengl-tutorials" url="http://huangwei.pro/categories/modern-opengl-tutorials/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2007-08/number-theory-factorial-factors/</loc>
+    <lastmod>2016-04-14T08:48:03.564Z</lastmod>
+    <data>
+        <display>
+        <title>Number Theory 4.4 Factorial Factors</title>
+        <pubTime>2007-08-22T16:00:00.000Z</pubTime>
+        
+        <tag>number_theory</tag>
+         
+        <tag>concrete_mathematics</tag>
+         
+        <tag>reading_notes</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2015-08/modern-opengl2/</loc>
+    <lastmod>2016-04-14T08:48:03.563Z</lastmod>
+    <data>
+        <display>
+        <title>现代OpenGL教程 02 - 贴图</title>
+        <pubTime>2015-08-05T16:00:00.000Z</pubTime>
+        
+        <tag>opengl</tag>
+         
+        <tag>tutorials</tag>
+         
+         
+           
+             
+              <breadCrumb title="modern-opengl-tutorials" url="http://huangwei.pro/categories/modern-opengl-tutorials/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2015-08/modern-opengl3/</loc>
+    <lastmod>2016-04-14T08:48:03.563Z</lastmod>
+    <data>
+        <display>
+        <title>现代OpenGL教程 03 - 矩阵，深度缓冲，动画</title>
+        <pubTime>2015-08-12T16:00:00.000Z</pubTime>
+        
+        <tag>opengl</tag>
+         
+        <tag>tutorials</tag>
+         
+         
+           
+             
+              <breadCrumb title="modern-opengl-tutorials" url="http://huangwei.pro/categories/modern-opengl-tutorials/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2015-05/modern-opengl1/</loc>
+    <lastmod>2016-04-14T08:48:03.562Z</lastmod>
+    <data>
+        <display>
+        <title>现代OpenGL教程 01 - 入门指南</title>
+        <pubTime>2015-05-12T16:00:00.000Z</pubTime>
+        
+        <tag>opengl</tag>
+         
+        <tag>tutorials</tag>
+         
+         
+           
+             
+              <breadCrumb title="modern-opengl-tutorials" url="http://huangwei.pro/categories/modern-opengl-tutorials/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2007-08/max-not-combined/</loc>
+    <lastmod>2016-04-14T08:48:03.562Z</lastmod>
+    <data>
+        <display>
+        <title>关于数论中的互质数的最大不能组合数</title>
+        <pubTime>2007-08-29T16:00:00.000Z</pubTime>
+        
+        <tag>acm</tag>
+         
+        <tag>number_theory</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2016-03/golang-note1/</loc>
+    <lastmod>2016-04-14T08:48:03.561Z</lastmod>
+    <data>
+        <display>
+        <title>Golang笔记</title>
+        <pubTime>2016-03-01T16:00:00.000Z</pubTime>
+        
+        <tag>dev-log</tag>
+         
+        <tag>go</tag>
+         
+         
+           
+             
+              <breadCrumb title="go" url="http://huangwei.pro/categories/go/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2015-08/game-sight-light/</loc>
+    <lastmod>2016-04-14T08:48:03.561Z</lastmod>
+    <data>
+        <display>
+        <title>视线和光线：如何给游戏添加 2D 可见性和阴影效果</title>
+        <pubTime>2015-08-10T16:00:00.000Z</pubTime>
+        
+        <tag>game</tag>
+         
+        <tag>2d</tag>
+         
+        <tag>visibility</tag>
+         
+        <tag>sight</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2015-04/game-visiablity/</loc>
+    <lastmod>2016-04-14T08:48:03.561Z</lastmod>
+    <data>
+        <display>
+        <title>游戏中的 2D 可见性</title>
+        <pubTime>2015-04-27T16:00:00.000Z</pubTime>
+        
+        <tag>game</tag>
+         
+        <tag>2d</tag>
+         
+        <tag>visibility</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2015-07/game-random/</loc>
+    <lastmod>2016-04-14T08:48:03.560Z</lastmod>
+    <data>
+        <display>
+        <title>游戏中的随机概率</title>
+        <pubTime>2015-07-25T16:00:00.000Z</pubTime>
+        
+        <tag>game</tag>
+         
+        <tag>random</tag>
+         
+        <tag>distribution</tag>
+         
+         
+           
+             
+              <breadCrumb title="develop" url="http://huangwei.pro/categories/develop/"/>
+          
+             
+              <breadCrumb title="dev-log" url="http://huangwei.pro/categories/develop/dev-log/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2015-03/effective-living/</loc>
+    <lastmod>2016-04-14T08:48:03.560Z</lastmod>
+    <data>
+        <display>
+        <title>高效率生活</title>
+        <pubTime>2015-03-06T16:00:00.000Z</pubTime>
+        
+        <tag>effective</tag>
+         
+        <tag>summary</tag>
+         
+         
+           
+             
+              <breadCrumb title="startup" url="http://huangwei.pro/categories/startup/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2014-07/doom-clean-code/</loc>
+    <lastmod>2016-04-14T08:48:03.560Z</lastmod>
+    <data>
+        <display>
+        <title>「毁灭战士3」源码就是“保持简洁”的证明</title>
+        <pubTime>2014-07-29T16:00:00.000Z</pubTime>
+        
+        <tag>doom</tag>
+         
+        <tag>zen</tag>
+         
+         
+           
+             
+              <breadCrumb title="develop" url="http://huangwei.pro/categories/develop/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2010-11/bloomfilter/</loc>
+    <lastmod>2016-04-14T08:48:03.559Z</lastmod>
+    <data>
+        <display>
+        <title>Bloom Filter 原理与应用</title>
+        <pubTime>2010-11-16T16:00:00.000Z</pubTime>
+        
+        <tag>bloom_filter</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2007-09/chinese-postman-problem/</loc>
+    <lastmod>2016-04-14T08:48:03.559Z</lastmod>
+    <data>
+        <display>
+        <title>关于中国邮递员问题和欧拉图应用</title>
+        <pubTime>2007-09-07T16:00:00.000Z</pubTime>
+        
+        <tag>graph_theory</tag>
+         
+        <tag>acm</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2014-10/bktree/</loc>
+    <lastmod>2016-04-14T08:48:03.559Z</lastmod>
+    <data>
+        <display>
+        <title>超酷算法：BK树</title>
+        <pubTime>2014-10-21T16:00:00.000Z</pubTime>
+        
+        <tag>trie</tag>
+         
+        <tag>string</tag>
+         
+        <tag>tree</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2015-01/anagram-Trees/</loc>
+    <lastmod>2016-04-14T08:48:03.558Z</lastmod>
+    <data>
+        <display>
+        <title>超酷算法：字谜树</title>
+        <pubTime>2015-01-16T16:00:00.000Z</pubTime>
+        
+        <tag>trie</tag>
+         
+        <tag>string</tag>
+         
+        <tag>tree</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2012-09/baidu-suggestion/</loc>
+    <lastmod>2016-04-14T08:48:03.558Z</lastmod>
+    <data>
+        <display>
+        <title>百度面试题 - 搜索框的suggestion</title>
+        <pubTime>2012-09-22T16:00:00.000Z</pubTime>
+        
+        <tag>trie</tag>
+         
+        <tag>string</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+</urlset>

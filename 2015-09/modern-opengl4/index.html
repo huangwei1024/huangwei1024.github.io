@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>现代OpenGL教程 04 - 相机，向量，输入 | HuangWei&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="现代, OpenGL, 教程, 相机，向量，输入">
+  
+
+  <meta name="description" content="现代OpenGL教程 04 - 相机，向量，输入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="现代OpenGL教程 04 - 相机，向量，输入">
+<meta property="og:url" content="http://huangwei.pro/2015-09/modern-opengl4/index.html">
+<meta property="og:site_name" content="HuangWei's blog">
+<meta property="og:description" content="现代OpenGL教程 04 - 相机，向量，输入">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/modern-opengl-04.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/visual_rep_of_vector.gif">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/vector_negation.gif">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/scalar_mult.gif">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/vector-addition.gif">
+<meta property="og:updated_time" content="2016-04-14T08:48:03.564Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="现代OpenGL教程 04 - 相机，向量，输入">
+<meta name="twitter:description" content="现代OpenGL教程 04 - 相机，向量，输入">
+<meta name="twitter:image" content="http://huangwei.pro/static/img/opengl-tutorials/modern-opengl-04.png">
+  
+    <link rel="alternative" href="/atom.xml" title="HuangWei&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://dn-huangweipro.qbox.me/static/favicon.ico">
+  
+  <link rel="stylesheet" href="http://dn-huangweipro.qbox.me/css/style.css">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">HuangWei</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/collections">好文收藏</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+					        
+								<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/2d/" style="font-size: 12px;">2d</a> <a href="/tags/acm/" style="font-size: 14px;">acm</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/bloom-filter/" style="font-size: 10px;">bloom_filter</a> <a href="/tags/concrete-mathematics/" style="font-size: 18px;">concrete_mathematics</a> <a href="/tags/dev-log/" style="font-size: 10px;">dev-log</a> <a href="/tags/distribution/" style="font-size: 12px;">distribution</a> <a href="/tags/doom/" style="font-size: 10px;">doom</a> <a href="/tags/effective/" style="font-size: 10px;">effective</a> <a href="/tags/encryption/" style="font-size: 10px;">encryption</a> <a href="/tags/game/" style="font-size: 18px;">game</a> <a href="/tags/go/" style="font-size: 10px;">go</a> <a href="/tags/graph-theory/" style="font-size: 10px;">graph_theory</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/number-theory/" style="font-size: 20px;">number_theory</a> <a href="/tags/opengl/" style="font-size: 16px;">opengl</a> <a href="/tags/pathfinding/" style="font-size: 10px;">pathfinding</a> <a href="/tags/permutation/" style="font-size: 10px;">permutation</a> <a href="/tags/pixi/" style="font-size: 10px;">pixi</a> <a href="/tags/random/" style="font-size: 12px;">random</a> <a href="/tags/reading-notes/" style="font-size: 18px;">reading_notes</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sight/" style="font-size: 10px;">sight</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/string/" style="font-size: 14px;">string</a> <a href="/tags/summary/" style="font-size: 14px;">summary</a> <a href="/tags/tree/" style="font-size: 12px;">tree</a> <a href="/tags/trie/" style="font-size: 14px;">trie</a> <a href="/tags/tutorials/" style="font-size: 16px;">tutorials</a> <a href="/tags/visibility/" style="font-size: 12px;">visibility</a> <a href="/tags/windows/" style="font-size: 10px;">windows</a> <a href="/tags/zen/" style="font-size: 10px;">zen</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">前网易码农<br>现苦逼创业<br>轻微完美主义强迫症<br>努力提升个人魅力，强化自身修养</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">HuangWei</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">HuangWei</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/collections">好文收藏</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+			        
+						<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-modern-opengl4" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015-09/modern-opengl4/" class="article-date">
+  	<time datetime="2015-08-31T16:00:00.000Z" itemprop="datePublished">2015-09-01</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      现代OpenGL教程 04 - 相机，向量，输入
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tutorials/">tutorials</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/modern-opengl-tutorials/">modern-opengl-tutorials</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="60%" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/modern-opengl-04.png"></p></p>
+<p>本篇教程中，我们会巩固上一篇所提到的矩阵和相机知识，并使用<code>tdogl::Camera</code>类来实现第一人称射击类型的相机。然后，我们会将相机与键盘和鼠标挂钩，使得我们可以移动和浏览3D场景。这里会学一些向量数学，还有上一篇没提到的逆矩阵。</p>
+<a id="more"></a>
+<h2 id="获取代码"><a href="#获取代码" class="headerlink" title="获取代码"></a>获取代码</h2><p>所有例子代码的zip打包可以从这里获取：<a href="https://github.com/tomdalling/opengl-series/archive/master.zip" target="_blank" rel="external">https://github.com/tomdalling/opengl-series/archive/master.zip</a>。</p>
+<p>这一系列文章中所使用的代码都存放在：<a href="https://github.com/tomdalling/opengl-series" target="_blank" rel="external">https://github.com/tomdalling/opengl-series</a>。你可以在页面中下载zip，加入你会git的话，也可以复制该仓库。</p>
+<p>本文代码你可以在<code><a href="https://github.com/tomdalling/opengl-series/tree/master/source/04_camera" target="_blank" rel="external">source/04_camera</a></code>目录里找到。使用OS X系统的，可以打开根目录里的<code>opengl-series.xcodeproj</code>，选择本文工程。使用Windows系统的，可以在Visual Studio 2013里打开<code>opengl-series.sln</code>，选择相应工程。</p>
+<p>工程里已包含所有依赖，所以你不需要再安装或者配置额外的东西。如果有任何编译或运行上的问题，请联系我。</p>
+<h2 id="向量理论"><a href="#向量理论" class="headerlink" title="向量理论"></a>向量理论</h2><p>在上一篇学了矩阵理论后，你以为数学理论课就结束了？想得太美了，现在下一部分就来了：<a href="http://en.wikipedia.org/wiki/Euclidean_vector" target="_blank" rel="external">向量</a>。正统的理解认为向量是3D编程的基础。后面我会展示些代码，是用键盘来进行向量运算，让相机可以在不同方向上移动。</p>
+<p>在3D中（2D中也一样），向量经常用来表示一些不同的东西，比如：</p>
+<ol>
+<li>位置（即，坐标）</li>
+<li>位移（比如，移动）</li>
+<li>方向（比如，南北，上下）</li>
+<li>速度（比如，车的速度和方向）</li>
+<li>加速（比如，重力）</li>
+</ol>
+<p>你可能注意到了上面所提的一些概念都是通常是用来实现物理引擎的。我们在本文中不会实现所有的物理，但为了更好的理解向量，第一步让我们来一些物理教学。</p>
+<p>什么是向量？<mark>一种伪数学的定义上来说，一个向量(vector)就是<em>幅度(magnitude)</em>加上<em>方向</em>。</mark>它能向上，向下，往左，往右，朝北，朝西南等等。你能用3D向量来表示任何一个你指向的方向。向量的另一部分，幅度，表示向量的长度或者大小。</p>
+<p>向量最简单的可视化方式就是绘制它，一般向量都会被绘制为箭头。箭头所指的方向就是向量的方向，箭头的长度就是幅度。下面的图是一个2D向量，但2D的理论同样能应用到3D上。</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/visual_rep_of_vector.gif"></p></p>
+<p><br></p>
+<p>下面用例子来说明向量代表的不同含义。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">&nbsp;</th>
+<th style="text-align:center">方向</th>
+<th style="text-align:center">幅度</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">往北5千米</td>
+<td style="text-align:center">北</td>
+<td style="text-align:center">5千米</td>
+<td style="text-align:center">位置</td>
+</tr>
+<tr>
+<td style="text-align:center">头上5厘米</td>
+<td style="text-align:center">上</td>
+<td style="text-align:center">5厘米</td>
+<td style="text-align:center">位置</td>
+</tr>
+<tr>
+<td style="text-align:center">以50千米每小时开往西湖</td>
+<td style="text-align:center">西湖方向</td>
+<td style="text-align:center">50千米/每小时</td>
+<td style="text-align:center">速度</td>
+</tr>
+<tr>
+<td style="text-align:center">地球引力为9.8m/s<sup>2</sup></td>
+<td style="text-align:center">往地球质心</td>
+<td style="text-align:center">9.8m/s<sup>2</sup></td>
+<td style="text-align:center">加速</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p><mark>当编码时，向量只是一组数字。每个数字都是向量的“一维”。比如，一个三维3D向量就是有3个数字的数组，2D向量是有2个数字。</mark>因为我们是在3D中进行工作，所以大部分情况只要处理3D向量，但我们也需要用到4D。无论何时我说“向量”，那意味着是3D向量。我们使用GLM的向量数学库，2D，3D，4D的类型分别为<code>glm::vec2</code></p>
+<p>,<code>glm::vec3</code>,<code>glm::vec4</code>。</p>
+<p>3D向量表示顶点，坐标或者位置相当简单。<mark>3D向量的3个维度分别是X，Y，Z的值。</mark>当向量表示位置，方向和幅度时，都是从原点(0,0,0)开始计算的。比如，假设一个物体的XYZ坐标为(0,2,0)，则它的幅度是2，方向为“沿Y轴向上”。</p>
+<h2 id="负向量"><a href="#负向量" class="headerlink" title="负向量"></a>负向量</h2><p><mark>当你要将向量取负时，就是保持相同的幅度，但变成了反方向。</mark></p>
+<p>比如：</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/vector_negation.gif"></p></p>
+<p align="center"><br><br>A=向北5千米<br><br><br>-A=向南5千米<br><br><br></p>
+
+<p>如果相机的方向是往右的，我们可以使用负向量来算出相机往左的方向。就像这样：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glm::vec3 rightDirection = gCamera.right();</span><br><span class="line">glm::vec3 leftDirection = -rightDirection; <span class="comment">//vector negation</span></span><br></pre></td></tr></table></figure>
+<h2 id="标量乘法"><a href="#标量乘法" class="headerlink" title="标量乘法"></a>标量乘法</h2><p><mark>当你将向量乘上一个数值时，新向量的结果表示相同的方向，但幅度被扩大了相应倍数。</mark>这个数值被称为“标量”，这就是为何该乘法被称为“标量乘法”。</p>
+<p>比如：</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/scalar_mult.gif"></p></p>
+<p align="center"><br><br>A=向北5千米<br><br><br>0.5 × A=向北2.5千米<br><br><br>2 × A=向北10千米<br><br><br></p>
+
+<p>我们可以使用标量乘法来计算基于“移动速度”的相机位置，像这样：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">float</span> moveSpeed = <span class="number">2.0</span>; <span class="comment">//units per second</span></span><br><span class="line"><span class="keyword">float</span> distanceMoved = moveSpeed * secondsElapsed;</span><br><span class="line">glm::vec3 forwardDirection = gCamera.forward();</span><br><span class="line">glm::vec3 displacement = distanceMoved * forwardDirection; <span class="comment">//scalar multiplication</span></span><br></pre></td></tr></table></figure>
+<h2 id="向量加法"><a href="#向量加法" class="headerlink" title="向量加法"></a>向量加法</h2><p>向量加法在2D图形表现下最容易理解。对两个向量进行加法，就是将它们的头部（箭头一段）连接尾部（非箭头一段）。加法顺序不重要。它的结果就是，从第一个向量尾部走向另外一个向量的头部。</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/vector-addition.gif"></p></p>
+<p>注意，即使这些向量看上去是在不同的位置上，但结果向量的幅度（长度）和方向不会改变。请记住，向量<em>只有</em>一个方向和一个幅度。它们没有起始点，所以它们可以在任意不同位置上，但还是相等的。</p>
+<p>比如：</p>
+<blockquote>
+<p>A = 往北1千米</p>
+<p>B = 往西1千米</p>
+<p>A + B = 往西北1.41千米</p>
+</blockquote>
+<p>向量减法相当于是加上一个负向量，比如：</p>
+<blockquote>
+<p>A = 往北1千米</p>
+<p>B = 往西1千米</p>
+<p>A - B = 往西北1.41千米</p>
+<p>A + (-B) = 往西北1.41千米</p>
+</blockquote>
+<p>我们使用向量加法来计算出相机位移后的的新位置，像这样：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">glm::vec3 displacement = gCamera.forward() * moveSpeed * secondsElapsed;</span><br><span class="line">glm::vec3 oldPosition = gCamera.position();</span><br><span class="line">glm::vec3 newPosition = oldPosition + displacement; <span class="comment">//vector addition</span></span><br><span class="line">gCamera.setPosition(newPosition);</span><br></pre></td></tr></table></figure>
+<h2 id="单位向量"><a href="#单位向量" class="headerlink" title="单位向量"></a>单位向量</h2><p><mark>单位向量是幅度为1的向量。它们经常被用来表示方向。</mark></p>
+<p>当一个向量是用来表示方向时，它的幅度就没啥用处。即使这样，我们还是将它的幅度设为1，是为了计算时更方便一些。</p>
+<p>当你在单位向量上使用标量乘法时，它的方向仍然不变，但幅度会被设为标量的值。因此，你将一个单位向量乘上5后，新的向量的幅度就是5。假如你乘上123，那幅度也就是123。基本上这允许我们设置任意一个向量的幅度，而不会更改它的方向。</p>
+<p>让我们对相机进行往左移动12单位的操作。我们先设置一个方向为左的单位向量，然后使用标量乘法将它的幅度设为12，最后使用它来计算出新位置。代码看上去应该是这样的：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// `gCamera.right()` returns a unit vector, therefore `leftDirection` will also be a unit vector.</span></span><br><span class="line"><span class="comment">// Negation only affects the direction, not the magnitude.</span></span><br><span class="line">glm::vec3 leftDirection = -gCamera.right();</span><br><span class="line"><span class="comment">//`displacement` will have a magnitude of 12</span></span><br><span class="line">glm::vec3 displacement = leftDirection * <span class="number">12</span>;</span><br><span class="line"><span class="comment">//`newPosition` will be 12 units to the left of `oldPosition`</span></span><br><span class="line">glm::vec3 newPosition = oldPosition + displacement;</span><br></pre></td></tr></table></figure>
+<p>任何一个向量都能变为单位向量。这个操作叫做<em>单位化</em>。我们可以用GLM来单位化一个向量：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glm::vec3 someRandomVector = glm::vec3(<span class="number">123</span>,<span class="number">456</span>,<span class="number">789</span>);</span><br><span class="line">glm::vec3 unitVector = glm::normalize(someRandomVector);</span><br></pre></td></tr></table></figure>
+<h2 id="tdogl-Camera类"><a href="#tdogl-Camera类" class="headerlink" title="tdogl::Camera类"></a>tdogl::Camera类</h2><p>恭喜你看到这儿了！现在你已经有足够的向量知识了，来，让我们开始编码。</p>
+<p><a href="https://github.com/tomdalling/opengl-series/blob/master/source/04_camera/source/tdogl/Camera.h" target="_blank" rel="external"><code>tdogl::Camera</code>类的接口</a>在<a href="https://github.com/tomdalling/opengl-series/blob/master/source/04_camera/source/tdogl/Camera.h" target="_blank" rel="external">这里</a>，实现代码在<a href="https://github.com/tomdalling/opengl-series/blob/master/source/04_camera/source/tdogl/Camera.cpp" target="_blank" rel="external">这里</a>。</p>
+<p>在前面文章中我们在OpenGL中用矩阵来实现相机。<code>tdogl::Camera</code>类可以基于各种属性来创建矩阵，比如：</p>
+<ul>
+<li>相机位置</li>
+<li>相机朝向（方向）</li>
+<li>缩放（视野）</li>
+<li>最大和最小可视距离（远近平面）</li>
+<li>视口/窗口纵横比</li>
+</ul>
+<p>上面的每个属性都有各自的设置和获取接口。前文已经介绍过了。</p>
+<p>现在让我们用<code>matrix</code>和<code>orientation</code>方法来实现如何让这所有属性组合成一个矩阵。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">glm::mat4 Camera::matrix() <span class="keyword">const</span> &#123;</span><br><span class="line">    glm::mat4 camera = glm::perspective(_fieldOfView, _viewportAspectRatio, _nearPlane, _farPlane);</span><br><span class="line">    camera *= orientation();</span><br><span class="line">    camera = glm::translate(camera, -_position);</span><br><span class="line">    return camera;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">glm::mat4 Camera::orientation() <span class="keyword">const</span> &#123;</span><br><span class="line">    glm::mat4 orientation;</span><br><span class="line">    orientation = glm::rotate(orientation, _verticalAngle, glm::vec3(<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>));</span><br><span class="line">    orientation = glm::rotate(orientation, _horizontalAngle, glm::vec3(<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>));</span><br><span class="line">    return orientation;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以看到，最终的相机矩阵是由四个不同的变换组成。按顺序是：</p>
+<ul>
+<li>移动，基于相机位置</li>
+<li>旋转，基于相机水平（左/右）转角</li>
+<li>旋转，基于相机垂直（上/下）转角</li>
+<li>透视，基于视野，近平面，远平面和纵横比</li>
+</ul>
+<p>假如你觉得这顺序是反的，那请记住矩阵乘法是从右往左，代码上顺序是从底往上。</p>
+<p>注意，移动用了相机的<em>负</em>位置。这里再次用前文提到的方式，我们可以让3D场景往后来实现相机往前走。向量为负时会反转其方向，所以“往前”就变成“往后”。</p>
+<p><code>tdogl::Camera</code>类还有其它方法来返回单位向量：<code>上</code>,<code>右</code>和<code>前</code>。我们需要从键盘获取消息来实现相机移动。</p>
+<h2 id="相机方位矩阵求逆"><a href="#相机方位矩阵求逆" class="headerlink" title="相机方位矩阵求逆"></a>相机方位矩阵求逆</h2><p>让我来看下<code>tdogl::Camera::up</code>方法的实现，这里有两个东西我们还没有提及。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">glm::vec3 Camera::up() <span class="keyword">const</span> &#123;</span><br><span class="line">    glm::vec4 up = glm::inverse(orientation()) * glm::vec4(<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>);</span><br><span class="line">    return glm::vec3(up);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们看到它使用了<code>glm::inverse</code>方法。从上一篇文章中，我们知道矩阵能对坐标进行变换。在这里，我们还需要对坐标进行“反变换”，使得我们能获得矩阵乘法变换前的坐标。为了实现这个目的，我们需要计算<em>逆</em>矩阵。<mark>逆矩阵是一个矩阵，<em>完全相反</em>于另外一个矩阵，这意味着它能<em>撤销</em>另外一个矩阵的变换。</mark>比如，矩阵<code>A</code>是绕着Y轴旋转90°，那矩阵<code>A</code>的逆矩阵就是绕着Y轴旋转-90°。</p>
+<p>当相机的方向改变时，“向上”的方向也随之改变。比如，想象下有个箭头指向你的头顶，假如你旋转你的头往地上看，那箭头就是向前倾斜，假如你往天上看，那箭头是向后倾斜的。如果你往前看，就是你的头“不旋转”，那箭头就是笔直向上。我们用“笔直向上”的单位向量(0,1,0)来表示相机的向上方向，“不旋转”使用相机方位矩阵的逆矩阵。另外一种解释，在相机旋转后，向上方向总是为(0,1,0)，所以我们要将逆旋转乘上(0,1,0)，这就能得到相机旋转前的向上方向。</p>
+<p>(0,1,0)是单位向量，当你旋转一个单位向量结果还是一个单位向量。假如结果<em>不是</em>单位向量，你应该使用<code>glm::normalize</code>来单位化。</p>
+<p>计算相机的<code>前</code>和<code>右</code>方向是同样的方式。</p>
+<p>你可能注意到了这里用了一个4D向量<code>glm::vec4</code>。前文解释过，4x4 矩阵(<code>glm::mat4</code>)需要一个4D向量来进行矩阵乘法，使用<code>glm::vec3</code>会导致编译错误。只要把3D向量(0,1,0)变成4D向量(0,1,0,1)就可以进行矩阵乘法了，计算完成后我们再将4D向量变回3D向量。</p>
+<h2 id="整合tdogl-Camera类"><a href="#整合tdogl-Camera类" class="headerlink" title="整合tdogl::Camera类"></a>整合tdogl::Camera类</h2><p>现在我们开始使用<code>tdogl:Camera</code>类。</p>
+<p>在之前的文章中，我们分别设置了投影矩阵和相机矩阵两个着色器变量。在本文中，<code>tdogl::Camera</code>合并了这两个矩阵，所以让我们移除<code>projection</code>着色器变量，只用<code>camera</code>变量就足够了。下面是顶点着色器的更新：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 150</span></span><br><span class="line"></span><br><span class="line">uniform mat4 camera;</span><br><span class="line">uniform mat4 model;</span><br><span class="line"></span><br><span class="line">in vec3 vert;</span><br><span class="line">in vec2 vertTexCoord;</span><br><span class="line"></span><br><span class="line">out vec2 fragTexCoord;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Pass the tex coord straight through to the fragment shader</span></span><br><span class="line">    fragTexCoord = vertTexCoord;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Apply all matrix transformations to vert</span></span><br><span class="line">    gl_Position = camera * model * vec4(vert, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在我们将<code>tdogl::Camera</code>整合到<code>main.cpp</code>中。首先包含头文件：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="string">"tdogl/Camera.h"</span></span></span><br></pre></td></tr></table></figure>
+<p>然后声明全局变量：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tdogl::Camera gCamera;</span><br></pre></td></tr></table></figure>
+<p>在前一篇文章中，相机和投影矩阵是不会改变的，所以在<code>LoadShaders</code>函数中设置一次就好了。但在本文中，因为我们需要用鼠标和键盘来控制，所以设置相机矩阵要放在<code>Render</code>函数中并每帧都要设置一下。首先让我们移除旧代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">LoadShaders</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;tdogl::Shader&gt; shaders;</span><br><span class="line">    shaders.push_back(tdogl::Shader::shaderFromFile(ResourcePath(<span class="string">"vertex-shader.txt"</span>), GL_VERTEX_SHADER));</span><br><span class="line">    shaders.push_back(tdogl::Shader::shaderFromFile(ResourcePath(<span class="string">"fragment-shader.txt"</span>), GL_FRAGMENT_SHADER));</span><br><span class="line">    gProgram = new tdogl::Program(shaders);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// the commented-out code below was removed</span></span><br><span class="line">    <span class="comment">/* </span><br><span class="line">    gProgram-&gt;use();</span><br><span class="line"></span><br><span class="line">    //set the "projection" uniform in the vertex shader, because it's not going to change</span><br><span class="line">    glm::mat4 projection = glm::perspective&lt;float&gt;(50.0, SCREEN_SIZE.x/SCREEN_SIZE.y, 0.1, 10.0);</span><br><span class="line">    //glm::mat4 projection = glm::ortho&lt;float&gt;(-2, 2, -2, 2, 0.1, 10);</span><br><span class="line">    gProgram-&gt;setUniform("projection", projection);</span><br><span class="line"></span><br><span class="line">    //set the "camera" uniform in the vertex shader, because it's also not going to change</span><br><span class="line">    glm::mat4 camera = glm::lookAt(glm::vec3(3,3,3), glm::vec3(0,0,0), glm::vec3(0,1,0));</span><br><span class="line">    gProgram-&gt;setUniform("camera", camera);</span><br><span class="line"></span><br><span class="line">    gProgram-&gt;stopUsing();</span><br><span class="line">    */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后，在<code>Render</code>函数中设置<code>camera</code>着色器变量：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// draws a single frame</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Render</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// clear everything</span></span><br><span class="line">    glClearColor(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>); <span class="comment">// black</span></span><br><span class="line">    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// bind the program (the shaders)</span></span><br><span class="line">    gProgram-&gt;use();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// set the "camera" uniform</span></span><br><span class="line">    gProgram-&gt;setUniform(<span class="string">"camera"</span>, gCamera.matrix());</span><br></pre></td></tr></table></figure>
+<p><code>gCamera.matrix()</code>函数返回的是一个<code>glm::mat4</code>, 并且<code>setUniform</code>函数使用了<code>glUniformMatrix4fv</code>来设置顶点着色器中的相机矩阵uniform变量。</p>
+<p>在<code>AppMain</code>函数中设置相机的初始化位置和视窗纵横比。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gCamera.setPosition(glm::vec3(<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>));</span><br><span class="line">gCamera.setViewportAspectRatio(SCREEN_SIZE.x / SCREEN_SIZE.y);</span><br></pre></td></tr></table></figure>
+<p>其余相机属性都留成默认值。</p>
+<p>你现在运行程序，会看到上次实现的旋转立方体。下一步就让我们用鼠标和键盘来控制相机。</p>
+<h2 id="键盘输入"><a href="#键盘输入" class="headerlink" title="键盘输入"></a>键盘输入</h2><p>我们先来实现键盘控制。每次我们更新屏幕时，我们先检查’W’,’A’,’S’或’D’按键是否被按下，如果有触发那就稍微移动下相机。函数<code>glfwGetKey</code>返回一个布尔值来表示这个按键是否按下。新的<code>Update</code>函数看上去是这样的：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// update the scene based on the time elapsed since last update</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Update</span><span class="params">(<span class="keyword">float</span> secondsElapsed)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//rotate the cube</span></span><br><span class="line">    <span class="keyword">const</span> GLfloat degreesPerSecond = <span class="number">180.0f</span>;</span><br><span class="line">    gDegreesRotated += secondsElapsed * degreesPerSecond;</span><br><span class="line">    <span class="keyword">while</span>(gDegreesRotated &gt; <span class="number">360.0f</span>) gDegreesRotated -= <span class="number">360.0f</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//move position of camera based on WASD keys</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">float</span> moveSpeed = <span class="number">2.0</span>; <span class="comment">//units per second</span></span><br><span class="line">    <span class="keyword">if</span>(glfwGetKey(gWindow, <span class="string">'S'</span>))&#123;</span><br><span class="line">        gCamera.offsetPosition(secondsElapsed * moveSpeed * -gCamera.forward());</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(glfwGetKey(gWindow, <span class="string">'W'</span>))&#123;</span><br><span class="line">        gCamera.offsetPosition(secondsElapsed * moveSpeed * gCamera.forward());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(glfwGetKey(gWindow, <span class="string">'A'</span>))&#123;</span><br><span class="line">        gCamera.offsetPosition(secondsElapsed * moveSpeed * -gCamera.right());</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(glfwGetKey(gWindow, <span class="string">'D'</span>))&#123;</span><br><span class="line">        gCamera.offsetPosition(secondsElapsed * moveSpeed * gCamera.right());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们先忽略立方体的旋转。</p>
+<p>当<code>S</code>键被按下时，我们可以看得更近些：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gCamera.offsetPosition(secondsElapsed * moveSpeed * -gCamera.forward());</span><br></pre></td></tr></table></figure>
+<p>这一行代码做了好多事，让我们用更容易懂的方式重写一遍，新的函数叫<code>MoveCameraBackwards</code>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MoveCameraBackwards</span><span class="params">(<span class="keyword">float</span> secondsElapsed)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span> finish writing this function</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>向后是一个方向，所以应该是个单位向量。在相机类中没有<code>backward</code>函数，但它有个<code>forward</code>函数。向后就是向前的反方向，所以我们只要对向前的单位向量取负数即可。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MoveCameraBackwards</span><span class="params">(<span class="keyword">float</span> secondsElapsed)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//`direction` is a unit vector, set to the "backwards" direction</span></span><br><span class="line">    glm::vec3 direction = -gCamera.forward();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span> finish writing this function</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后，我们应该知道将相机移多<em>远</em>。我们有相机的移动速度<code>moveSpeed</code>，我们还知道从上一帧到现在过去了多少时间<code>secondsElapsed</code>。对这两个值进行乘法，就能得到相机移动的距离。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MoveCameraBackwards</span><span class="params">(<span class="keyword">float</span> secondsElapsed)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//`direction` is a unit vector, set to the "backwards" direction</span></span><br><span class="line">    glm::vec3 direction = -gCamera.forwards();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//`distance` is the total distance to move the camera</span></span><br><span class="line">    <span class="keyword">float</span> distance = moveSpeed * secondsElapsed;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span> finish writing this function</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在，我们知道了移动的距离和方向，我们就能构造一个位移向量。它的幅度就是<code>distance</code>，它的方向就是<code>direction</code>。因为<code>direction</code>是个单位向量，我们可以用标量乘法来设置幅度。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MoveCameraBackwards</span><span class="params">(<span class="keyword">float</span> secondsElapsed)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//`direction` is a unit vector, set to the "backwards" direction</span></span><br><span class="line">    glm::vec3 direction = -gCamera.forwards(); <span class="comment">//vector negation</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//`distance` is the total distance to move the camera</span></span><br><span class="line">    <span class="keyword">float</span> distance = moveSpeed * secondsElapsed;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//`displacement` is a combination of `distance` and `direction`</span></span><br><span class="line">    glm::vec3 displacement = distance * direction; <span class="comment">//scalar multiplication</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span> finish writing this function</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后，我们移动（或者说是置换）相机当前位置。用向量加法即可。最基础的公式<code>newPosition = oldPosition + displacement</code>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MoveCameraBackwards</span><span class="params">(<span class="keyword">float</span> secondsElapsed)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//`direction` is a unit vector, set to the "backwards" direction</span></span><br><span class="line">    glm::vec3 direction = -gCamera.forwards(); <span class="comment">//vector negation</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//`distance` is the total distance to move the camera</span></span><br><span class="line">    <span class="keyword">float</span> distance = moveSpeed * secondsElapsed;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//`displacement` is a combination of `distance` and `direction`</span></span><br><span class="line">    glm::vec3 displacement = distance * direction; <span class="comment">//scalar multiplication</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//change the position of the camera</span></span><br><span class="line">    glm::vec3 oldPosition = gCamera.position();</span><br><span class="line">    glm::vec3 newPosition = oldPosition + displacement; <span class="comment">//vector addition</span></span><br><span class="line">    gCamera.setPosition(newPosition);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>完成了！<code>MoveCameraBackwards</code>函数这么多行代码跟这一行代码是一样的：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gCamera.offsetPosition(secondsElapsed * moveSpeed * -gCamera.forward());</span><br></pre></td></tr></table></figure>
+<p><code>offsetPosition</code>函数做的就是向量加法，它将位移向量作为参数传入。让我们使用那一行代码来替换<code>MoveCameraBackwards</code>函数，因为简洁就是美。</p>
+<p>其余按键的工作方式都是相同的，无非是方向不同而已。让我们再添加<code>Z</code>和<code>X</code>键来实现相机上和下。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(glfwGetKey(gWindow, <span class="string">'Z'</span>))&#123;</span><br><span class="line">    gCamera.offsetPosition(secondsElapsed * moveSpeed * -glm::vec3(<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>));</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span>(glfwGetKey(gWindow, <span class="string">'X'</span>))&#123;</span><br><span class="line">    gCamera.offsetPosition(secondsElapsed * moveSpeed * glm::vec3(<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，为什么这里用向量(0,1,0)而不是<code>gCamera.up()</code>。记住，“向上”方向会随着相机方向而改变。假如相机看地上，“向上”指的是向前，假设相机看天上，“向上”指的是向后。这并不是我想实现的行为，我希望的是“笔直向上”的方向(0,1,0)，不依赖于相机的方向。</p>
+<p>现在当你运行程序，你能使用<code>W</code>, <code>A</code>, <code>S</code>, <code>D</code>, <code>X</code>,和<code>Z</code>键来向前移动，向左移动，向后移动，向右移动，向上移动和向下移动。观察时不会因为相机移动而改变方向，这个将留个鼠标来控制。</p>
+<h2 id="鼠标输入"><a href="#鼠标输入" class="headerlink" title="鼠标输入"></a>鼠标输入</h2><p>此时，我们的窗口还无法捕捉鼠标消息。你能看到鼠标在窗口上移来移去。我希望它消失，并且不希望它移出窗口。为了实现这个，我们要改下GLFW的设置。</p>
+<p>在我们捕获鼠标之前，让我们先实现用取消键（Esc）退出程序。我不想再点击关闭按钮了，因为鼠标隐藏，并且无法离开窗口。让我们在<code>AppMain</code>主循环下放加上些代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// run while the window is open</span></span><br><span class="line"><span class="keyword">double</span> lastTime = glfwGetTime();</span><br><span class="line"><span class="keyword">while</span>(!glfwWindowShouldClose(gWindow))&#123;</span><br><span class="line">    <span class="comment">// process pending events</span></span><br><span class="line">    glfwPollEvents();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// update the scene based on the time elapsed since last update</span></span><br><span class="line">    <span class="keyword">double</span> thisTime = glfwGetTime();</span><br><span class="line">    Update((float)(thisTime - lastTime));</span><br><span class="line">    lastTime = thisTime;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// draw one frame</span></span><br><span class="line">    Render();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// check for errors</span></span><br><span class="line">    GLenum error = glGetError();</span><br><span class="line">    <span class="keyword">if</span>(error != GL_NO_ERROR)</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; <span class="string">"OpenGL Error "</span> &lt;&lt; error &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//exit program if escape key is pressed</span></span><br><span class="line">    <span class="keyword">if</span>(glfwGetKey(gWindow, GLFW_KEY_ESCAPE))</span><br><span class="line">        glfwSetWindowShouldClose(gWindow, GL_TRUE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当我们用<code>glfwCreateWindow</code>打开窗口这样设置时，就可以捕获鼠标了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GLFW settings</span></span><br><span class="line">glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);</span><br><span class="line">glfwSetCursorPos(gWindow, <span class="number">0</span>, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>这段代码让鼠标消失了，并且将它移动到了像素坐标(0,0)。在<code>Update</code>中，我们会获取鼠标位置来更新相机，更新完后将鼠标坐标再次设为(0,0)。这种方式可以很方便的看出每帧鼠标移动了多少，还要在当鼠标要移出窗口时停住它。在<code>Update</code>函数下面添加以下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//rotate camera based on mouse movement</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">float</span> mouseSensitivity = <span class="number">0.1f</span>;</span><br><span class="line"><span class="keyword">double</span> mouseX, mouseY;</span><br><span class="line">glfwGetCursorPos(gWindow, &amp;mouseX, &amp;mouseY);</span><br><span class="line">gCamera.offsetOrientation(mouseSensitivity * (float)mouseY, mouseSensitivity * (float)mouseX);</span><br><span class="line">glfwSetCursorPos(gWindow, <span class="number">0</span>, <span class="number">0</span>); <span class="comment">//reset the mouse, so it doesn't go out of the window</span></span><br></pre></td></tr></table></figure>
+<p>鼠标的坐标单位是像素，但相机方向是基于两个角度。这就是为何我们使用<code>mouseSensitivity</code>变量来将像素转为角度。越大的鼠标灵敏度，相机转向的越快，越小的灵敏度，转向的越慢。灵敏度设为<code>0.1f</code>的含义就是每10像素就旋转1°。</p>
+<p><code>offsetOrientation</code>函数类似于<code>offsetPosition</code>函数，它会使用水平和垂直角度来更新相机方向。</p>
+<p>好了！基本到这就完成了。你现在运行程序的话，你能绕着飞行并且<a href="http://en.wikipedia.org/wiki/Gimbal_lock" target="_blank" rel="external">几乎</a>能观察任意方向。立方体的旋转动画可能会让你在环绕时失去方向感，我们可以关闭它。</p>
+<h2 id="用鼠标滚轮控制视野"><a href="#用鼠标滚轮控制视野" class="headerlink" title="用鼠标滚轮控制视野"></a>用鼠标滚轮控制视野</h2><p>就像蛋糕上的糖衣一样，我们可以滚动鼠标或者在触摸板上滑动来实现相机镜头的视野缩放。上篇文章我们已经解释过视野的概念了。</p>
+<p>我们使用同样的方式来使用鼠标位置，并且每帧重置滚动值。首先我们创建一个全局变量来保存滚动值：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> gScrollY = <span class="number">0.0</span>;</span><br></pre></td></tr></table></figure>
+<p>使用GLFW来接受滚轮消息，首先我们得创建个回调：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// records how far the y axis has been scrolled</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">OnScroll</span><span class="params">(GLFWwindow* window, <span class="keyword">double</span> deltaX, <span class="keyword">double</span> deltaY)</span> </span>&#123;</span><br><span class="line">  gScrollY += deltaY;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们用GLFW在<code>AppMain</code>中注册下回调：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">glfwSetScrollCallback(gWindow, OnScroll);</span><br></pre></td></tr></table></figure>
+<p>当每帧我们渲染的时候，我们使用<code>gScrollY</code>值来更改视野。代码放在<code>Update</code>函数的下放：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">float</span> zoomSensitivity = <span class="number">-0.2</span>f;</span><br><span class="line"><span class="keyword">float</span> fieldOfView = gCamera.fieldOfView() + zoomSensitivity * (float)gScrollY;</span><br><span class="line"><span class="keyword">if</span>(fieldOfView &lt; <span class="number">5.0f</span>) fieldOfView = <span class="number">5.0f</span>;</span><br><span class="line"><span class="keyword">if</span>(fieldOfView &gt; <span class="number">130.0f</span>) fieldOfView = <span class="number">130.0f</span>;</span><br><span class="line">gCamera.setFieldOfView(fieldOfView);</span><br><span class="line">gScrollY = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p><code>zoomSensitivity</code>常量类似<code>mouseSensitivity</code>常量。视野取值范围是0°到180°，但假如你设置的值离上下限很近的话，3D场景看上去会很奇怪，所以我们限制这个值范围在5°到130°。类似鼠标位置的方法，我们在每帧之后设置<code>gScrollY = 0</code>。</p>
+<h2 id="下篇预告"><a href="#下篇预告" class="headerlink" title="下篇预告"></a>下篇预告</h2><p>下一篇文章，我们会重构代码来实现最最基本的“引擎”。我们会将代码分为资产（资源）和实例，类似典型的3D引擎，可以生成有多个略微不同的木箱子的3D场景。</p>
+<h2 id="更多资源"><a href="#更多资源" class="headerlink" title="更多资源"></a>更多资源</h2><ul>
+<li><a href="http://www.arcsynthesis.org/gltut/Basics/Introduction.html" target="_blank" rel="external">The vector math chapter of Learning Modern 3D Graphics Programming</a> by Jason L. McKesson</li>
+<li><a href="http://www.wildbunny.co.uk/blog/vector-maths-a-primer-for-games-programmers/" target="_blank" rel="external">Vector maths – a primer for games programmers</a></li>
+<li><a href="http://www.matrix44.net/cms/notes/opengl-3d-graphics/basic-3d-math-vectors" target="_blank" rel="external">Basic 3D Math: Vectors</a> by Egon Rath</li>
+<li><a href="http://en.wikipedia.org/wiki/Euclidean_vector" target="_blank" rel="external">Wikipedia article on vectors</a>, which isn’t very beginner-friendly</li>
+<li>The GLFW <a href="http://www.glfw.org/docs/3.0.4/pages.html" target="_blank" rel="external">guides</a> and <a href="http://www.glfw.org/docs/3.0.4/modules.html" target="_blank" rel="external">references</a>.</li>
+<li>假如你有任何关于向量方面对初学者友好的文章，请发送给我，我会添加进来。</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015-09/think-pathfind-11/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          关于寻路算法的一些思考（11）：寻路算法的其他应用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015-08/modern-opengl3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">现代OpenGL教程 03 - 矩阵，深度缓冲，动画</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2015-09/modern-opengl4/" data-title="现代OpenGL教程 04 - 相机，向量，输入" data-url="http://huangwei.pro/2015-09/modern-opengl4/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"huangweipro"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 HuangWei
+    	</div>
+      	<div class="footer-right">
+		<script src="http://s4.cnzz.com/z_stat.php?id=1257126202&web_id=1257126202" language="JavaScript"></script>
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: false,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		cdn: 'http://dn-huangweipro.qbox.me/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="http://dn-huangweipro.qbox.me/js/main.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-58636572-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+<!-- Baidu Analytics -->
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?37eed26af63c8a627a52667cb97cf2cf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Baidu Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>

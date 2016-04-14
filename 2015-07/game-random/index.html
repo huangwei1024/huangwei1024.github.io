@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>游戏中的随机概率 | HuangWei&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="游戏开发，随机，概率，统计，正态分布，算法">
+  
+
+  <meta name="description" content="游戏中的随机概率">
+<meta property="og:type" content="article">
+<meta property="og:title" content="游戏中的随机概率">
+<meta property="og:url" content="http://huangwei.pro/2015-07/game-random/index.html">
+<meta property="og:site_name" content="HuangWei's blog">
+<meta property="og:description" content="游戏中的随机概率">
+<meta property="og:image" content="http://huangwei.pro/static/img/rnd1.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/rnd2.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/rnd3_Normal_distribution.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/rnd4_normal_sigma.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/rnd3.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/rnd_rand.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/rnd_weight.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/rnd_normal.png">
+<meta property="og:updated_time" content="2016-04-14T08:48:03.560Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="游戏中的随机概率">
+<meta name="twitter:description" content="游戏中的随机概率">
+<meta name="twitter:image" content="http://huangwei.pro/static/img/rnd1.png">
+  
+    <link rel="alternative" href="/atom.xml" title="HuangWei&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://dn-huangweipro.qbox.me/static/favicon.ico">
+  
+  <link rel="stylesheet" href="http://dn-huangweipro.qbox.me/css/style.css">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">HuangWei</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/collections">好文收藏</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+					        
+								<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/2d/" style="font-size: 12px;">2d</a> <a href="/tags/acm/" style="font-size: 14px;">acm</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/bloom-filter/" style="font-size: 10px;">bloom_filter</a> <a href="/tags/concrete-mathematics/" style="font-size: 18px;">concrete_mathematics</a> <a href="/tags/dev-log/" style="font-size: 10px;">dev-log</a> <a href="/tags/distribution/" style="font-size: 12px;">distribution</a> <a href="/tags/doom/" style="font-size: 10px;">doom</a> <a href="/tags/effective/" style="font-size: 10px;">effective</a> <a href="/tags/encryption/" style="font-size: 10px;">encryption</a> <a href="/tags/game/" style="font-size: 18px;">game</a> <a href="/tags/go/" style="font-size: 10px;">go</a> <a href="/tags/graph-theory/" style="font-size: 10px;">graph_theory</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/number-theory/" style="font-size: 20px;">number_theory</a> <a href="/tags/opengl/" style="font-size: 16px;">opengl</a> <a href="/tags/pathfinding/" style="font-size: 10px;">pathfinding</a> <a href="/tags/permutation/" style="font-size: 10px;">permutation</a> <a href="/tags/pixi/" style="font-size: 10px;">pixi</a> <a href="/tags/random/" style="font-size: 12px;">random</a> <a href="/tags/reading-notes/" style="font-size: 18px;">reading_notes</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sight/" style="font-size: 10px;">sight</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/string/" style="font-size: 14px;">string</a> <a href="/tags/summary/" style="font-size: 14px;">summary</a> <a href="/tags/tree/" style="font-size: 12px;">tree</a> <a href="/tags/trie/" style="font-size: 14px;">trie</a> <a href="/tags/tutorials/" style="font-size: 16px;">tutorials</a> <a href="/tags/visibility/" style="font-size: 12px;">visibility</a> <a href="/tags/windows/" style="font-size: 10px;">windows</a> <a href="/tags/zen/" style="font-size: 10px;">zen</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">前网易码农<br>现苦逼创业<br>轻微完美主义强迫症<br>努力提升个人魅力，强化自身修养</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">HuangWei</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">HuangWei</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/collections">好文收藏</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+			        
+						<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-game-random" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015-07/game-random/" class="article-date">
+  	<time datetime="2015-07-25T16:00:00.000Z" itemprop="datePublished">2015-07-26</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      游戏中的随机概率
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/distribution/">distribution</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/game/">game</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/random/">random</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/develop/">develop</a><a class="article-category-link" href="/categories/develop/dev-log/">dev-log</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这段时间公司开发的游戏上线测试，许多玩家在抽卡时抱怨脸黑，很难抽到所需要的卡牌，而又有一部分玩家反应运气好能连着抽到紫卡，检查了下随机相关逻辑代码，并没有找出问题所在，玩家运气好与坏只是觉得真有可能是概率原因。</p>
+<p>测试开服了几天之后，需要开放某个限时抽卡活动，在内部测试时，我们发现玩家反应的问题在限时抽卡中格外明显，尤其是其中最主要的一张稀有卡牌，猜测因为限时抽卡库配置的种类较少，然后就拿该活动来检查了下我们游戏随机机制问题。</p>
+<a id="more"></a>
+<h2 id="5-概率？20次出现一次？"><a href="#5-概率？20次出现一次？" class="headerlink" title="5%概率？20次出现一次？"></a>5%概率？20次出现一次？</h2><p>大部分游戏策划使用权值来配置随机概率，因为权值有个好处就是可以在增加随机物品时，可以不对之前的配置进行更改，比如：白卡 30，蓝卡 10，紫卡 10，转为概率即是：白卡 60%，蓝卡 20%，紫卡 20%。</p>
+<p>而上述限时抽卡的例子中，我们的权值配置是5和95，模拟50000次随机（使用系统随机函数，如C的rand函数，Python的random库）得到如下结果：</p>
+<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="80%" alt="按权值随机50000次" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/rnd1.png"></p><br></p>
+
+<p>上图绘制的是权值为5的卡牌的随机状态，红色的图是分布图，X轴是出现的次数，Y轴是相同卡牌再次出现的间隔，简单得说就是，第x次卡牌出现时离上次该卡牌出现间隔了y次随机。绿色的图是分布概率图，X轴是间隔数，Y轴是概率。按策划的想法，<strong>5%概率</strong>应该等同于<strong>20次出现一次</strong>，那上图很明显并不满足<strong>20次出现一次</strong>出现规则，实际间隔从近到远呈下坡形状分布，就是说相邻的概率最大，间隔最大超过160，这与玩家所吐槽的抽卡体验是一致的。但50000次随机总共出现了2508次，从统计的意义上来说又是符合<strong>5%概率</strong>的。所以这个问题，究其原因就是所谓的概率是统计意义上的还是分布意义上的问题。</p>
+<h2 id="最原始的实现"><a href="#最原始的实现" class="headerlink" title="最原始的实现"></a>最原始的实现</h2><p>我用列表里取元素的方式来模拟<strong>20次出现一次</strong>，为了方便比较异同，直接随机的方式我也贴上相关代码。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pool = [<span class="number">0</span>]*<span class="number">5</span> + [<span class="number">1</span>]*<span class="number">95</span></span><br><span class="line">result = [random.choice(a) <span class="keyword">for</span> i <span class="keyword">in</span> xrange(N)]</span><br></pre></td></tr></table></figure>
+<p>上面是直接随机的方式，只保证<strong>5%概率</strong>。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pool = []</span><br><span class="line">result = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(N):</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> pool:</span><br><span class="line">		pool = [<span class="number">0</span>]*<span class="number">1</span> + [<span class="number">1</span>]*<span class="number">19</span></span><br><span class="line">		random.shuffle(pool)</span><br><span class="line">	result.append(pool[<span class="number">-1</span>])</span><br><span class="line">	<span class="keyword">del</span> pool[<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+<p>上面是打乱列表，然后依次取元素的方式，保证<strong>20次出现一次</strong>，而<strong>5%概率</strong>则是隐含在内的，生成效果如下图。</p>
+<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="80%" alt="使用第二种实现的随机分布" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/rnd2.png"></p><br></p>
+
+<p>该图明显跟第一个实现的图不一样，上图表明了间隔基本上是落在[0, 40]的区间内，并且均匀分布在20那条蓝色对称线附近。这个才是最终想要的随机的效果。红色的线是正态分布曲线，是不是很相似？后面我会讲到。</p>
+<p>眼尖的会发现在第一个实现中我用的pool是<code>[0]*5 + [1]*95</code>，而第二个实现中我用的是<code>[0]*1 + [1]*19</code>。</p>
+<p>这里<strong>20次出现一次</strong>并不等同于<strong>100次出现五次</strong>，也是从分布的意义上来说的，<strong>100次出现五次</strong>是存在5次连续出现的可能。</p>
+<p>针对策划的配置，我们需要进行预处理，怎么处理？GCD啊~，5和95的最大公约数是5，所以在第二个实现的代码中我直接使用了1和19。</p>
+<p>但这里有个问题，一般策划配置的随机库中肯定有多个物品。权值如果配置的比较随意的话，很可能就导致GCD为1，这样想要实现<strong>XX次出现一次</strong>就不可行了。比如刚才的权值配置5和95，再加一个权值为11的话，就只能实现<strong>111次出现5次</strong>。</p>
+<p>所以这两种依赖列表的随机方式并不适用，一是需要维护的列表内存会比较大，二是对策划配置方式有过多约束。</p>
+<h2 id="更通用更优美的实现"><a href="#更通用更优美的实现" class="headerlink" title="更通用更优美的实现"></a>更通用更优美的实现</h2><p><strong>20次出现一次</strong>是以20为标准周期，当然不能每次都是间隔20出现，这样就太假了，根本没有随机感受可言，为了模拟随机并可以控制一定的出现频率，我选择正态分布来进行伪随机分布生成，原因是分布会更自然一些。</p>
+<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="60%" alt="正态分布" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/rnd3_Normal_distribution.png"></p><br></p>
+
+<p>关于正态分布这里就不详细描述了，只需关心分布的两个参数即可，位置参数为$\mu$、尺度参数为$\sigma$。根据正态分布，两个标准差之内的比率合起来为95%；三个标准差之内的比率合起来为99%。</p>
+<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="60%" alt="根据正态分布，两个标准差之内的比率合起来为95%；三个标准差之内的比率合起来为99%" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/rnd4_normal_sigma.png"></p><br></p>
+
+
+<p>用上面的例子来定下参数，$\mu=20, \sigma=20/3$，这样每次按正态分布随机，就能得到一个理想的随机分布和概率区间。</p>
+<p>C语言标准函数库中只有rand，如何生成符合正态分布的随机数可以参见<a href="https://zh.wikipedia.org/wiki/%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83" target="_blank" rel="external">WiKi上的介绍</a>。这里我直接使用Python中random库中的normalvariate函数，当然gauss函数也是一样的，<a href="https://docs.python.org/2/library/random.html" target="_blank" rel="external">官方文档</a>上说gauss函数会快些，<a href="http://stackoverflow.com/questions/27749133/what-is-the-difference-between-random-normalvariate-and-random-gauss-in-pyth" target="_blank" rel="external">StackOverFlow</a>上说gauss是非线程安全函数，所以会快。我自己简单测试了下，在单线程情况下，gauss是会快些，但只是快了一点点而已。</p>
+<p>首先，我直接生成权值为5的卡牌的间隔，检验下正态分布的随机效果。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NN = int(N*<span class="number">0.05</span>)</span><br><span class="line">mu, sigma = <span class="number">20</span>, <span class="number">20</span>/<span class="number">3.</span></span><br><span class="line">delta = [int(random.normalvariate(mu, sigma)) <span class="keyword">for</span> i <span class="keyword">in</span> xrange(NN)]</span><br></pre></td></tr></table></figure>
+<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="80%" alt="模拟正态分布的伪随机" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/rnd3.png"></p><br></p>
+
+<p>这图是不是比第二个实现的图更好看一些，分布也更平滑一些呢。OK，接下来就是替换旧的随机算法了。</p>
+<h2 id="细节和优化"><a href="#细节和优化" class="headerlink" title="细节和优化"></a>细节和优化</h2><p>刚才说了随机库中会有很多物品，都需要按照各自的权值随机，并各自出现频率符合正态分布。下面我们来说说细节。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">wtp = [<span class="number">1.</span>*x/sum(wt) <span class="keyword">for</span> x <span class="keyword">in</span> wt]</span><br><span class="line">result = []</span><br><span class="line">p = [random.normalvariate(<span class="number">1.</span>/x, <span class="number">1.</span>/x/<span class="number">3.</span>) <span class="keyword">for</span> x <span class="keyword">in</span> wtp]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(N):</span><br><span class="line">	minp = <span class="number">1.e9</span></span><br><span class="line">	minj = <span class="number">-1</span></span><br><span class="line">	<span class="keyword">for</span> j, pp <span class="keyword">in</span> enumerate(p):</span><br><span class="line">		<span class="keyword">if</span> pp &lt; minp:</span><br><span class="line">			minp = pp</span><br><span class="line">			minj = j</span><br><span class="line">	result.append(minj)</span><br><span class="line">	<span class="keyword">for</span> j, pp <span class="keyword">in</span> enumerate(p):</span><br><span class="line">		p[j] -= minp</span><br><span class="line">	p[minj] = random.normalvariate(<span class="number">1.</span>/wtp[minj], <span class="number">1.</span>/wtp[minj]/<span class="number">3.</span>)</span><br></pre></td></tr></table></figure>
+<p>这里我使用了统一的随机种子，随机测试了500万次后，所得的结果与多个随机种子差别不大。</p>
+<p>简单解释下代码：初始化对所有物品按权值进行正态分布随机，每次取位置最小值的物品（也就是最先出现的），然后其它物品均减去该值，被取出的物品再单独进行一次正态分布随机，再次循环判断位置最小值。</p>
+<p>这里，每次都需要对所有物品进行求最小值和减法，都是需要遍历的运算，我们可以有如下优化。</p>
+<p>例如：(1,3,4) -&gt; 取1减1, (0,2,3) -&gt; 随机1, (1,2,3)，其实我们只是为了保持各物品之间位置的相对顺序即可，将对其它物品的减法变成对自己的加法，操作量级立马从$O(N)$缩为$O(1)$ 。</p>
+<p>如上面的例子：(1,3,4) -&gt; 取1, (0,3,4) -&gt; 随机1加1, (2,3,4)，这样的操作不会改变物品序列的正确性。</p>
+<p>熟悉最小堆的朋友，将查找最小值优化到$O(1)$应该也没啥问题吧。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wtp = [<span class="number">1.</span>*x/sum(wt) <span class="keyword">for</span> x <span class="keyword">in</span> wt]</span><br><span class="line">result = []</span><br><span class="line">p = [(random[i].normalvariate(<span class="number">1.</span>/x, <span class="number">1.</span>/x/<span class="number">3.</span>), i) <span class="keyword">for</span> x <span class="keyword">in</span> wtp]</span><br><span class="line">heapq.heapify(p)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(N):</span><br><span class="line">	minp, minj = heapq.heappop(p)</span><br><span class="line">	result.append(minj)</span><br><span class="line">	heapq.heappush(p, (random[minj].normalvariate(<span class="number">1.</span>/wtp[minj], <span class="number">1.</span>/wtp[minj]/<span class="number">3.</span>)+minp, minj))</span><br></pre></td></tr></table></figure>
+<h2 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h2><p>问题分析和算法实现就到这了，替换进我的游戏里看看什么效果，我已经迫不及待了。</p>
+<p>物品测试权值序列[10, 30, 50, 110, 150, 200, 250, 500]，随机测试500万次。</p>
+<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="80%" alt="第一个随机实现" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/rnd_rand.png"></p><br>    <br>第一个随机实现<br></p>
+
+<p>第一个实现是只符合统计要求，不符合分布要求。</p>
+<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="80%" alt="第二个随机实现" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/rnd_weight.png"></p><br>    <br>第二个随机实现<br></p>
+
+<p>第二个实现中对权值序列进行了GCD，可以看到只有绿色是符合分布要求的，而蓝色和青色退化成第一种实现。</p>
+<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="80%" alt="基于正态分布的随机实现" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/rnd_normal.png"></p><br>    <br>基于正态分布的随机实现<br></p>
+
+<p>完美！</p>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p>当然，实现<strong>20次出现一次</strong>这样的分布伪随机还有其它方法，比如保存一个计数器，每随机一次就加到计数器上，当计数器的值大于或等于1，即必然出现。但这种实现需要计数器，每个玩家每个随机库每个物品都需要这么一个计数器字段，空间上实在太大了。</p>
+<p>关于随机种子，除非是全服竞争类资源，不然最好每个玩家有各自的随机种子，否则会造成体验上的误差，比如抽卡、关卡掉落等这些只针对玩家自身的系统随机。服从正态分布的全局随机序列，不同玩家任意取走序列中一段或者一些值，就可能导致对于每个玩家而言，各自取出的随机序列不再服从正态分布。</p>
+<h2 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h2><p>我只能感叹Python的库太强大了，matplotlib绘制出来的图形也挺漂亮的，感兴趣的童鞋可以查阅<a href="http://myshare.dscloud.me/scipydoc/" target="_blank" rel="external">用Python做科學計算</a>。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015-08/modern-opengl2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          现代OpenGL教程 02 - 贴图
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015-05/modern-opengl1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">现代OpenGL教程 01 - 入门指南</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2015-07/game-random/" data-title="游戏中的随机概率" data-url="http://huangwei.pro/2015-07/game-random/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"huangweipro"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 HuangWei
+    	</div>
+      	<div class="footer-right">
+		<script src="http://s4.cnzz.com/z_stat.php?id=1257126202&web_id=1257126202" language="JavaScript"></script>
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: false,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		cdn: 'http://dn-huangweipro.qbox.me/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="http://dn-huangweipro.qbox.me/js/main.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-58636572-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+<!-- Baidu Analytics -->
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?37eed26af63c8a627a52667cb97cf2cf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Baidu Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>

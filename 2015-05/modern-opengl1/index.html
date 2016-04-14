@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>现代OpenGL教程 01 - 入门指南 | HuangWei&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="现代, OpenGL, 教程, 入门指南">
+  
+
+  <meta name="description" content="现代OpenGL在Xcode，Visual C++和Linux下的入门指南">
+<meta property="og:type" content="article">
+<meta property="og:title" content="现代OpenGL教程 01 - 入门指南">
+<meta property="og:url" content="http://huangwei.pro/2015-05/modern-opengl1/index.html">
+<meta property="og:site_name" content="HuangWei's blog">
+<meta property="og:description" content="现代OpenGL在Xcode，Visual C++和Linux下的入门指南">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/modern-opengl-01.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/pipe2.0.png">
+<meta property="og:updated_time" content="2016-04-14T08:48:03.562Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="现代OpenGL教程 01 - 入门指南">
+<meta name="twitter:description" content="现代OpenGL在Xcode，Visual C++和Linux下的入门指南">
+<meta name="twitter:image" content="http://huangwei.pro/static/img/opengl-tutorials/modern-opengl-01.png">
+  
+    <link rel="alternative" href="/atom.xml" title="HuangWei&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://dn-huangweipro.qbox.me/static/favicon.ico">
+  
+  <link rel="stylesheet" href="http://dn-huangweipro.qbox.me/css/style.css">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">HuangWei</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/collections">好文收藏</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+					        
+								<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/2d/" style="font-size: 12px;">2d</a> <a href="/tags/acm/" style="font-size: 14px;">acm</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/bloom-filter/" style="font-size: 10px;">bloom_filter</a> <a href="/tags/concrete-mathematics/" style="font-size: 18px;">concrete_mathematics</a> <a href="/tags/dev-log/" style="font-size: 10px;">dev-log</a> <a href="/tags/distribution/" style="font-size: 12px;">distribution</a> <a href="/tags/doom/" style="font-size: 10px;">doom</a> <a href="/tags/effective/" style="font-size: 10px;">effective</a> <a href="/tags/encryption/" style="font-size: 10px;">encryption</a> <a href="/tags/game/" style="font-size: 18px;">game</a> <a href="/tags/go/" style="font-size: 10px;">go</a> <a href="/tags/graph-theory/" style="font-size: 10px;">graph_theory</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/number-theory/" style="font-size: 20px;">number_theory</a> <a href="/tags/opengl/" style="font-size: 16px;">opengl</a> <a href="/tags/pathfinding/" style="font-size: 10px;">pathfinding</a> <a href="/tags/permutation/" style="font-size: 10px;">permutation</a> <a href="/tags/pixi/" style="font-size: 10px;">pixi</a> <a href="/tags/random/" style="font-size: 12px;">random</a> <a href="/tags/reading-notes/" style="font-size: 18px;">reading_notes</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sight/" style="font-size: 10px;">sight</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/string/" style="font-size: 14px;">string</a> <a href="/tags/summary/" style="font-size: 14px;">summary</a> <a href="/tags/tree/" style="font-size: 12px;">tree</a> <a href="/tags/trie/" style="font-size: 14px;">trie</a> <a href="/tags/tutorials/" style="font-size: 16px;">tutorials</a> <a href="/tags/visibility/" style="font-size: 12px;">visibility</a> <a href="/tags/windows/" style="font-size: 10px;">windows</a> <a href="/tags/zen/" style="font-size: 10px;">zen</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">前网易码农<br>现苦逼创业<br>轻微完美主义强迫症<br>努力提升个人魅力，强化自身修养</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">HuangWei</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">HuangWei</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/collections">好文收藏</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+			        
+						<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-modern-opengl1" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015-05/modern-opengl1/" class="article-date">
+  	<time datetime="2015-05-12T16:00:00.000Z" itemprop="datePublished">2015-05-13</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      现代OpenGL教程 01 - 入门指南
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tutorials/">tutorials</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/modern-opengl-tutorials/">modern-opengl-tutorials</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="60%" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/modern-opengl-01.png"></p><br></p>
+
+<h2 id="译序"><a href="#译序" class="headerlink" title="译序"></a>译序</h2><p>早前学OpenGL的时候还是1.x版本，用的都是<code>glVertex</code>，<code>glNormal</code>等固定管线API。后来工作需要接触DirectX9，shader也只是可选项而已，跟固定管线一起混用着。现在工作内容是手机游戏，又转到OpenGL ES，发现OpenGL的世界已经完全不同了，OpenGL ES 2.0版本开始就不再支持固定管线，只支持可编程管线。</p>
+<a id="more"></a>
+<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="60%" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/pipe2.0.png"></p><br></p>
+
+<p>国内很多资料教程参差不齐，旧式接口满天飞。在<a href="http://www.zhihu.com/question/22005157" target="_blank" rel="external">知乎</a>看到这一系列教程，觉着挺好，就想着一边学顺便翻译下。毕竟手游市场的机遇和竞争压力都在同比猛涨，多了解OpenGL ES肯定没有坏处。浮躁功利的环境下更需要怀着一颗宁静致远的心去提高自身功底，长路漫漫，与君共勉。</p>
+<p>欢迎大家，这是现代OpenGL教程系列的第一篇。所有代码都是开源的，你可以在GitHub上下载：<a href="https://github.com/tomdalling/opengl-series" target="_blank" rel="external">https://github.com/tomdalling/opengl-series</a></p>
+<p>通过这篇教程，你将会学到如何在Windows下用Visual Studio 2013或Mac下用Xcode搭建OpenGL 3.2工程。该应用包含一个顶点着色器（vertex shader），一个片段着色器（fragment shader）和使用VAO和VBO来绘制的三角形。该工程使用<a href="http://glew.sourceforge.net/" target="_blank" rel="external">GLEW</a>来访问OpenGL API，用<a href="http://www.glfw.org/" target="_blank" rel="external">GLFW</a>来处理窗口创建和输入，还有使用<a href="http://glm.g-truc.net/" target="_blank" rel="external">GLM</a>进行矩阵/矢量相关的数学运算。</p>
+<p>这听上去有点无聊，但搭建这样的工程确实挺麻烦的，尤其对于初学者。只要解决完这问题，我们就可以开始玩些有趣的东西了。</p>
+<p>[TOC]</p>
+<h2 id="获取代码"><a href="#获取代码" class="headerlink" title="获取代码"></a>获取代码</h2><p>所有例子代码的zip打包可以从这里获取：<a href="https://github.com/tomdalling/opengl-series/archive/master.zip" target="_blank" rel="external">https://github.com/tomdalling/opengl-series/archive/master.zip</a>。</p>
+<p>这一系列文章中所使用的代码都存放在：<a href="https://github.com/tomdalling/opengl-series" target="_blank" rel="external">https://github.com/tomdalling/opengl-series</a>。你可以在页面中下载zip，加入你会git的话，也可以复制该仓库。</p>
+<p>本文代码你可以在<code><a href="https://github.com/tomdalling/opengl-series/tree/master/source/01_project_skeleton" target="_blank" rel="external">source/01_project_skeleton</a></code>目录里找到。使用OS X系统的，可以打开根目录里的<code>opengl-series.xcodeproj</code>，选择本文工程。使用Windows系统的，可以在Visual Studio 2013里打开<code>opengl-series.sln</code>，选择相应工程。</p>
+<p>工程里已包含所有依赖，所以你不需要再安装或者配置额外的东西。如果有任何编译或运行上的问题，请联系我。</p>
+<h2 id="关于兼容性的提醒"><a href="#关于兼容性的提醒" class="headerlink" title="关于兼容性的提醒"></a>关于兼容性的提醒</h2><p>本文使用OpenGL 3.2，但我会尝试保持如下兼容：</p>
+<ul>
+<li>向后兼容OpenGL 2.1</li>
+<li>向前兼容OpenGL 3.X和4.X</li>
+<li>兼容Android和iOS的OpenGL ES 2.0</li>
+</ul>
+<p>因为OpenGL和GLSL存在许多不同版本，本文代码不一定能做到100%上述兼容。我希望能兼容99%，并且不同版本之间只要轻微修改即可。</p>
+<p>想要了解OpenGL和GLSL不同版本间的区别，这里很好得罗列了<a href="http://web.eecs.umich.edu/~sugih/courses/eecs487/common/notes/APITables.xml" target="_blank" rel="external">兼容列表</a>。</p>
+<h2 id="Visual-Studio下安装"><a href="#Visual-Studio下安装" class="headerlink" title="Visual Studio下安装"></a>Visual Studio下安装</h2><p>代码在Windows 7 32位系统，<a href="http://www.visualstudio.com/en-us/downloads/download-visual-studio-vs#DownloadFamilies_2" target="_blank" rel="external">Visual Studio Express 2013</a>（免费）下创建和测试。你应该可以打开解决方案并成功编译所有工程。如果有问题请联系我，或者将补丁发我，我会更新工程。</p>
+<h2 id="Xcode下安装"><a href="#Xcode下安装" class="headerlink" title="Xcode下安装"></a>Xcode下安装</h2><p>Xcode工程实在OSX 10.10系统，Xcode 6.1下创建并测试的。打开Xcode工程应该可以成功编译所有目标。加入你无法成功编译请联系我。</p>
+<h2 id="Linux下安装"><a href="#Linux下安装" class="headerlink" title="Linux下安装"></a>Linux下安装</h2><p>Linux是基于<a href="http://www.reddit.com/user/SpartanJ" target="_blank" rel="external">SpartanJ</a>。我在Ubuntu 12.04下简单测试通过。</p>
+<ul>
+<li>安装GLM，GLFW和GLEW：<br>  <code>sudo aptitude install libglm-dev libglew-dev libglfw-dev</code></li>
+<li>进入工程目录：<code>cd platforms/linux/01_project_skeleto</code></li>
+<li>运行makefile：<code>make</code></li>
+<li>运行可执行文件：<code>bin/01_project_skeleton-debug</code></li>
+</ul>
+<h2 id="GLEW-GLFW和GLM介绍"><a href="#GLEW-GLFW和GLM介绍" class="headerlink" title="GLEW, GLFW和GLM介绍"></a>GLEW, GLFW和GLM介绍</h2><p>现在你有了工程，就让我们开始介绍下工程所用到的开源库和为啥需要这些。</p>
+<p><a href="http://glew.sourceforge.net/" target="_blank" rel="external">The OpenGL Extension Wrangler (GLEW)</a>是用来访问OpenGL 3.2 API函数的。不幸的是你不能简单的使用<code>#include &lt;GL/gl.h&gt;</code>来访问OpenGL接口，除非你想用旧版本的OpenGL。在现代OpenGL中，API函数是在运行时（run time）确定的，而非编译期（compile time）。GLEW可以在运行时加载OpenGL API。</p>
+<p><a href="http://www.glfw.org/" target="_blank" rel="external">GLFW</a>允许我们跨平台创建窗口，接受鼠标键盘消息。OpenGL不处理这些窗口创建和输入，所以就需要我们自己动手。我选择GLFW是因为它很小，并且容易理解。</p>
+<p><a href="http://glm.g-truc.net/" target="_blank" rel="external">OpenGL Mathematics (GLM)</a>是一个数学库，用来处理矢量和矩阵等几乎其它所有东西。旧版本OpenGL提供了类似<code>glRotate</code>, <code>glTranslate</code>和<code>glScale</code>等函数，在现代OpenGL中，这些函数已经不存在了，我们需要自己处理所有的数学运算。GLM能在后续教程里提供很多矢量和矩阵运算上帮助。</p>
+<p>在这系列的所有教程中，我们还编写了一个小型库<code>tdogl</code>用来重用C++代码。这篇教程会包含<code>tdogl::Shader</code>和<code>tdogl::Program</code>用来加载，编译和链接shaders。</p>
+<h2 id="什么是Shaders？"><a href="#什么是Shaders？" class="headerlink" title="什么是Shaders？"></a>什么是Shaders？</h2><p>Shaders在现代OpenGL中是个很重要的概念。应用程序离不开它，除非你理解了，否则这些代码也没有任何意义。</p>
+<p><mark>Shaders是一段GLSL小程序，运行在<strong>GPU</strong>上而非CPU</mark>。它们使用<a href="http://en.wikipedia.org/wiki/GLSL" target="_blank" rel="external">OpenGL Shading Language (GLSL)</a>语言编写，看上去像C或C++，但却是另外一种不同的语言。使用shader就像你写个普通程序一样：写代码，编译，最后链接在一起才生成最终的程序。</p>
+<p>Shaders并不是个很好的名字，因为它不仅仅只做着色。只要记得它们是个用不同的语言写的，运行在显卡上的小程序就行。</p>
+<p>在旧版本的OpenGL中，shaders是可选的。在现代OpenGL中，为了能在屏幕上显示出物体，shaders是必须的。</p>
+<p>为可能近距离了解shaders和图形渲染管线，我推荐Durian Software的相关文章<a href="http://duriansoftware.com/joe/An-intro-to-modern-OpenGL.-Chapter-1:-The-Graphics-Pipeline.html" target="_blank" rel="external">The Graphics Pipeline chapter</a>。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">主程序</th>
+<th style="text-align:left">Shader程序</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">语言</td>
+<td style="text-align:left">C++</td>
+<td style="text-align:left">GLSL</td>
+</tr>
+<tr>
+<td style="text-align:left">主函数</td>
+<td style="text-align:left">int main(int, char**);</td>
+<td style="text-align:left">void main();</td>
+</tr>
+<tr>
+<td style="text-align:left">运行于</td>
+<td style="text-align:left">CPU</td>
+<td style="text-align:left">GPU</td>
+</tr>
+<tr>
+<td style="text-align:left">需要编译？</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">是</td>
+</tr>
+<tr>
+<td style="text-align:left">需要链接？</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">是</td>
+</tr>
+</tbody>
+</table>
+<p>那shaders实际上干了啥？这取决于是哪种shader。</p>
+<h2 id="Vertex-Shaders"><a href="#Vertex-Shaders" class="headerlink" title="Vertex Shaders"></a>Vertex Shaders</h2><p><mark>Vertex shader主要用来将点（x，y，z坐标）变换成不同的点。</mark>顶点只是几何形状中的一个点，一个点叫vectex，多个点叫vertices（发音为<a href="http://static.sfdict.com/dictstatic/dictionary/audio/luna/V00/V0096700.mp3" target="_blank" rel="external">ver-tuh-seez</a>）。在本教程中，我们的三角形需要三个顶点（vertices）组成。</p>
+<p>Vertex Shader的GLSL代码如下：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#version 150</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">in</span> vec3 vert;</span><br><span class="line"></span><br><span class="line">void main() &#123;</span><br><span class="line">    // does <span class="keyword">not</span> alter the vertices at all</span><br><span class="line">    gl_Position = vec4(vert, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第一行<code>#version 150</code>告诉OpenGL这个shader使用GLSL版本1.50.</p>
+<p>第二行<code>in vec3 vert;</code>告诉shader需要那一个顶点作为输入，放入变量<code>vert</code>。</p>
+<p>第三行定义函数<code>main</code>，这是shader运行入口。这看上去像C，但GLSL中<code>main</code>不需要带任何参数，并且不用返回void。</p>
+<p>第四行<code>gl_Position = vec4(vert, 1);</code>将输入的顶点直接输出，变量<code>gl_Position</code>是OpenGL定义的全局变量，用来存储vertex shader的输出。所有vertex shaders都需要对<code>gl_Position</code>进行赋值。</p>
+<p><code>gl_Position</code>是4D坐标（vec4），但<code>vert</code>是3D坐标（vec3），所以我们需要将<code>vert</code>转换为4D坐标<code>vec4(vert, 1)</code>。第二个的参数<code>1</code>是赋值给第四维坐标。我们会在后续教程中学到更多关于4D坐标的东西。但现在，我们只要知道第四维坐标是<code>1</code>即可，i可以忽略它就把它当做3D坐标来对待。</p>
+<p>Vertex Shader在本文中没有做任何事，后续我们会修改它来处理动画，摄像机和其它东西。</p>
+<h2 id="Fragment-Shaders"><a href="#Fragment-Shaders" class="headerlink" title="Fragment Shaders"></a>Fragment Shaders</h2><p><mark>Fragment shader的主要功能是计算每个需要绘制的像素点的颜色。</mark></p>
+<p>一个”fragment”基本上就是一个像素，所以你可以认为片段着色器（fragment shader）就是像素着色器（pixel shader）。在本文中每个片段都是一像素，但这并不总是这样的。你可以更改某个OpenGL设置，以便得到比像素更小的片段，之后的文章我们会讲到这个。</p>
+<p>本文所使用的fragment shader代码如下：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#version 150</span></span><br><span class="line"></span><br><span class="line">out vec4 finalColor;</span><br><span class="line"></span><br><span class="line">void main() &#123;</span><br><span class="line">    //set every drawn pixel to white</span><br><span class="line">    finalColor = vec4(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再次，第一行<code>#version 150</code>告诉OpenGL这个shader使用的是GLSL 1.50。</p>
+<p>第二行<code>finalColor = vec4(1.0, 1.0, 1.0, 1.0);</code>将输出变量设为白色。<code>vec4(1.0, 1.0, 1.0, 1.0)</code>是创建一个RGBA颜色，并且红绿蓝和alpha都设为最大值，即白色。</p>
+<p>现在，就能用shader在OpenGL中绘制出了纯白色。在之后的文章中，我们还会加入不同颜色和贴图。贴图就是你3D模型上的图像。</p>
+<h2 id="编译和链接Shaders"><a href="#编译和链接Shaders" class="headerlink" title="编译和链接Shaders"></a>编译和链接Shaders</h2><p>在C++中，你需要对你的<code>.cpp</code>文件进行编译，然后链接到一起组成最终的程序。OpenGL的shaders也是这么回事。</p>
+<p>在这篇文章中用到了两个可复用的类，是用来处理shaders的编译和链接：<code>tdogl::Shader</code>和<code>tdogl::Program</code>。这两个类代码不多，并且有详细的注释，我建议你阅读源码并且去链接OpenGL是如何工作的。</p>
+<h2 id="什么是VBO和VAO？"><a href="#什么是VBO和VAO？" class="headerlink" title="什么是VBO和VAO？"></a>什么是VBO和VAO？</h2><p>当shaders运行在GPU，其它代码运行在CPU时，你需要有种方式将数据从CPU传给GPU。在本文中，我们传送了一个三角的三个顶点数据，但在更大的工程中3D模型会有成千上万个顶点，颜色，贴图坐标和其它东西。</p>
+<p>这就是我们为什么需要Vertex Buffer Objects (VBOs)和Vertex Array Objects (VAOs)。<mark>VBO和VAO用来将C++程序的数据传给shaders来渲染。</mark></p>
+<p>在旧版本的OpenGL中，是通过<code>glVertex</code>，<code>glTexCoord</code>和<code>glNormal</code>函数把每帧数据发送给GPU的。在现代OpenGL中，所有数据必须通过VBO在渲染之前发送给显卡。当你需要渲染某些数据时，通过设置VAO来描述该获取哪些VBO数据推送给shader变量。</p>
+<h2 id="Vertex-Buffer-Objects-VBOs"><a href="#Vertex-Buffer-Objects-VBOs" class="headerlink" title="Vertex Buffer Objects (VBOs)"></a>Vertex Buffer Objects (VBOs)</h2><p>第一步我们需要从内存里上传三角形的三个顶点到显存中。这就是VBO该干的事。<mark>VBO其实就是显存的“缓冲区（buffers）” - 一串包含各种二进制数据的字节区域。</mark>你能上传3D坐标，颜色，甚至是你喜欢的音乐和诗歌。VBO不关心这些数据是啥，因为它只是对内存进行复制。</p>
+<h2 id="Vertex-Array-Objects-VAOs"><a href="#Vertex-Array-Objects-VAOs" class="headerlink" title="Vertex Array Objects (VAOs)"></a>Vertex Array Objects (VAOs)</h2><p>第二步我们要用VBO的数据在shaders中渲染三角形。请记住VBO只是一块数据，它不清楚这些数据的类型。而告诉OpenGL这缓冲区里是啥类型数据，这事就归VAO管。</p>
+<p><mark>VAO对VBO和shader变量进行了连接。它描述了VBO所包含的数据类型，还有该传递数据给哪个shader变量。</mark>在OpenGL所有不准确的技术名词中，“Vertex Array Object”是最烂的一个，因为它根本没有解释VAO该干的事。</p>
+<p>你回头看下本文的vertex shader（在文章的前面），你就能发现我们只有一个输入变量<code>vert</code>。在本文中，我们用VAO来说明“hi，OpenGL，这里的VBO有3D顶点，我想要你在vertex shader时，发三个顶点数据给vert变量。”</p>
+<p>在后续的文章中，我们会用VAO来说“hi，OpenGL，这里的VBO有3D顶点，颜色，贴图坐标，我想要你在shader时，发顶点数据给vert变量，发颜色数据给vertColor变量，发贴图坐标给vertTexCoord变量。”</p>
+<p><strong>给使用上个OpenGL版本的用户的提醒</strong></p>
+<p>假如你在旧版本的OpenGL中使用了VBO但没有用到VAO，你可能会不认同VAO的描述。你会争论说“顶点属性”可以用<code>glVertexAttribPointer</code>将VBO和shaders连接起来，而不是用VAO。这取决于你是否认为顶点属性应该是VAO“内置（inside）”的（我是这么认为的），或者说它们是否是VAO外置的一个全局状态。3.2内核和我用的AIT驱动中，VAO不是可选项 - 没有VAO的封装<code>glEnableVertexAttribArray</code>, <code>glVertexAttribPointer</code>和<code>glDrawArrays</code>都会导致<code>GL_INVALID_OPERATION</code>错误。这就是为啥我认为顶点属性应该内置于VAO，而非全局状态的原因。<a href="http://www.opengl.org/registry/doc/glspec32.core.20091207.pdf" target="_blank" rel="external">3.2内核手册</a>也说VAO是必须的，但我只听说ATI驱动会抛错误。下面描述引用自<a href="http://www.opengl.org/registry/doc/glspec32.core.20091207.pdf" target="_blank" rel="external">OpenGL 3.2内核手册</a></p>
+<blockquote>
+<p>所有与顶点处理有关的数据定义都应该封装在VAO里。<br>一般VAO边界包含所有更改vertex array状态的命令，比如VertexAttribPointer和EnableVertexAttribArray；所有使用vertex array进行绘制的命令，比如DrawArrays和DrawElements；所有对vertex array状态进行查询的命令（见第6章）。</p>
+</blockquote>
+<p>不管怎样，我也知道为啥会有人认为顶点属性应该放在VAO外部。<code>glVertexAttribPointer</code>出现早于VAO，在这段时间里顶点属性一直被认为是全局状态。你应该能看得出VAO是一种改变全局状态的有效方法。我更倾向于认为是这样：假如你没有创建VAO，那OpenGL通过了一个默认的全局VAO。所以当你使用<code>glVertexAttribPointer</code>时，你仍然是在VAO内修改顶点属性，只不过现在从默认的VAO变成你自己创建的VAO。</p>
+<p>这里有更多的讨论：<a href="http://www.opengl.org/discussion_boards/showthread.php/174577-Questions-on-VAOs" target="_blank" rel="external">http://www.opengl.org/discussion_boards/showthread.php/174577-Questions-on-VAOs</a></p>
+<h2 id="代码解释"><a href="#代码解释" class="headerlink" title="代码解释"></a>代码解释</h2><p>终于！理论已经说完了，我们开始编码。OpenGL对于初学者而言不是特别友好，但如果你理解了之前所介绍的概念（shaders，VBO，VAO）那你就没啥问题。</p>
+<p>打开<code>main.cpp</code>，我们从<code>main()</code>函数开始。</p>
+<p>首先，我们初始化GLFW：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">glfwSetErrorCallback(OnError);</span><br><span class="line"><span class="keyword">if</span>(!glfwInit())</span><br><span class="line">    throw <span class="built_in">std</span>::runtime_error(<span class="string">"glfwInit failed"</span>);</span><br></pre></td></tr></table></figure>
+<p><code>glfwSetErrorCallback(OnError)</code>这一行告诉GLFW当错误发生时调用<code>OnError</code>函数。<code>OnError</code>函数会抛一个包含错误信息的异常，我们能从中发现哪里出错了。</p>
+<p>然后我们用GLFW创建一个窗口。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);</span><br><span class="line">glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);</span><br><span class="line">glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, <span class="number">3</span>);</span><br><span class="line">glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, <span class="number">2</span>);</span><br><span class="line">glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);</span><br><span class="line">gWindow = glfwCreateWindow((int)SCREEN_SIZE.x, (int)SCREEN_SIZE.y, <span class="string">"OpenGL Tutorial"</span>, NULL, NULL);</span><br><span class="line"><span class="keyword">if</span>(!gWindow)</span><br><span class="line">    throw <span class="built_in">std</span>::runtime_error(<span class="string">"glfwCreateWindow failed. Can your hardware handle OpenGL 3.2?"</span>);</span><br></pre></td></tr></table></figure>
+<p>该窗口包含一个向前兼容的OpenGL 3.2内核上下文。假如<code>glfwCreateWindow</code>失败了，你应该降低OpenGL版本。</p>
+<p>创建窗口最后一步，我们应该设置一个“当前”OpenGL上下文给刚创建的窗口：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">glfwMakeContextCurrent(gWindow);</span><br></pre></td></tr></table></figure>
+<p>无论我们调用哪个OpenGL函数，都会影响到“当前上下文”。我们只会用到一个上下文，所以设置完后，就别管它了。理论上来说，我们可以有多个窗口，且每个窗口都可以有自己的上下文。</p>
+<p>现在我们窗口有了OpenGL上下文变量，我们需要初始化GLEW以便访问OpenGL接口。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">glewExperimental = GL_TRUE; <span class="comment">//stops glew crashing on OSX :-/</span></span><br><span class="line"><span class="keyword">if</span>(glewInit() != GLEW_OK)</span><br><span class="line">    throw <span class="built_in">std</span>::runtime_error(<span class="string">"glewInit failed"</span>);</span><br></pre></td></tr></table></figure>
+<p>这里的GLEW与OpenGL内核有点小问题，设置<code>glewExperimental</code>就可以修复，但希望再未来永远不要发生。</p>
+<p>我们也可以用GLEW再次确认3.2版本是否存在：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!GLEW_VERSION_3_2)</span><br><span class="line">    throw <span class="built_in">std</span>::runtime_error(<span class="string">"OpenGL 3.2 API is not available."</span>);</span><br></pre></td></tr></table></figure>
+<p>在<code>LoadShaders</code>函数中，我们使用本教程提供的<code>tdogl::Shader</code>和<code>tdogl::Program</code>两个类编译和链接了vertex shader和fragment shader。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;tdogl::Shader&gt; shaders;</span><br><span class="line">shaders.push_back(tdogl::Shader::shaderFromFile(ResourcePath(<span class="string">"vertex-shader.txt"</span>), GL_VERTEX_SHADER));</span><br><span class="line">shaders.push_back(tdogl::Shader::shaderFromFile(ResourcePath(<span class="string">"fragment-shader.txt"</span>), GL_FRAGMENT_SHADER));</span><br><span class="line">gProgram = new tdogl::Program(shaders);</span><br></pre></td></tr></table></figure>
+<p>在<code>LoadTriangle</code>函数中，我们创建了一个VAO和VBO。这是第一步，创建和绑定新的VAO：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glGenVertexArrays(<span class="number">1</span>, &amp;gVAO);</span><br><span class="line">glBindVertexArray(gVAO);</span><br></pre></td></tr></table></figure>
+<p>然后我们创建和绑定新的VBO：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glGenBuffers(<span class="number">1</span>, &amp;gVBO);</span><br><span class="line">glBindBuffer(GL_ARRAY_BUFFER, gVBO);</span><br></pre></td></tr></table></figure>
+<p>接着，我们上传一些数据到VBO中。这些数据就是三个顶点，每个顶点包含三个<code>GLfloat</code>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GLfloat vertexData[] = &#123;</span><br><span class="line">    <span class="comment">//  X     Y     Z</span></span><br><span class="line">     <span class="number">0.0f</span>, <span class="number">0.8f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">-0.8</span>f,<span class="number">-0.8</span>f, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">0.8f</span>,<span class="number">-0.8</span>f, <span class="number">0.0f</span>,</span><br><span class="line">&#125;;</span><br><span class="line">glBufferData(GL_ARRAY_BUFFER, <span class="keyword">sizeof</span>(vertexData), vertexData, GL_STATIC_DRAW);</span><br></pre></td></tr></table></figure>
+<p>现在缓冲区包含了三角形的三个顶点，是时候开始设置VAO了。首先，我们应该启用shader程序中的<code>vert</code>变量。这些变量能被开启或关闭，默认情况下是关闭的，所以我们需要开启它。<code>vert</code>变量是一个“属性变量（attribute variable）”，这也是为何OpenGL函数名称中有带“Attrib”。我们可以在后续的文章中看到更多类型。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">glEnableVertexAttribArray(gProgram-&gt;attrib(<span class="string">"vert"</span>));</span><br></pre></td></tr></table></figure>
+<p>VAO设置最复杂的部分就是下个函数：<code>glVertexAttribPointer</code>。让我们先调用该函数，等会解释。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">glVertexAttribPointer(gProgram-&gt;attrib(<span class="string">"vert"</span>), <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">0</span>, <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure>
+<p>第一个参数，<code>gProgram-&gt;attrib(&quot;vert&quot;)</code>，这就是那个需要上传数据的shder变量。在这个例子中，我们需要发数据给<code>vert</code>shader变量。</p>
+<p>第二个参数，<code>3</code>表明每个顶点需要三个数字。</p>
+<p>第三个参数，<code>GL_FLOAT</code>说明三个数字是<code>GLfloat</code>类型。这非常重要，因为<code>GLdouble</code>类型的数据大小跟它是不同的。</p>
+<p>第四个参数，<code>GL_FALSE</code>说明我们不需要对浮点数进行“归一化”，假如我们使用了归一化，那这个值会被限定为最小0，最大1。我们不需要对我们的顶点进行限制，所以这个参数为false。</p>
+<p>第五个参数，<code>0</code>，该参数可以在顶点之间有间隔时使用，设置参数为0，表示数据之间没有间隔。</p>
+<p>第六个参数，<code>NULL</code>，假如我们的数据不是从缓冲区头部开始的话，可以设置这个参数来指定。设置该参数为NULL，表示我们的数据从VBO的第一个字节开始。</p>
+<p>现在VBO和VAO都设置完成，我们需要对它们进行解绑定，防止一不小心被哪里给更改了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glBindBuffer(GL_ARRAY_BUFFER, <span class="number">0</span>);</span><br><span class="line">glBindVertexArray(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>到此，shader，VBO和VAO都准备好了。我们可以开始在<code>Render</code>函数里绘制了。</p>
+<p>首先，我们先清空下屏幕，让它变成纯黑色：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glClearColor(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>); <span class="comment">// black</span></span><br><span class="line">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);</span><br></pre></td></tr></table></figure>
+<p>然后告诉OpenGL我们要开始使用VAO和shader了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glUseProgram(gProgram-&gt;object());</span><br><span class="line">glBindVertexArray(gVAO);</span><br></pre></td></tr></table></figure>
+<p>最后，我们绘制出三角形：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">glDrawArrays(GL_TRIANGLES, <span class="number">0</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+<p>调用<code>glDrawArrays</code>函数说明我们需要绘制三角形，从第0个顶点开始，有3个顶点被发送到shader。OpenGL会在当前VAO范围内确定该从哪里获取顶点。</p>
+<p>顶点将会从VBO中取出并发送到vertex shader。然后三角形内的每个像素会发送给fragment shader。接着fragment shader将每个像素变成白色。欢呼！</p>
+<p>现在绘制结束了，为了安全起见，我们需要将shader和VAO进行解绑定：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glBindVertexArray(<span class="number">0</span>);</span><br><span class="line">glUseProgram(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>最后一件事，在我们看到三角形之前需要切换帧缓冲：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">glfwSwapBuffers(gWindow);</span><br></pre></td></tr></table></figure>
+<p>在帧缓冲被交换前，我们会绘制到一个不可见的离屏（off-screen）帧缓冲区。当我们调用<code>glfwSwapBuffers</code>时，离屏缓冲会变成屏幕缓冲，所以我们就能在窗口上看见内容了。</p>
+<h2 id="进一步阅读"><a href="#进一步阅读" class="headerlink" title="进一步阅读"></a>进一步阅读</h2><p>在后续文章中，我们会对三角形进行贴图。之后，你会学到一点矩阵变换知识，就可以使用vertex shader来实现3D立方体旋转。</p>
+<p>在这之后，我们开始创建3D场景并提交多个物体。</p>
+<h2 id="更多现代OpenGL资料"><a href="#更多现代OpenGL资料" class="headerlink" title="更多现代OpenGL资料"></a>更多现代OpenGL资料</h2><p>不幸的是，我不得不跳过很多内容，防止本教程的篇幅过长。后面还有很多好的现代OpenGL资料能满足你的求知欲：</p>
+<ul>
+<li><a href="http://duriansoftware.com/joe/An-intro-to-modern-OpenGL.-Table-of-Contents.html" target="_blank" rel="external">An intro to modern OpenGL</a> by Joe Groff of Durian Software</li>
+<li><a href="http://www.arcsynthesis.org/gltut/" target="_blank" rel="external">Learning Modern 3D Graphics Programming</a> by Jason L. McKesson</li>
+<li><a href="https://github.com/progschj/OpenGL-Examples" target="_blank" rel="external">A collection of simple single file OpenGL examples</a> by Jakob Progsch</li>
+<li><a href="http://ogldev.atspace.co.uk/" target="_blank" rel="external">OpenGL Step by Step</a> by Etay Meiri</li>
+<li><a href="http://db-in.com/blog/2011/01/all-about-opengl-es-2-x-part-13/" target="_blank" rel="external">All about OpenGL ES 2.x</a> by Diney Bomfim</li>
+<li><a href="http://en.wikibooks.org/wiki/OpenGL_Programming" target="_blank" rel="external">The OpenGL Progamming book on Wikibooks</a></li>
+<li><a href="http://www.opengl.org/wiki/Tutorials" target="_blank" rel="external">Tutorials on the OpenGL wiki</a></li>
+<li><a href="http://www.swiftless.com/tutorials/opengl4/1-opengl-window.html" target="_blank" rel="external">OpenGL 4 tutorials</a> by Donald Urquhart (Swiftless)</li>
+<li><a href="http://open.gl/" target="_blank" rel="external">open.gl</a> by Alexander Overvoorde</li>
+<li><a href="http://openglbook.com/" target="_blank" rel="external">OpenGLBook.com</a> by Eddy Luten</li>
+<li><a href="http://www.opengl.org/sdk/docs/" target="_blank" rel="external">The official OpenGL SDK documentation</a></li>
+<li><a href="http://web.eecs.umich.edu/~sugih/courses/eecs487/common/notes/APITables.xml" target="_blank" rel="external">Compatibility tables for OpenGL, OpenGL ES, GLSL, and GLSL ES</a> by Sugih Jamin</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015-07/game-random/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          游戏中的随机概率
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015-04/game-visiablity/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">游戏中的 2D 可见性</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2015-05/modern-opengl1/" data-title="现代OpenGL教程 01 - 入门指南" data-url="http://huangwei.pro/2015-05/modern-opengl1/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"huangweipro"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 HuangWei
+    	</div>
+      	<div class="footer-right">
+		<script src="http://s4.cnzz.com/z_stat.php?id=1257126202&web_id=1257126202" language="JavaScript"></script>
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: false,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		cdn: 'http://dn-huangweipro.qbox.me/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="http://dn-huangweipro.qbox.me/js/main.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-58636572-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+<!-- Baidu Analytics -->
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?37eed26af63c8a627a52667cb97cf2cf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Baidu Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>

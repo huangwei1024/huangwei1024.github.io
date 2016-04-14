@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>现代OpenGL教程 03 - 矩阵，深度缓冲，动画 | HuangWei&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="现代, OpenGL, 教程, 入门指南">
+  
+
+  <meta name="description" content="本文中，我会将不会动的2D三角形替换为旋转的3D立方体。你会看到这样的效果：
+
+现在我们终于能在屏幕上搞点有趣的东西了，我放了更多的动图在这里：http://imgur.com/a/x8q7R
+为了生成旋转立方体，我们需要学些关于矩阵的数学，用于创建透视投影，旋转，平移和“相机”概念。我们还有必要学习些深度缓冲，和典型的随时间改变的3D应用，比如动画。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="现代OpenGL教程 03 - 矩阵，深度缓冲，动画">
+<meta property="og:url" content="http://huangwei.pro/2015-08/modern-opengl3/index.html">
+<meta property="og:site_name" content="HuangWei's blog">
+<meta property="og:description" content="本文中，我会将不会动的2D三角形替换为旋转的3D立方体。你会看到这样的效果：
+
+现在我们终于能在屏幕上搞点有趣的东西了，我放了更多的动图在这里：http://imgur.com/a/x8q7R
+为了生成旋转立方体，我们需要学些关于矩阵的数学，用于创建透视投影，旋转，平移和“相机”概念。我们还有必要学习些深度缓冲，和典型的随时间改变的3D应用，比如动画。">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/modern-opengl-03.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/rotating-crate.gif">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/mat4x4.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/mat-x-mat.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/mat-x-mat-commutative.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/rotate-translate.gif">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/translate-rotate.gif">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/mat-x-vec.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/homo-coord-letters.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/homo-coord.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/crate-stretched.jpg">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/frustum.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/depth-buffer-disabled.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/depth-buffer-correct.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/not-animated.png">
+<meta property="og:updated_time" content="2016-04-14T08:48:03.563Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="现代OpenGL教程 03 - 矩阵，深度缓冲，动画">
+<meta name="twitter:description" content="本文中，我会将不会动的2D三角形替换为旋转的3D立方体。你会看到这样的效果：
+
+现在我们终于能在屏幕上搞点有趣的东西了，我放了更多的动图在这里：http://imgur.com/a/x8q7R
+为了生成旋转立方体，我们需要学些关于矩阵的数学，用于创建透视投影，旋转，平移和“相机”概念。我们还有必要学习些深度缓冲，和典型的随时间改变的3D应用，比如动画。">
+<meta name="twitter:image" content="http://huangwei.pro/static/img/opengl-tutorials/modern-opengl-03.png">
+  
+    <link rel="alternative" href="/atom.xml" title="HuangWei&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://dn-huangweipro.qbox.me/static/favicon.ico">
+  
+  <link rel="stylesheet" href="http://dn-huangweipro.qbox.me/css/style.css">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">HuangWei</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/collections">好文收藏</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+					        
+								<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/2d/" style="font-size: 12px;">2d</a> <a href="/tags/acm/" style="font-size: 14px;">acm</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/bloom-filter/" style="font-size: 10px;">bloom_filter</a> <a href="/tags/concrete-mathematics/" style="font-size: 18px;">concrete_mathematics</a> <a href="/tags/dev-log/" style="font-size: 10px;">dev-log</a> <a href="/tags/distribution/" style="font-size: 12px;">distribution</a> <a href="/tags/doom/" style="font-size: 10px;">doom</a> <a href="/tags/effective/" style="font-size: 10px;">effective</a> <a href="/tags/encryption/" style="font-size: 10px;">encryption</a> <a href="/tags/game/" style="font-size: 18px;">game</a> <a href="/tags/go/" style="font-size: 10px;">go</a> <a href="/tags/graph-theory/" style="font-size: 10px;">graph_theory</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/number-theory/" style="font-size: 20px;">number_theory</a> <a href="/tags/opengl/" style="font-size: 16px;">opengl</a> <a href="/tags/pathfinding/" style="font-size: 10px;">pathfinding</a> <a href="/tags/permutation/" style="font-size: 10px;">permutation</a> <a href="/tags/pixi/" style="font-size: 10px;">pixi</a> <a href="/tags/random/" style="font-size: 12px;">random</a> <a href="/tags/reading-notes/" style="font-size: 18px;">reading_notes</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sight/" style="font-size: 10px;">sight</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/string/" style="font-size: 14px;">string</a> <a href="/tags/summary/" style="font-size: 14px;">summary</a> <a href="/tags/tree/" style="font-size: 12px;">tree</a> <a href="/tags/trie/" style="font-size: 14px;">trie</a> <a href="/tags/tutorials/" style="font-size: 16px;">tutorials</a> <a href="/tags/visibility/" style="font-size: 12px;">visibility</a> <a href="/tags/windows/" style="font-size: 10px;">windows</a> <a href="/tags/zen/" style="font-size: 10px;">zen</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">前网易码农<br>现苦逼创业<br>轻微完美主义强迫症<br>努力提升个人魅力，强化自身修养</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">HuangWei</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">HuangWei</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/collections">好文收藏</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+			        
+						<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-modern-opengl3" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015-08/modern-opengl3/" class="article-date">
+  	<time datetime="2015-08-12T16:00:00.000Z" itemprop="datePublished">2015-08-13</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      现代OpenGL教程 03 - 矩阵，深度缓冲，动画
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tutorials/">tutorials</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/modern-opengl-tutorials/">modern-opengl-tutorials</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="60%" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/modern-opengl-03.png"></p></p>
+<p>本文中，我会将不会动的2D三角形替换为旋转的3D立方体。你会看到这样的效果：</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/rotating-crate.gif"></p></p>
+<p>现在我们终于能在屏幕上搞点有趣的东西了，我放了更多的动图在这里：<a href="http://imgur.com/a/x8q7R" target="_blank" rel="external">http://imgur.com/a/x8q7R</a></p>
+<p>为了生成旋转立方体，我们需要学些关于矩阵的数学，用于创建透视投影，旋转，平移和“相机”概念。我们还有必要学习些深度缓冲，和典型的随时间改变的3D应用，比如动画。</p>
+<a id="more"></a>
+<h2 id="获取代码"><a href="#获取代码" class="headerlink" title="获取代码"></a>获取代码</h2><p>所有例子代码的zip打包可以从这里获取：<a href="https://github.com/tomdalling/opengl-series/archive/master.zip" target="_blank" rel="external">https://github.com/tomdalling/opengl-series/archive/master.zip</a>。</p>
+<p>这一系列文章中所使用的代码都存放在：<a href="https://github.com/tomdalling/opengl-series" target="_blank" rel="external">https://github.com/tomdalling/opengl-series</a>。你可以在页面中下载zip，加入你会git的话，也可以复制该仓库。</p>
+<p>本文代码你可以在<code><a href="https://github.com/tomdalling/opengl-series/tree/master/source/03_matrices" target="_blank" rel="external">source/03_matrices</a></code>目录里找到。使用OS X系统的，可以打开根目录里的<code>opengl-series.xcodeproj</code>，选择本文工程。使用Windows系统的，可以在Visual Studio 2013里打开<code>opengl-series.sln</code>，选择相应工程。</p>
+<p>工程里已包含所有依赖，所以你不需要再安装或者配置额外的东西。如果有任何编译或运行上的问题，请联系我。</p>
+<h2 id="矩阵原理"><a href="#矩阵原理" class="headerlink" title="矩阵原理"></a>矩阵原理</h2><p>本文讲的最多的就是关于3D中的矩阵，所以让我们在写代码前先了解下矩阵原理。我不会过多关注数学，网上有很多好的这类资源。我们只需要使用GLM来实现相关运算。我会注重于那些应用在我们3D程序里的矩阵。</p>
+<p><mark>矩阵是用来进行3D变换。</mark>可能的变换包括（点击可以看动画）：</p>
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Rotation_matrix" target="_blank" rel="external">旋转</a></li>
+<li><a href="http://imgur.com/a/x8q7R#6" target="_blank" rel="external">缩放</a>（变大和变小）</li>
+<li><a href="http://en.wikipedia.org/wiki/Translation_(geometry" target="_blank" rel="external">平移</a>)（移动）</li>
+<li><a href="http://imgur.com/a/x8q7R#0" target="_blank" rel="external">透视/正交 投影</a>（后面会解释）</li>
+</ul>
+<p>一个矩阵是一个数字表格，像这样：</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/mat4x4.png"></p></p>
+<p>矩阵英文matrix的复数形式是matrices。</p>
+<p>不同的数值的能产生不同类型的变换。上面的那个矩阵会绕着Z轴旋转90°。我们会使用GLM来创建矩阵，所以我们不用理解如何计算出这些数值。</p>
+<p>矩阵可以有任意行和列，但3D变换使用4×4矩阵，就像上面看到的那样。无论我在那说到“矩阵”，指的就是4×4矩阵。</p>
+<p>当用代码实现矩阵时，一般会用一个浮点数组来表示。我们使用<code>glm::mat4</code>类来表示4×4矩阵。</p>
+<p>两个最重要的矩阵操作是：</p>
+<ul>
+<li><mark>matrix × matrix = combined matrix</mark></li>
+<li><mark>matrix × coordinate = transformed coordinate </mark></li>
+</ul>
+<h2 id="矩阵-×-矩阵"><a href="#矩阵-×-矩阵" class="headerlink" title="矩阵 × 矩阵"></a>矩阵 × 矩阵</h2><p>当你要对两个矩阵进行相乘时，它们的乘积是一个包含两者变换的新矩阵。</p>
+<p>比如，你将一个旋转矩阵乘以一个平移矩阵，得到的结果就是“组合”矩阵，即先旋转然后平移。下面的例子展示这类矩阵相乘。</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/mat-x-mat.png"></p></p>
+<p><mark>不像普通的乘法，矩阵乘法中顺序很重要。</mark> 比如，<code>A</code>和<code>B</code>是矩阵，<code>A*B</code>不一定等于<code>B*A</code>。下面我们会使用相同的矩阵，但改变下乘法顺序：</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/mat-x-mat-commutative.png"></p></p>
+<p>注意不同的顺序，结果也不同。下面动画说明顺序有多重要。相同的矩阵，不同的顺序。两个变换分别是沿Y轴上移，和旋转45°。</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/rotate-translate.gif"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/translate-rotate.gif"></p></p>
+<p>当你编码的时候，假如看到变换出错，请回头检查下你的矩阵运算是否是正确的顺序。</p>
+<h2 id="矩阵-×-坐标"><a href="#矩阵-×-坐标" class="headerlink" title="矩阵 × 坐标"></a>矩阵 × 坐标</h2><p>当你用矩阵乘以一个坐标时，它们的乘积就是一个变换后的新坐标。</p>
+<p>比如，你有上面提到的旋转矩阵，乘上坐标(1,1,0)，它的结果就是(-1,1,0)。变换后的坐标就是原始坐标绕着Z周旋转90°。下面是该乘法的图例：</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/mat-x-vec.png"></p></p>
+<h2 id="为何我们会使用4D坐标"><a href="#为何我们会使用4D坐标" class="headerlink" title="为何我们会使用4D坐标"></a>为何我们会使用4D坐标</h2><p>你可能注意到了上面的坐标是4D的，而非3D。它的格式是这样的：</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/homo-coord-letters.png"></p></p>
+<p>为何我们会使用4D坐标？因为我们需要用4x4的矩阵完成所有我们需要的3D变换。不管怎样，矩阵乘法需要左边的列数等于右边的行数。这就意味着4x4矩阵无法与3D坐标相乘，因为矩阵有4列，但坐标只有3行。<mark>我们需要使用4D坐标，因为4x4的矩阵<em>需要</em>用它们来完成矩阵运算。</mark></p>
+<p>一些变换，比如旋转，缩放，只需要3x3矩阵。对于这些变换，我们不需要4D坐标，因为3D坐标就能运算。但无论如何，变换需要至少是4x3的矩阵，而透视投影矩阵需要4x4矩阵，而我们两者都会用到，所以我们强制使用4D。</p>
+<p>这些被称为<a href="http://en.wikipedia.org/wiki/Homogeneous_coordinates" target="_blank" rel="external">齐次坐标</a>。在后续的教程里，我们会讲到有向光照，那里我们会学到有关“W”维度的表示。在这里，我们只需要将3D转换为4D。3D转换为4D只要将第四维坐标“W”设为1即可。比如，坐标(22,33,44)转换为：</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/homo-coord.png"></p></p>
+<p>当需要将4D坐标变为3D时，假如“W”维度是1，你可以直接忽略它，使用X，Y，Z的值即可。如果你发现“W”的值不为1，好吧，你就需要做些额外处理，或者这里出了个bug。</p>
+<h2 id="构造一个立方体"><a href="#构造一个立方体" class="headerlink" title="构造一个立方体"></a>构造一个立方体</h2><p>代码上第一个变动就是用立方体替换之前的三角形。</p>
+<p>我们用三角形来构造立方体，用两个三角形表示6个面的每个面。在旧版本的OpengGL中，我们可以使用1个正方形（<code>GL_QUADS</code>）来替代2个三角表示每个面，但<code>GL_QUADS</code>已经被现代版本的OpenGL给移除了。X，Y，Z坐标值域为-1到1，这意味着立方体是两个单位宽，立方体中心点在原点（原点坐标(0,0,0)）。我们将使用256×256的贴图给立方体每个面贴上。后序文章中都会使用这个数据，我们不需要改变太多。这里有立方体数据：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">GLfloat vertexData[] = &#123;</span><br><span class="line">    <span class="comment">//  X     Y     Z       U     V</span></span><br><span class="line">    <span class="comment">// bottom</span></span><br><span class="line">    <span class="number">-1.0</span>f,<span class="number">-1.0</span>f,<span class="number">-1.0</span>f,   <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">1.0f</span>,<span class="number">-1.0</span>f,<span class="number">-1.0</span>f,   <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">-1.0</span>f,<span class="number">-1.0</span>f, <span class="number">1.0f</span>,   <span class="number">0.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">     <span class="number">1.0f</span>,<span class="number">-1.0</span>f,<span class="number">-1.0</span>f,   <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">1.0f</span>,<span class="number">-1.0</span>f, <span class="number">1.0f</span>,   <span class="number">1.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">    <span class="number">-1.0</span>f,<span class="number">-1.0</span>f, <span class="number">1.0f</span>,   <span class="number">0.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// top</span></span><br><span class="line">    <span class="number">-1.0</span>f, <span class="number">1.0f</span>,<span class="number">-1.0</span>f,   <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">-1.0</span>f, <span class="number">1.0f</span>, <span class="number">1.0f</span>,   <span class="number">0.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">     <span class="number">1.0f</span>, <span class="number">1.0f</span>,<span class="number">-1.0</span>f,   <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">1.0f</span>, <span class="number">1.0f</span>,<span class="number">-1.0</span>f,   <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">-1.0</span>f, <span class="number">1.0f</span>, <span class="number">1.0f</span>,   <span class="number">0.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">     <span class="number">1.0f</span>, <span class="number">1.0f</span>, <span class="number">1.0f</span>,   <span class="number">1.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// front</span></span><br><span class="line">    <span class="number">-1.0</span>f,<span class="number">-1.0</span>f, <span class="number">1.0f</span>,   <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">1.0f</span>,<span class="number">-1.0</span>f, <span class="number">1.0f</span>,   <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">-1.0</span>f, <span class="number">1.0f</span>, <span class="number">1.0f</span>,   <span class="number">1.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">     <span class="number">1.0f</span>,<span class="number">-1.0</span>f, <span class="number">1.0f</span>,   <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">1.0f</span>, <span class="number">1.0f</span>, <span class="number">1.0f</span>,   <span class="number">0.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">    <span class="number">-1.0</span>f, <span class="number">1.0f</span>, <span class="number">1.0f</span>,   <span class="number">1.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// back</span></span><br><span class="line">    <span class="number">-1.0</span>f,<span class="number">-1.0</span>f,<span class="number">-1.0</span>f,   <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">-1.0</span>f, <span class="number">1.0f</span>,<span class="number">-1.0</span>f,   <span class="number">0.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">     <span class="number">1.0f</span>,<span class="number">-1.0</span>f,<span class="number">-1.0</span>f,   <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">1.0f</span>,<span class="number">-1.0</span>f,<span class="number">-1.0</span>f,   <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">-1.0</span>f, <span class="number">1.0f</span>,<span class="number">-1.0</span>f,   <span class="number">0.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">     <span class="number">1.0f</span>, <span class="number">1.0f</span>,<span class="number">-1.0</span>f,   <span class="number">1.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// left</span></span><br><span class="line">    <span class="number">-1.0</span>f,<span class="number">-1.0</span>f, <span class="number">1.0f</span>,   <span class="number">0.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">    <span class="number">-1.0</span>f, <span class="number">1.0f</span>,<span class="number">-1.0</span>f,   <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">-1.0</span>f,<span class="number">-1.0</span>f,<span class="number">-1.0</span>f,   <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">-1.0</span>f,<span class="number">-1.0</span>f, <span class="number">1.0f</span>,   <span class="number">0.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">    <span class="number">-1.0</span>f, <span class="number">1.0f</span>, <span class="number">1.0f</span>,   <span class="number">1.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">    <span class="number">-1.0</span>f, <span class="number">1.0f</span>,<span class="number">-1.0</span>f,   <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// right</span></span><br><span class="line">     <span class="number">1.0f</span>,<span class="number">-1.0</span>f, <span class="number">1.0f</span>,   <span class="number">1.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">     <span class="number">1.0f</span>,<span class="number">-1.0</span>f,<span class="number">-1.0</span>f,   <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">1.0f</span>, <span class="number">1.0f</span>,<span class="number">-1.0</span>f,   <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">1.0f</span>,<span class="number">-1.0</span>f, <span class="number">1.0f</span>,   <span class="number">1.0f</span>, <span class="number">1.0f</span>,</span><br><span class="line">     <span class="number">1.0f</span>, <span class="number">1.0f</span>,<span class="number">-1.0</span>f,   <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">1.0f</span>, <span class="number">1.0f</span>, <span class="number">1.0f</span>,   <span class="number">0.0f</span>, <span class="number">1.0f</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们需要更改下<code>Render</code>函数中<code>glDrawArrays</code>调用，之前是用来绘制三角形的。立方体6个面，每个面有2个三角形，每个三角形有3个顶点，所以需要绘制的顶点数是：6 × 2 × 3 = 36。新的<code>glDrawArrays</code>调用像这样：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">glDrawArrays(GL_TRIANGLES, <span class="number">0</span>, <span class="number">6</span>*<span class="number">2</span>*<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+<p>最后，我们使用新的贴图“wooden-crate.jpg”，我们更改<code>LoadTexture</code>中的文件名，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tdogl::Bitmap bmp = tdogl::Bitmap::bitmapFromFile(ResourcePath(<span class="string">"wooden-crate.jpg"</span>));</span><br></pre></td></tr></table></figure>
+<p>就是这样！我们已经提供了所有绘制带贴图立方体的需要用到的数据。假如你运行程序，你可以看到这样的：</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/crate-stretched.jpg"></p></p>
+<p>此时此刻，我们有两个问题。第一，这个立方体看上去非常2D，因为我们只看到了一个面。我们需要“移动相机”，以不同角度观察这个立方体。第二，上面有些问题，因为立方体宽和高应该相等，但从截图看上去宽度明显比高度大。为了修复这两个问题，我们需要学习更多的矩阵知识，和如何应用到3D程序中。</p>
+<h2 id="裁剪体-默认相机"><a href="#裁剪体-默认相机" class="headerlink" title="裁剪体 - 默认相机"></a>裁剪体 - 默认相机</h2><p>为了理解3D中的“相机”，我们首先得理解裁剪体。</p>
+<p><mark>裁剪体是一个立方体。无论什么东西在裁剪体中的都会显示在屏幕上，任何在裁剪体之外的都不会显示。</mark>裁剪体跟我们上面的立方体是相同大小，它的X，Y，Z坐标值域也是从-1到+1。-X表示左边，+X表示右边，-Y是底部，+Y是顶部，+Z是远离相机，-Z是朝着相机。</p>
+<p>因为我们的立方体和裁剪体一样大，所以我们只能看到立方体的正面。</p>
+<p>这也解释了为何我们的立方体看起来比较宽。窗口显示了裁剪体里的所有东西。窗口的左右边缘是X轴的-1和+1，窗口的底部和顶部边缘是Y轴的-1和+1。裁剪体被拉伸了，用来跟窗口的可视大小相适应，所以我们的立方体看上去不是正方形的。</p>
+<h2 id="固定住相机，让世界移动起来"><a href="#固定住相机，让世界移动起来" class="headerlink" title="固定住相机，让世界移动起来"></a>固定住相机，让世界移动起来</h2><p>我们需要移动相机，使得可以从不同角度进行观察，或放大缩小。但不管怎样，<mark>裁剪体不会更改。它永远是一样的大小和位置。所以我们换种方式来替代移动相机，我们可以移动3D场景让它正确得出现在裁剪体中。</mark>比如，我们想要让相机往右旋转，我们可以把整个世界往左旋转。假如我们想要让相机离玩家近些，我们可以把玩家挪到相机前。这就是“相机”在3D中的工作方式，变换整个世界使得它出现在裁剪体中并且看上去是正确的。</p>
+<p>无论你走到哪里，都会觉得是世界没动，是你在移动。但你也能想象出当你不动，而世界在你脚下滚动，就像你在跑步机上一样。这就是“移动相机”和“移动世界”的区别，这两种方式，对于观察者而言，看上去都是一样的。</p>
+<p>我们如何对3D场景进行变换来适应裁剪体呢？这里我们需要用到矩阵。</p>
+<h2 id="实现相机矩阵"><a href="#实现相机矩阵" class="headerlink" title="实现相机矩阵"></a>实现相机矩阵</h2><p>让我们先来实现相机矩阵。3D中“相机”的解释可认为是对3D场景的一系列变换。因为相机就是一个变换，所以我们可以用矩阵来表示。</p>
+<p>首先，我们需要包含GLM头文件，用来创建不同类型的矩阵。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;glm/gtc/matrix_transform.hpp&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>接着，我们需要更新顶点着色器。我们创建一个相机矩阵变量叫做<code>camera</code>，并且每个顶点都会乘上这个相机矩阵。这样我们就将整个3D场景进行了变换。每个顶点都会被相机矩阵所变换。新的顶点着色器看上去应该是这样的：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 150</span></span><br><span class="line"></span><br><span class="line">uniform mat4 camera; <span class="comment">//this is the new variable</span></span><br><span class="line"></span><br><span class="line">in vec3 vert;</span><br><span class="line">in vec2 vertTexCoord;</span><br><span class="line"></span><br><span class="line">out vec2 fragTexCoord;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Pass the tex coord straight through to the fragment shader</span></span><br><span class="line">    fragTexCoord = vertTexCoord;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Transform the input vertex with the camera matrix</span></span><br><span class="line">    gl_Position = camera * vec4(vert, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在我们需要在C++代码中设置<code>camera</code>着色器变量。在<code>LoadShaders</code>函数的地步，我们添加这样的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gProgram-&gt;use();</span><br><span class="line"></span><br><span class="line">glm::mat4 camera = glm::lookAt(glm::vec3(<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>), glm::vec3(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>), glm::vec3(<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>));</span><br><span class="line">gProgram-&gt;setUniform(<span class="string">"camera"</span>, camera);</span><br><span class="line"></span><br><span class="line">gProgram-&gt;stopUsing();</span><br></pre></td></tr></table></figure>
+<p>这个相机矩阵在本文中不会再被改变，当所有着色器被创建后，我们只需这样设置一次。</p>
+<p>你无法在设置着色器变量，除非着色器在使用中，这就是为何我们用到了<code>gProgram-&gt;use()</code>和<code>gProgram-&gt;stopUsing()</code>。</p>
+<p>我们使用<code>glm::lookAt</code>函数为我们创建相机矩阵。假如你使用的是旧版本的OpenGL，那你应该使用<code>gluLookAt</code>函数来达到相同目的，但<code>gluLookAt</code>已经在最近的OpenGL版本中被移除了。第一个参数<code>glm::vec3(3,3,3)</code>是相机的位置。第二个参数<code>glm::vec3(0,0,0)</code>是相机观察的点。立方体中心是（0,0,0），相机就朝着这个点观察。最后一个参数<code>glm::vec3(0,1,0)</code>是“向上”的方向。我们需要垂直摆放相机，所以我们设置“向上”是沿着Y轴的正方向。假如相机是颠倒或者倾斜的，这里就是其它值了。</p>
+<p>在我们生成了相机矩阵后，我们用<code>gProgram-&gt;setUniform(&quot;camera&quot;, camera);</code>来设置<code>camera</code>着色器变量，<code>setUniform</code>方法属于<code>tdogl::Program</code>类，它会调用<code>glUniformMatrix4fv</code>来设置变量。</p>
+<p>就是这样！我们现在有了一个可运行的相机。</p>
+<p>不幸的是，假如你现在运行程序，你会看到整个都是黑屏。因为我们的立方体顶点经过相机矩阵变换后，飞出了裁剪体。这就是上面我提到的，在裁剪体之外的它是不会被显示。为了能再次看到它，我们需要设置<strong>投影矩阵</strong>。</p>
+<h2 id="实现投影矩阵"><a href="#实现投影矩阵" class="headerlink" title="实现投影矩阵"></a>实现投影矩阵</h2><p>记住裁剪体只有2个单元宽、高和深。假设1个单元等于我们3D场景中的1米。这就意味着我们在相机中能看到正前方2米，这样不是很方便。</p>
+<p>我们需要扩大裁剪体使得能看到3D场景中的更多东西，可怜我们又不能改变裁剪体的大小，但，我们能缩小整个场景。缩小是一个变换，所以我们用矩阵来表示，基本上说，投影矩阵就是用来干这个的。</p>
+<p>让我们在顶点着色器中加入投影矩阵变量。更新后的代码看上去是这样的：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 150</span></span><br><span class="line"></span><br><span class="line">uniform mat4 projection; <span class="comment">//this is the new variable</span></span><br><span class="line">uniform mat4 camera;</span><br><span class="line"></span><br><span class="line">in vec3 vert;</span><br><span class="line">in vec2 vertTexCoord;</span><br><span class="line"></span><br><span class="line">out vec2 fragTexCoord;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Pass the tex coord straight through to the fragment shader</span></span><br><span class="line">    fragTexCoord = vertTexCoord;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Apply camera and projection transformations to the vertex</span></span><br><span class="line">    gl_Position = projection * camera * vec4(vert, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意矩阵相乘的顺序：<code>projection * camera * vert</code>。相机变换是放在首位的，投影矩阵是第二位。<mark>矩阵乘法中，变换从右往左，从顶点角度说是从最近的变换到更早前的变换。</mark></p>
+<p>现在让我们在C++代码中设置<code>projection</code>着色器变量，方式和我们设置<code>camera</code>变量相同。在<code>LoadShaders</code>函数中，添加如下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glm::mat4 projection = glm::perspective(glm::radians(<span class="number">50.0f</span>), SCREEN_SIZE.x/SCREEN_SIZE.y, <span class="number">0.1f</span>, <span class="number">10.0f</span>);</span><br><span class="line">gProgram-&gt;setUniform(<span class="string">"projection"</span>, projection);</span><br></pre></td></tr></table></figure>
+<p>假如你使用的是旧版本OpenGL，你可以使用<code>gluPerspective</code>来设置投影矩阵，同样<code>gluPerspective</code>函数在最近版本的OpenGL中也被移除了。幸运的是你可以使用<code>glm::perspective</code>来替代。</p>
+<p><code>glm::perspective</code>第一个参数是“可视区域”参数。这个参数是个弧度，用来说明相机视野有多宽。弧度换算我们可以用<code>glm::radians</code>函数来将50度转换为弧度。大的可视区域意味着我们的相机可以看到更多场景，看上去就像是缩小了。小的可视区域意味着相机只能看到场景的一小部分，看上去像是放大了。第二个参数是“纵横比”，该参数表示可视区域的纵横比率。一般该参数设置为窗口的<code>width/height</code>，倒数第二个参数是“近平面”，近平面是裁剪体的前面，<code>0.1</code>表示近平面离相机是0.1单位远。任何离相机小于<code>0.1</code>单位的物体均不可见。近平面的值必须大于0。最后一个参数是“远平面”，远平面是裁剪体的后面。<code>10.0</code>表示相机所显示的物体均离相机10个单位之内。任何大于10单位的物体均不可见。我们的立方体是3单位远，所以它能被看见。</p>
+<p><code>glm::perspective</code>对将<a href="http://en.wikipedia.org/wiki/Viewing_frustum&quot;" target="_blank" rel="external">可视锥体</a>对应到裁剪体中非常有用。一个锥体像是一个金字塔被砍掉了顶端。金字塔的底部就是远平面，顶部就是近平面。可视区域就是该锥体胖瘦。任何在锥体里的物体都会被显示，而不再内的就隐藏。</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/frustum.png"></p></p>
+<p>有了相机矩阵和投影矩阵的组合，我们就可以看到立方体了。运行程序你会看到：</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/depth-buffer-disabled.png"></p></p>
+<p>这看上去。。。几乎是对的。</p>
+<p>这个立方体看上去已经是正方形了，不再是矩形。这是因为<code>glm::perspective</code>中的“纵横比”参数，能够基于窗口的宽和高进行正确的调整比例。</p>
+<p>不幸的是，截图看上去立方体的背面渲染并覆盖到前面来了。我们当然不希望发生这样的事，我们需要开启<strong>深度缓冲</strong>来解决。</p>
+<h2 id="深度缓冲"><a href="#深度缓冲" class="headerlink" title="深度缓冲"></a>深度缓冲</h2><p>OpenGL默认会将最新的绘制覆盖到之前的绘制上。假如一个物体的背面在前面之后绘制，就会发生背面挡住前面。<mark>深度缓冲就是为了防止背景层覆盖到前景层的东西。</mark></p>
+<p>假如深度缓冲被开启，每个被绘制的像素到相机的距离都是可知的。这个距离会以一个数值保存在深度缓冲里。当你绘制一个像素在另外一个已存在的像素上时，OpenGL会查找深度缓冲来决定哪个像素应该离相机更近。假如新的像素离相机更近，那该像素点就会被重写。假如之前的像素离相机更近，那新像素就会被<em>抛弃</em>。所以，<mark>一个之前已存在的像素只会当新像素离相机更近时才会被重写。</mark>这就叫做“深度测试”。</p>
+<h2 id="实现深度缓冲"><a href="#实现深度缓冲" class="headerlink" title="实现深度缓冲"></a>实现深度缓冲</h2><p>在<code>AppMain</code>函数中，调用了<code>glewInit</code>之后，我们添加如下代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glEnable(GL_DEPTH_TEST);</span><br><span class="line">glDepthFunc(GL_LESS);</span><br></pre></td></tr></table></figure>
+<p>这告诉OpenGL开启深度测试。调用<code>glDepthFunc</code>是表明假如像素离相机的距离<em>小于</em>之前的像素距离时应该被重写。</p>
+<p>最后一步我们需要在渲染每帧之后清理深度缓冲。假如我们不清理，旧的像素距离会保存在缓冲中，这样会影响到绘制新的一帧。在<code>Render</code>函数里，我们改变<code>glClear</code>来实现它：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);</span><br></pre></td></tr></table></figure>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/depth-buffer-correct.png"></p></p>
+<h2 id="旋转立方体"><a href="#旋转立方体" class="headerlink" title="旋转立方体"></a>旋转立方体</h2><p>假如你完成了上述例子，祝贺你走了这么远！最后我们来实现会旋转的立方体动画。</p>
+<p>如何实现旋转？你会猜到：另外一个矩阵。这与之前的矩阵不同的是，这个矩阵是每帧都在改变，之前的矩阵都是常量。</p>
+<p>我需要新建一个“模型”矩阵。在常见的3D引擎中，每个物体都有一个模型矩阵。相机和投影矩阵对整个场景来说是一样的，但模型矩阵是每个物体都不同。模型矩阵用来摆放每个物体在正确的位置上（平移），设置正确的面向（旋转），或者改变物体大小（缩放）。我们只有一个物体在当前3D场景上，所以，我们只需要一个模型矩阵。</p>
+<p>让我们添加一个<code>model</code>矩阵变量到顶点着色器，就像我们添加相机和投影一样。最终版本的顶点着色器应该是这样的：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 150</span></span><br><span class="line"></span><br><span class="line">uniform mat4 projection;</span><br><span class="line">uniform mat4 camera;</span><br><span class="line">uniform mat4 model; <span class="comment">//this is the new variable</span></span><br><span class="line"></span><br><span class="line">in vec3 vert;</span><br><span class="line">in vec2 vertTexCoord;</span><br><span class="line"></span><br><span class="line">out vec2 fragTexCoord;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Pass the tex coord straight through to the fragment shader</span></span><br><span class="line">    fragTexCoord = vertTexCoord;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Apply all matrix transformations to vert</span></span><br><span class="line">    gl_Position = projection * camera * model * vec4(vert, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还是要注意矩阵相乘的顺序。模型矩阵是<code>vert</code>变量最近的一次变换，意味着模型矩阵应该第一个被使用，其次是相机，最后是投影。</p>
+<p>现在我们需要设置新的<code>model</code>着色器变量。不像相机和投影变量，模型变量需要每帧都被设置，所以我们把它放在<code>Render</code>函数里。在<code>gProgram-&gt;use()</code>之后添加这样的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gProgram-&gt;setUniform(<span class="string">"model"</span>, glm::rotate(glm::mat4(), glm::radians(<span class="number">45.0f</span>), glm::vec3(<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>)));</span><br></pre></td></tr></table></figure>
+<p>我们使用<code>glm::rotate</code>函数创建一个旋转矩阵。第一个参数是一个已存在的需要进行旋转的矩阵。在这我们不需要对已存在的矩阵进行旋转，所以我们传个新的<code>glm::mat4</code>对象就可以了。下一个参数是旋转的角度，或者说是要旋转多少度。现在让我给它设置个45°。最后一个参数是旋转的轴。想象下旋转像是将物体插在叉子上，然后转动叉子。叉子就是轴，角度就是你的转动。在我们的例子中，我们使用垂直的叉子，所以立方体像在一个平台上旋转。</p>
+<p>运行程序，你们看到立方体被旋转：</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/not-animated.png"></p></p>
+<p>它还没有转动，因为矩阵没有被更改-它永远是旋转了45°。最后一步就是让它每帧都旋转一下。</p>
+<h2 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h2><p>首先，添加一个新的全局变量叫<code>gDegreesRotated</code>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GLfloat gDegreesRotated = <span class="number">0.0f</span>;</span><br></pre></td></tr></table></figure>
+<p>每帧，我们会轻微的增加<code>gDegreesRotated</code>，并且我们用它来计算新的旋转矩阵。这样就能达到动画效果。我们需要做的就是更新，绘制，更新，绘制，更新，绘制，这样一个模式。</p>
+<p>让我们创建一个<code>Update</code>函数，用来每次增加<code>gDegreesRotated</code>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Update</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//rotate by 1 degree</span></span><br><span class="line">    gDegreesRotated += <span class="number">1.0f</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//don't go over 360 degrees</span></span><br><span class="line">    <span class="keyword">while</span>(gDegreesRotated &gt; <span class="number">360.0f</span>) gDegreesRotated -= <span class="number">360.0f</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们需要每帧都调用一次<code>Update</code>函数。让我们把它加入到<code>AppMain</code>的循环中，在调用<code>Render</code>之前。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(glfwGetWindowParam(GLFW_OPENED))&#123;</span><br><span class="line">    <span class="comment">// process pending events</span></span><br><span class="line">    glfwPollEvents();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// update the rotation animation</span></span><br><span class="line">    Update();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// draw one frame</span></span><br><span class="line">    Render();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在我们需要基于<code>gDegreesRotated</code>变量来重新计算模型矩阵。在<code>Render</code>函数中我们修改相关代码来设置模型矩阵：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gProgram-&gt;setUniform(<span class="string">"model"</span>, glm::rotate(glm::mat4(), glm::radians(gDegreesRotated), glm::vec3(<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>)));</span><br></pre></td></tr></table></figure>
+<p>与之前唯一不同的是我们使用了<code>gDegreesRotated</code>来替换45°常量。</p>
+<p>你现在运行程序能看到一个漂亮，平滑转动的立方体动画。唯一的问题就是转动的速度很你的FPS帧率有关。假如FPS高，你的立方体旋转的就快。假如FPS降低，那立方体旋转的就慢些。这不够理想。一个程序应该能正确更新，而不在乎于运行的帧率。</p>
+<h2 id="基于时间的动画"><a href="#基于时间的动画" class="headerlink" title="基于时间的动画"></a>基于时间的动画</h2><p>为了使程序跑起来更正确，不依赖于FPS，动画应该<em>每秒</em>更新，而非<em>每帧</em>更新。最简单得方式就是对时间进行计数，并相对上次更新时间来正确更新。让我们改下<code>Update</code>函数，增加个变量<code>secondsElapsed</code>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Update</span><span class="params">(<span class="keyword">float</span> secondsElapsed)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> GLfloat degreesPerSecond = <span class="number">180.0f</span>;</span><br><span class="line">    gDegreesRotated += secondsElapsed * degreesPerSecond;</span><br><span class="line">    <span class="keyword">while</span>(gDegreesRotated &gt; <span class="number">360.0f</span>) gDegreesRotated -= <span class="number">360.0f</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码使得立方体每秒旋转180°，而无关多少帧率。</p>
+<p>在<code>AppMain</code>循环中，我们需要计算离上次更新过去了多少秒。新的循环应该是这样：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> lastTime = glfwGetTime();</span><br><span class="line"><span class="keyword">while</span>(glfwGetWindowParam(GLFW_OPENED))&#123;</span><br><span class="line">    <span class="comment">// process pending events</span></span><br><span class="line">    glfwPollEvents();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// update the scene based on the time elapsed since last update</span></span><br><span class="line">    <span class="keyword">double</span> thisTime = glfwGetTime();</span><br><span class="line">    Update((float)(thisTime - lastTime));</span><br><span class="line">    lastTime = thisTime;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// draw one frame</span></span><br><span class="line">    Render();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>glfwGetTime</code>返回从程序启动开始到现在所逝去的时间。</p>
+<p>我们使用<code>lastTime</code>变量来记录上次更新时间。每次迭代，我们获取最新的时间存入变量<code>thisTime</code>。从上次更新到现在的差值就是<code>thisTime - lastTime</code>。当更新结束，我们设置<code>lastTime = thisTime</code>以便下次循环迭代的时候很正常工作。</p>
+<p>这是基于时间更新的最简单方法。这里还有<a href="http://gafferongames.com/game-physics/fix-your-timestep/" target="_blank" rel="external">更好的更新方法</a>，但我们还不需要搞得这么复杂。</p>
+<h2 id="下篇预告"><a href="#下篇预告" class="headerlink" title="下篇预告"></a>下篇预告</h2><p>下一篇，我们会使用<code>tdogl::Camera</code>类来实现用键盘操作第一人称射击类型的相机移动，可以用鼠标观察不同方向，或者用鼠标滚轮来放大缩小。</p>
+<h2 id="更多资源"><a href="#更多资源" class="headerlink" title="更多资源"></a>更多资源</h2><ul>
+<li><a href="http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/" target="_blank" rel="external">Tutorial 3 : Matrices</a> is a great explanation of matrices from opengl-tutorial.org</li>
+<li><a href="http://en.wikipedia.org/wiki/Scaling_(geometry" target="_blank" rel="external">Scaling</a>), <a href="http://en.wikipedia.org/wiki/Rotation_matrix" target="_blank" rel="external">rotation</a>, <a href="http://en.wikipedia.org/wiki/Translation_(geometry" target="_blank" rel="external">translation</a>), and <a href="http://en.wikipedia.org/wiki/Transformation_matrix" target="_blank" rel="external">transformation matrices</a> on Wikipedia</li>
+<li><a href="http://www.matrix44.net/cms/notes/opengl-3d-graphics/basic-3d-math-matrices" target="_blank" rel="external">Basic 3D Math: Matrices</a></li>
+<li><a href="http://www.teamten.com/lawrence/graphics/homogeneous/" target="_blank" rel="external">Homogeneous coordinates</a> by Lawrence Kesteloot</li>
+<li><a href="http://www.glprogramming.com/red/chapter03.html" target="_blank" rel="external">Viewing</a> chapter of the OpenGL red book. Uses old version of OpenGL in code examples, but the theory is still the same.</li>
+<li>GLM <a href="http://glm.g-truc.net/code.html" target="_blank" rel="external">code samples</a> and <a href="http://glm.g-truc.net/glm-0.9.4.pdf" target="_blank" rel="external">manual (pdf)</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Z-buffering" target="_blank" rel="external">Z-buffering (depth buffering)</a> on Wikipedia</li>
+<li><a href="http://www.arcsynthesis.org/gltut/Positioning/Tut05%20Overlap%20and%20Depth%20Buffering.html" target="_blank" rel="external">Overlap and Depth Buffering</a> section of the Learning Modern 3D Graphics Programming book</li>
+<li><a href="http://gafferongames.com/game-physics/fix-your-timestep/" target="_blank" rel="external">Fix Your Timestep!</a> by Glenn Fiedler</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015-09/modern-opengl4/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          现代OpenGL教程 04 - 相机，向量，输入
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015-08/game-sight-light/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">视线和光线：如何给游戏添加 2D 可见性和阴影效果</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2015-08/modern-opengl3/" data-title="现代OpenGL教程 03 - 矩阵，深度缓冲，动画" data-url="http://huangwei.pro/2015-08/modern-opengl3/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"huangweipro"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 HuangWei
+    	</div>
+      	<div class="footer-right">
+		<script src="http://s4.cnzz.com/z_stat.php?id=1257126202&web_id=1257126202" language="JavaScript"></script>
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: false,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		cdn: 'http://dn-huangweipro.qbox.me/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="http://dn-huangweipro.qbox.me/js/main.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-58636572-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+<!-- Baidu Analytics -->
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?37eed26af63c8a627a52667cb97cf2cf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Baidu Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>

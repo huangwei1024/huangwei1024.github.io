@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>现代OpenGL教程 02 - 贴图 | HuangWei&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="现代, OpenGL, 教程, 入门指南">
+  
+
+  <meta name="description" content="现代OpenGL贴图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="现代OpenGL教程 02 - 贴图">
+<meta property="og:url" content="http://huangwei.pro/2015-08/modern-opengl2/index.html">
+<meta property="og:site_name" content="HuangWei's blog">
+<meta property="og:description" content="现代OpenGL贴图">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/modern-opengl-02.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/hazard.png">
+<meta property="og:image" content="http://huangwei.pro/static/img/opengl-tutorials/uv_coords.png">
+<meta property="og:updated_time" content="2016-04-14T08:48:03.563Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="现代OpenGL教程 02 - 贴图">
+<meta name="twitter:description" content="现代OpenGL贴图">
+<meta name="twitter:image" content="http://huangwei.pro/static/img/opengl-tutorials/modern-opengl-02.png">
+  
+    <link rel="alternative" href="/atom.xml" title="HuangWei&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://dn-huangweipro.qbox.me/static/favicon.ico">
+  
+  <link rel="stylesheet" href="http://dn-huangweipro.qbox.me/css/style.css">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">HuangWei</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/collections">好文收藏</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+					        
+								<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/2d/" style="font-size: 12px;">2d</a> <a href="/tags/acm/" style="font-size: 14px;">acm</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/bloom-filter/" style="font-size: 10px;">bloom_filter</a> <a href="/tags/concrete-mathematics/" style="font-size: 18px;">concrete_mathematics</a> <a href="/tags/dev-log/" style="font-size: 10px;">dev-log</a> <a href="/tags/distribution/" style="font-size: 12px;">distribution</a> <a href="/tags/doom/" style="font-size: 10px;">doom</a> <a href="/tags/effective/" style="font-size: 10px;">effective</a> <a href="/tags/encryption/" style="font-size: 10px;">encryption</a> <a href="/tags/game/" style="font-size: 18px;">game</a> <a href="/tags/go/" style="font-size: 10px;">go</a> <a href="/tags/graph-theory/" style="font-size: 10px;">graph_theory</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/number-theory/" style="font-size: 20px;">number_theory</a> <a href="/tags/opengl/" style="font-size: 16px;">opengl</a> <a href="/tags/pathfinding/" style="font-size: 10px;">pathfinding</a> <a href="/tags/permutation/" style="font-size: 10px;">permutation</a> <a href="/tags/pixi/" style="font-size: 10px;">pixi</a> <a href="/tags/random/" style="font-size: 12px;">random</a> <a href="/tags/reading-notes/" style="font-size: 18px;">reading_notes</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sight/" style="font-size: 10px;">sight</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/string/" style="font-size: 14px;">string</a> <a href="/tags/summary/" style="font-size: 14px;">summary</a> <a href="/tags/tree/" style="font-size: 12px;">tree</a> <a href="/tags/trie/" style="font-size: 14px;">trie</a> <a href="/tags/tutorials/" style="font-size: 16px;">tutorials</a> <a href="/tags/visibility/" style="font-size: 12px;">visibility</a> <a href="/tags/windows/" style="font-size: 10px;">windows</a> <a href="/tags/zen/" style="font-size: 10px;">zen</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">前网易码农<br>现苦逼创业<br>轻微完美主义强迫症<br>努力提升个人魅力，强化自身修养</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">HuangWei</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">HuangWei</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/collections">好文收藏</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+			        
+						<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-modern-opengl2" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015-08/modern-opengl2/" class="article-date">
+  	<time datetime="2015-08-05T16:00:00.000Z" itemprop="datePublished">2015-08-06</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      现代OpenGL教程 02 - 贴图
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tutorials/">tutorials</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/modern-opengl-tutorials/">modern-opengl-tutorials</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="60%" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/modern-opengl-02.png"></p></p>
+<p>在本文中，我们将给三角形加一个贴图，这需要在顶点和片段着色器中加入一些新变量，创建和使用贴图对象，并且学习一点贴图单元和贴图坐标的知识。</p>
+<p>本文会使用两个新的类到<code>tdogl</code>命名空间中：<code>tdogl:Bitmap</code>和<code>tdogl:Texture</code>。这些类允许我们将jpg，png或bmp图片上传到显存并用于着色器。<code>tdogl:Program</code>类也增加一些相关接口。</p>
+<a id="more"></a>
+<h2 id="获取代码"><a href="#获取代码" class="headerlink" title="获取代码"></a>获取代码</h2><p>所有例子代码的zip打包可以从这里获取：<a href="https://github.com/tomdalling/opengl-series/archive/master.zip" target="_blank" rel="external">https://github.com/tomdalling/opengl-series/archive/master.zip</a>。</p>
+<p>这一系列文章中所使用的代码都存放在：<a href="https://github.com/tomdalling/opengl-series" target="_blank" rel="external">https://github.com/tomdalling/opengl-series</a>。你可以在页面中下载zip，加入你会git的话，也可以复制该仓库。</p>
+<p>本文代码你可以在<code><a href="https://github.com/tomdalling/opengl-series/tree/master/source/02_textures" target="_blank" rel="external">source/02_textures</a></code>目录里找到。使用OS X系统的，可以打开根目录里的<code>opengl-series.xcodeproj</code>，选择本文工程。使用Windows系统的，可以在Visual Studio 2013里打开<code>opengl-series.sln</code>，选择相应工程。</p>
+<p>工程里已包含所有依赖，所以你不需要再安装或者配置额外的东西。如果有任何编译或运行上的问题，请联系我。</p>
+<h2 id="着色器变量Uniform与Attribute"><a href="#着色器变量Uniform与Attribute" class="headerlink" title="着色器变量Uniform与Attribute"></a>着色器变量Uniform与Attribute</h2><p>教程一里的着色器变量都是<em>attribute</em>，本文介绍另外一种类型的变量：<em>uniform</em>变量。</p>
+<p>着色器变量有两种类型：<em>uniform</em>和<em>attribute</em>。<mark><em>attribute</em>变量可以在每个顶点上有不同值。而<em>uniform</em>变量在多个顶点上保持相同值。</mark>比如，你想要给一个三角形设置一种颜色，那你应该使用<em>uniform</em>变量，如果你希望每个三角形顶点有不同颜色，你应该使用<em>attribute</em>变量。从这开始，我称呼他们为“uniforms”和“attributes”。</p>
+<p><mark>Uniforms能被任意着色器访问，但是Attributes必须先进入<strong>顶点着色器</strong>，而非<strong>片段着色器</strong>。顶点着色器在需要时会将该值传给片段着色器。</mark>这因为Uniforms像常量-它们不会被任何着色器更改。然而，Attributes不是常量。顶点着色器会改变Attribute变量的值，在片段着色器获取之前。就是说，顶点着色器的输出就是片段着色器的输入。</p>
+<p>为了设置Uniform的值，我们可以调用<a href="http://www.opengl.org/sdk/docs/man/xhtml/glUniform.xml" target="_blank" rel="external">glUniform*</a>系列函数。而设置Attribute的值，我们需要在VBO中保存，并且和VAO一起发送给着色器，就像前一篇教程里的<a href="http://www.opengl.org/sdk/docs/man/xhtml/glVertexAttribPointer.xml" target="_blank" rel="external">glVertexAttribPointer</a>。加入你不想把值存在VBO里，你也可以使用<a href="http://www.opengl.org/sdk/docs/man/xhtml/glVertexAttrib.xml" target="_blank" rel="external">glVertexAttrib*</a>系列函数来设置Attribute值。</p>
+<h2 id="贴图"><a href="#贴图" class="headerlink" title="贴图"></a>贴图</h2><p><mark>贴图，大体上来说就是你应用在3D物体上的2D图像。</mark>它有其它用途，但显示2D图像在3D几何上是最常用的。有1D，2D，3D贴图，但本文只讲2D贴图。更深入阅读，请参见<a href="http://www.arcsynthesis.org/gltut/" target="_blank" rel="external">Learning Modern 3D Graphics Programming</a>书中的<a href="http://www.arcsynthesis.org/gltut/Texturing/Tutorial%2014.html" target="_blank" rel="external">Textures are not Pictures</a>章节。</p>
+<p>贴图是存放在显存里的。那就是说，你需要在使用之前上传你的贴图数据给显卡。这类似VBO在前文的作用-VBO也是在使用之前需要存放到显存上。</p>
+<p><mark>贴图的高和宽需要是2的幂次方。</mark>比如16，32，64，128，256，512。本文中使用的是256*256的图像作为贴图，如下图所示。</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="hazard.png" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/hazard.png"></p></p>
+<p>我们使用<code>tdogl:Bitmap</code>来加载“hazard.png”的原始像素数据到内存中，参见<a href="https://github.com/nothings/stb" target="_blank" rel="external">stb_image</a>帮助文档。然后我们使用<code>tdogl:Texture</code>上传原始像素数据给OpenGL贴图对象。幸运的是OpenGL中的贴图创建方法从面世到现在都没有实质性的变化，所以网上有大量的创建贴图的好文章。虽然贴图坐标的传输方式有变化，但创建贴图还是跟以前一样。</p>
+<p>以下是<code>tdogl:Texture</code>的构造函数，用于OpenGL贴图创建。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Texture::Texture(<span class="keyword">const</span> Bitmap&amp; bitmap, GLint minMagFiler, GLint wrapMode) :</span><br><span class="line">    _originalWidth((GLfloat)bitmap.width()),</span><br><span class="line">    _originalHeight((GLfloat)bitmap.height())</span><br><span class="line">&#123;</span><br><span class="line">    glGenTextures(<span class="number">1</span>, &amp;_object);</span><br><span class="line">    glBindTexture(GL_TEXTURE_2D, _object);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minMagFiler);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, minMagFiler);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);</span><br><span class="line">    glTexImage2D(GL_TEXTURE_2D,</span><br><span class="line">                 <span class="number">0</span>, </span><br><span class="line">                 TextureFormatForBitmapFormat(bitmap.format()),</span><br><span class="line">                 (GLsizei)bitmap.width(), </span><br><span class="line">                 (GLsizei)bitmap.height(),</span><br><span class="line">                 <span class="number">0</span>, </span><br><span class="line">                 TextureFormatForBitmapFormat(bitmap.format()), </span><br><span class="line">                 GL_UNSIGNED_BYTE, </span><br><span class="line">                 bitmap.pixelBuffer());</span><br><span class="line">    glBindTexture(GL_TEXTURE_2D, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="贴图坐标"><a href="#贴图坐标" class="headerlink" title="贴图坐标"></a>贴图坐标</h2><p>毫无疑问，贴图坐标就是贴图上的坐标。<mark>关于贴图坐标比较奇特的是它们不是以像素为单位。它们范围是从0到1，(0, 0)是左下角，(1, 1)是右上角。</mark>假如你上传到OpenGL的图像是颠倒的，那(0, 0)就是左上角，而非左下角。将像素坐标转换为贴图坐标，你必须除上贴图的宽和高。比如，在256*256的图像中，像素坐标(128, 256)的贴图坐标是(0.5, 1)。</p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="uv_coords.png" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/uv_coords.png"></p></p>
+<p>贴图坐标通常被称为UV坐标。你也可以叫它们是XY坐标，但是XYZ通常被用来表示顶点，我们不希望将这两者混淆。</p>
+<h2 id="贴图图像单元"><a href="#贴图图像单元" class="headerlink" title="贴图图像单元"></a>贴图图像单元</h2><p>贴图图像单元，亦或简称“贴图单元”，是在OpenGL中略怪异的一部分。<mark>你无法直接发送贴图给着色器。首先，你要绑定贴图到贴图单元，然后呢要发送<strong>贴图单元的索引</strong>给着色器</mark></p>
+<p>对于贴图单元是有数量限制的。在低端硬件上，如手机，它们只有两个贴图单元。既然如此，即使我们有许多的贴图，我们也只能同时使用两个贴图单元在着色器中。我们在本文中只用到了一个贴图，所以也只需要一个贴图单元，但它可以在多个不同的着色器中混合。</p>
+<h2 id="实现贴图"><a href="#实现贴图" class="headerlink" title="实现贴图"></a>实现贴图</h2><p>首先，让我们创建一个新的全局贴图。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tdogl::Texture* gTexture = <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+<p>我们为加载“hazard.png”图片新增一个函数。该函数能被<code>AppMain</code>所调用。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">LoadTexture</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    tdogl::Bitmap bmp = tdogl::Bitmap::bitmapFromFile(ResourcePath(<span class="string">"hazard.png"</span>));</span><br><span class="line">    bmp.flipVertically();</span><br><span class="line">    gTexture = new tdogl::Texture(bmp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下一步，我们给每个三角形的顶点一个贴图坐标。假如你跟上图比较过UV坐标，就可以看出按顺序这个坐标表示（中，上），（左，下）和（右，下）。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GLfloat vertexData[] = &#123;</span><br><span class="line">    <span class="comment">//  X     Y     Z       U     V</span></span><br><span class="line">     <span class="number">0.0f</span>, <span class="number">0.8f</span>, <span class="number">0.0f</span>,   <span class="number">0.5f</span>, <span class="number">1.0f</span>,</span><br><span class="line">    <span class="number">-0.8</span>f,<span class="number">-0.8</span>f, <span class="number">0.0f</span>,   <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">0.8f</span>,<span class="number">-0.8</span>f, <span class="number">0.0f</span>,   <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>现在我们需要修改片段着色器，使得它能使用贴图和贴图坐标作为输入。下面是新的片段着色器代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 150</span></span><br><span class="line">uniform sampler2D tex; <span class="comment">//this is the texture</span></span><br><span class="line">in vec2 fragTexCoord; <span class="comment">//this is the texture coord</span></span><br><span class="line">out vec4 finalColor; <span class="comment">//this is the output color of the pixel</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    finalColor = texture(tex, fragTexCoord);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>uniform</code>关键字说明<code>tex</code>是<em>uniform</em>变量。贴图是一致的，因为所有三角形顶点有相同的贴图。<code>sampler2D</code>是变量类型，说明它包含一个2D贴图。</p>
+<p><code>fragTexCoord</code>是<em>attribute</em>变量，因为每个三角形顶点是不同的贴图坐标。</p>
+<p><code>texture</code>函数是用来查找给定贴图坐标的像素颜色。在GLSL旧版本中，你应该使用<code>texture2D</code>函数来实现该功能。</p>
+<p>我们无法直接传送<em>attribute</em>给判断着色器，因为<em>attribute</em>必须首先通过顶点着色器。这儿是修改过的顶点着色器：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version 150</span></span><br><span class="line">in vec3 vert;</span><br><span class="line">in vec2 vertTexCoord;</span><br><span class="line">out vec2 fragTexCoord;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Pass the tex coord straight through to the fragment shader</span></span><br><span class="line">    fragTexCoord = vertTexCoord;</span><br><span class="line">    </span><br><span class="line">    gl_Position = vec4(vert, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>顶点着色器使用<code>vertTexCoord</code>作为输入，并且将它不经修改，直接传给名为<code>fragTexCoord</code>的<em>attribute</em>片段着色器变量。</p>
+<p>着色器有两个变量需要我们设置：<code>vertTexCoord</code><em>attribute</em>变量和<code>tex</code><em>uniform</em>变量。让我们从设置<code>tex</code>变量开始。打开main.cpp，找到<code>Render()</code>函数。我们在绘制三角形之前设置<code>tex</code><em>uniform</em>变量：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">glActiveTexture(GL_TEXTURE0);</span><br><span class="line">glBindTexture(GL_TEXTURE_2D, gTexture-&gt;object());</span><br><span class="line">gProgram-&gt;setUniform(<span class="string">"tex"</span>, <span class="number">0</span>); <span class="comment">//set to 0 because the texture is bound to GL_TEXTURE0</span></span><br></pre></td></tr></table></figure>
+<p>贴图在没有绑定到贴图单元时，是无法使用的。<code>glActiveTexture</code>告诉OpenGL我们希望使用哪个贴图单元。<code>GL_TEXTURE0</code>是第一个贴图单元，我们就使用它。</p>
+<p>下一本，我们使用<code>glBindTexture</code>来绑定我们的贴图到激活的贴图单元。</p>
+<p>然后我们设置贴图单元索引给<code>tex</code><em>uniform</em>着色器变量。我们使用0号贴图单元，所以我们设置<code>tex</code>变量为整数<code>0</code>。<code>setUniform</code>方法只是调用了<code>glUnifrom1i</code>函数。</p>
+<p>最后一步，获取贴图坐标给<code>vertTexCoord</code><em>attribute</em>变量。为了实现它，我们需要修改<code>LoadTriangle()</code>函数中的VAO。之前的代码是这样的：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Put the three triangle vertices into the VBO</span></span><br><span class="line">GLfloat vertexData[] = &#123;</span><br><span class="line">    <span class="comment">//  X     Y     Z</span></span><br><span class="line">     <span class="number">0.0f</span>, <span class="number">0.8f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">-0.8</span>f,<span class="number">-0.8</span>f, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">0.8f</span>,<span class="number">-0.8</span>f, <span class="number">0.0f</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// connect the xyz to the "vert" attribute of the vertex shader</span></span><br><span class="line">glEnableVertexAttribArray(gProgram-&gt;attrib(<span class="string">"vert"</span>));</span><br><span class="line">glVertexAttribPointer(gProgram-&gt;attrib(<span class="string">"vert"</span>), <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">0</span>, <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure>
+<p>现在我们需要改成这样：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Put the three triangle vertices (XYZ) and texture coordinates (UV) into the VBO</span></span><br><span class="line">GLfloat vertexData[] = &#123;</span><br><span class="line">    <span class="comment">//  X     Y     Z       U     V</span></span><br><span class="line">     <span class="number">0.0f</span>, <span class="number">0.8f</span>, <span class="number">0.0f</span>,   <span class="number">0.5f</span>, <span class="number">1.0f</span>,</span><br><span class="line">    <span class="number">-0.8</span>f,<span class="number">-0.8</span>f, <span class="number">0.0f</span>,   <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">     <span class="number">0.8f</span>,<span class="number">-0.8</span>f, <span class="number">0.0f</span>,   <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// connect the xyz to the "vert" attribute of the vertex shader</span></span><br><span class="line">glEnableVertexAttribArray(gProgram-&gt;attrib(<span class="string">"vert"</span>));</span><br><span class="line">glVertexAttribPointer(gProgram-&gt;attrib(<span class="string">"vert"</span>), <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">5</span>*<span class="keyword">sizeof</span>(GLfloat), <span class="literal">NULL</span>);</span><br><span class="line">    </span><br><span class="line"><span class="comment">// connect the uv coords to the "vertTexCoord" attribute of the vertex shader</span></span><br><span class="line">glEnableVertexAttribArray(gProgram-&gt;attrib(<span class="string">"vertTexCoord"</span>));</span><br><span class="line">glVertexAttribPointer(gProgram-&gt;attrib(<span class="string">"vertTexCoord"</span>), <span class="number">2</span>, GL_FLOAT, GL_TRUE,  <span class="number">5</span>*<span class="keyword">sizeof</span>(GLfloat), (const GLvoid*)(<span class="number">3</span> * sizeof(GLfloat)));</span><br></pre></td></tr></table></figure>
+<p>我们第二次调用了<code>glVertexAttribPointer</code>，但我们也修改了第一个调用。最重要的是最后两个参数。</p>
+<p>两个<code>glVertexAttribPointer</code>调用的倒数第二个参数都是<code>5*sizeof(GLfloat)</code>。这是“步长”参数。该参数是表明每个值开始位置的间隔是多少字节，或者说是到下个值开始的字节数。在两个调用中，每个值是5个<code>GLFloat</code>长度。举个例子，加入我们从“X”开始，往前数5个值，我们会落在下个“X”值上。从“U”开始也一样，也是往前数5个。该参数是字节单位，不是浮点作为单位，所以我们必须乘上浮点类型所占字节数。</p>
+<p>最后一个参数<code>glVertexAttribPointer</code>是一个“偏移”参数。该参数需要知道从开始到第一个值有多少字节。开始是<strong>XYZ</strong>，所以偏移设置为NULL表示“到开始的距离为0字节”。第一个<strong>UV</strong>不在最前面-中间有3个浮点的距离。再说一遍，参数是以字节为单位，而非浮点，所以我们必须乘上浮点类型所占字节数。并且我们必须将数值转为<code>const GLvoid*</code>类型，因为在旧版本的OpenGL中该参数有别于现在的“偏移”。</p>
+<p>现在，当你运行程序，你就能看到如本文最上方的那个三角形。</p>
+<h2 id="下篇预告"><a href="#下篇预告" class="headerlink" title="下篇预告"></a>下篇预告</h2><p>下一篇教程中我们会学一些矩阵相关的东西，使用矩阵来旋转立方体，移动相机，和添加透视投影。我们还会学习深度缓冲和基于时间更新的逻辑，比如动画。</p>
+<h2 id="更多OpenGL贴图相关资源"><a href="#更多OpenGL贴图相关资源" class="headerlink" title="更多OpenGL贴图相关资源"></a>更多OpenGL贴图相关资源</h2><ul>
+<li><a href="http://www.opengl.org/wiki/Texture" target="_blank" rel="external">The texture page on the OpenGL wiki</a></li>
+<li><a href="http://www.arcsynthesis.org/gltut/Texturing/Texturing.html" target="_blank" rel="external">The texturing chapters</a> of the Learning Modern 3D Graphics Programming book.</li>
+<li><a href="http://ogldev.atspace.co.uk/www/tutorial16/tutorial16.html" target="_blank" rel="external">Tutorial 16 - Basic Texture Mapping</a> by Etay Meiri</li>
+<li><a href="https://github.com/progschj/OpenGL-Examples/blob/master/03texture.cpp" target="_blank" rel="external">The texturing example code</a> by Jakob Progsch</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015-08/game-sight-light/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          视线和光线：如何给游戏添加 2D 可见性和阴影效果
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015-07/game-random/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">游戏中的随机概率</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2015-08/modern-opengl2/" data-title="现代OpenGL教程 02 - 贴图" data-url="http://huangwei.pro/2015-08/modern-opengl2/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"huangweipro"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 HuangWei
+    	</div>
+      	<div class="footer-right">
+		<script src="http://s4.cnzz.com/z_stat.php?id=1257126202&web_id=1257126202" language="JavaScript"></script>
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: false,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		cdn: 'http://dn-huangweipro.qbox.me/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="http://dn-huangweipro.qbox.me/js/main.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-58636572-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+<!-- Baidu Analytics -->
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?37eed26af63c8a627a52667cb97cf2cf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Baidu Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>

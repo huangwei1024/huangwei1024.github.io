@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>百度面试题 - 搜索框的suggestion | HuangWei&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="百度, 面试题, 搜索框, suggestion, trie, string">
+  
+
+  <meta name="description" content="百度搜索框的suggestion,比如输入北京，搜索框下面会以北京为前缀，展示“北京爱情故事”、“北京公交”、“北京医院”等等搜索词。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百度面试题 - 搜索框的suggestion">
+<meta property="og:url" content="http://huangwei.pro/2012-09/baidu-suggestion/index.html">
+<meta property="og:site_name" content="HuangWei's blog">
+<meta property="og:description" content="百度搜索框的suggestion,比如输入北京，搜索框下面会以北京为前缀，展示“北京爱情故事”、“北京公交”、“北京医院”等等搜索词。">
+<meta property="og:image" content="http://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Trie_example.svg/250px-Trie_example.svg.png">
+<meta property="og:image" content="http://pic002.cnblogs.com/images/2012/157422/2012092418501755.png">
+<meta property="og:image" content="http://pic002.cnblogs.com/images/2012/157422/2012092419063236.png">
+<meta property="og:image" content="http://pic002.cnblogs.com/images/2012/157422/2012092514564342.png">
+<meta property="og:updated_time" content="2016-04-14T08:48:03.558Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="百度面试题 - 搜索框的suggestion">
+<meta name="twitter:description" content="百度搜索框的suggestion,比如输入北京，搜索框下面会以北京为前缀，展示“北京爱情故事”、“北京公交”、“北京医院”等等搜索词。">
+<meta name="twitter:image" content="http://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Trie_example.svg/250px-Trie_example.svg.png">
+  
+    <link rel="alternative" href="/atom.xml" title="HuangWei&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://dn-huangweipro.qbox.me/static/favicon.ico">
+  
+  <link rel="stylesheet" href="http://dn-huangweipro.qbox.me/css/style.css">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">HuangWei</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/collections">好文收藏</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+					        
+								<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/2d/" style="font-size: 12px;">2d</a> <a href="/tags/acm/" style="font-size: 14px;">acm</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/bloom-filter/" style="font-size: 10px;">bloom_filter</a> <a href="/tags/concrete-mathematics/" style="font-size: 18px;">concrete_mathematics</a> <a href="/tags/dev-log/" style="font-size: 10px;">dev-log</a> <a href="/tags/distribution/" style="font-size: 12px;">distribution</a> <a href="/tags/doom/" style="font-size: 10px;">doom</a> <a href="/tags/effective/" style="font-size: 10px;">effective</a> <a href="/tags/encryption/" style="font-size: 10px;">encryption</a> <a href="/tags/game/" style="font-size: 18px;">game</a> <a href="/tags/go/" style="font-size: 10px;">go</a> <a href="/tags/graph-theory/" style="font-size: 10px;">graph_theory</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/number-theory/" style="font-size: 20px;">number_theory</a> <a href="/tags/opengl/" style="font-size: 16px;">opengl</a> <a href="/tags/pathfinding/" style="font-size: 10px;">pathfinding</a> <a href="/tags/permutation/" style="font-size: 10px;">permutation</a> <a href="/tags/pixi/" style="font-size: 10px;">pixi</a> <a href="/tags/random/" style="font-size: 12px;">random</a> <a href="/tags/reading-notes/" style="font-size: 18px;">reading_notes</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sight/" style="font-size: 10px;">sight</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/string/" style="font-size: 14px;">string</a> <a href="/tags/summary/" style="font-size: 14px;">summary</a> <a href="/tags/tree/" style="font-size: 12px;">tree</a> <a href="/tags/trie/" style="font-size: 14px;">trie</a> <a href="/tags/tutorials/" style="font-size: 16px;">tutorials</a> <a href="/tags/visibility/" style="font-size: 12px;">visibility</a> <a href="/tags/windows/" style="font-size: 10px;">windows</a> <a href="/tags/zen/" style="font-size: 10px;">zen</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">前网易码农<br>现苦逼创业<br>轻微完美主义强迫症<br>努力提升个人魅力，强化自身修养</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">HuangWei</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">HuangWei</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/collections">好文收藏</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+			        
+						<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-baidu-suggestion" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2012-09/baidu-suggestion/" class="article-date">
+  	<time datetime="2012-09-22T16:00:00.000Z" itemprop="datePublished">2012-09-23</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      百度面试题 - 搜索框的suggestion
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/string/">string</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/trie/">trie</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h2><hr>
+<p>百度搜索框的suggestion,比如输入北京，搜索框下面会以北京为前缀，展示“北京爱情故事”、“北京公交”、“北京医院”等等搜索词。</p>
+<p>如何设计使得空间和时间复杂度尽量低。</p>
+<a id="more"></a>
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h2><hr>
+<p>在字符串集合$ S $中，找出相同前缀$ P $的字符串。<br>设$ size(S) = N $，查询次数为$ M $。</p>
+<h3 id="1-朴素方案"><a href="#1-朴素方案" class="headerlink" title="1. 朴素方案"></a>1. 朴素方案</h3><p>朴素得，每次查询时，遍历整个字符串集合，比较每个字符串的前缀。</p>
+<p>时间复杂度$ T(N*len(P)) = O(N) $，这里的len(P)是一个常数值，所以不会对大O造成影响，参见<a href="http://zh.wikipedia.org/zh/%E5%A4%A7O%E7%AC%A6%E5%8F%B7" title="大O符号 - 维基百科，自由的百科全书" target="_blank" rel="external">扩展阅读1</a>。</p>
+<p>那总的时间复杂度就是$ O(MN) $，不使用额外空间，则空间复杂度为$ O(1) $。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> Si <span class="keyword">in</span> S:</span><br><span class="line">    <span class="keyword">if</span> prefix(Si, P):</span><br><span class="line">        <span class="keyword">print</span> Si</span><br></pre></td></tr></table></figure>
+<h3 id="2-离线处理方案"><a href="#2-离线处理方案" class="headerlink" title="2. 离线处理方案"></a>2. 离线处理方案</h3><p>想一下方案1，我们大部分时间浪费在了很多不可能的比较上。<br>如，字符串集合中有“南京”，“上海青年”等，跟“北京”前缀毫无关系的词。</p>
+<p>为了优化这部分计算，我们先对字符串集合进行排序，然后二分查找到前缀相关位置，接着遍历，如果遇上没有该前缀的词，就可以停止遍历。</p>
+<p>因为后续的词不可能再有相关前缀，这一特性是字典序后的集合保证的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sort(S)</span><br><span class="line">i = lower_bound(S, P)</span><br><span class="line"><span class="keyword">for</span> i = i to N:</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> prefix(S[i], P):</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">print</span> S[i]</span><br></pre></td></tr></table></figure>
+<p>排序是在第一次查询前先预处理的，后续不需再调用。</p>
+<p>假设每次查询获得条目数为R，所以时间复杂度$ T(NlogN + M(logN + R)) $。</p>
+<p>但我们这里定义$R$为常量，因为真实应用上显示条目上限是有限制的，像baidu就只有10个。</p>
+<p>那时间复杂度就是$ O(NlogN + MlogN) $。<br>集合S在这个方案中最好使用数组保存，随机读写效率高。<br>当然也能使用自平衡树，如<code>std::set</code>，<mark>虽然set排序也是$ O(NlogN) $，但由于其结构的复杂性，实际效率会有几倍的差弱于快排。</mark></p>
+<h3 id="3-在线处理方案"><a href="#3-在线处理方案" class="headerlink" title="3. 在线处理方案"></a>3. 在线处理方案</h3><h4 id="3-1-字典树"><a href="#3-1-字典树" class="headerlink" title="3.1 字典树"></a>3.1 字典树</h4><p>离线跟在线最大的区别，在于离线的字符串集合S是固定，而在线的话集合S会有增加、删除、更新操作。</p>
+<p>所以在线处理的难度大于离线，离线问题可以认为是在线问题的子集。</p>
+<p>假如在$M$次查询过程中，加入$L$次更新操作。在直接套用离线处理方案的情况下，时间复杂度为$ O(LNlogN + MlogN) $。</p>
+<p>显然这时查询不是瓶颈，反而预处理拖了后腿。</p>
+<p>这里，我们推荐使用Trie（<a href="http://zh.wikipedia.org/zh/Trie" title="Trie - 维基百科，自由的百科全书" target="_blank" rel="external">字典树</a>），为什么选择字典树？因为它满足这些需求：</p>
+<ol>
+<li>==更新和查找操作与字符串长度有关，时间复杂度O(1)==，保证了效率。</li>
+<li>==树的遍历顺序隐含了字典顺序==，不需显式排序，跳过预处理瓶颈。</li>
+</ol>
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Trie_example.svg/250px-Trie_example.svg.png" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_prefix</span><span class="params">(node, deep)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> empty(node):                <span class="comment">#子树为空</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">if</span> deep == len(P):            <span class="comment">#找到完整P</span></span><br><span class="line">        <span class="keyword">return</span> all_son(node)    <span class="comment">#返回该子树所有叶节点</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#递归遍历子树</span></span><br><span class="line">    find_prefix(son(node, P[deep]), deep+<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>Trie处理流程大致是这样的，单次查询的时间复杂度为$O(1)$。</p>
+<p>在线的处理方式当然也能用在离线上，但这两者的效率谁高谁低？</p>
+<p>从时间复杂度上，$O(logN)$对$O(1)$，似乎没有啥可比性，但在实践中我们要考虑一些其他因素。 </p>
+<p>首先，数组的下标访问速度优于树的指针访问（关于这点大家可以反汇编，不要迷信教科书上指针访问必定快于下标访问的结论，这点效率虽然有差，但现代编译器会很好的优化相关代码）。 </p>
+<p>其次，获取结果的效率，数组的顺序访问也优于树的遍历。树有中间节点的时间消耗，且数组能比较好得被Cache到。 </p>
+<p>再者，即使 $ N = 1G = 2^{30} $ ， $ logN = 30 $ 而已， $ O(logN) $ 数量级和$O(1)$相比其实不算多坏。 </p>
+<p>使用数组的方案在实际情况下，往往表现优于Trie，而且程序编写难度低，调试方面也相对轻松。 </p>
+<p>最最关键的是，Trie在工程上应用面很窄，根本不像其在理论上来的那样强大。 </p>
+<p>==朴素的Trie一般应用在英文场景，数据集庞大且重复率很高的情况下比较适用。==</p>
+<p>原因就是 ==Trie太费内存，不能应用于中文。== 基本上可以说，不改造不优化，Trie就是废材。 </p>
+<p>但Trie多路查找的思想确实很重要，很多变种能得到很好的时空效率。 </p>
+<p>有些程序员会迷恋甚至迷信各种数据结构在理论上带来的结果，其实我们更应该看清本质，这也是我想写有深度的分析稿子的原因。 </p>
+<p>关于Trie的优化和改造相关内容，我会再整理一份稿子奉上的，这里先作为一个案例引用。</p>
+<h4 id="3-2-改造方案"><a href="#3-2-改造方案" class="headerlink" title="3.2 改造方案"></a>3.2 改造方案</h4><p>现在的问题是，在线处理我们需要像Trie这样的多路查找树特性，而且要能支持中文。 </p>
+<p>这里我们可以转换下思路，可以把中文转换成拼音，这样又可以直接套用Trie，只不过多了中文转拼音一个步骤。 </p>
+<p>转拼音其实不难，就是做个表进行映射下就好了，GBK2.0标准中也就27000+个汉字，处理详细方法在这不累述，请自行google。</p>
+<p><img src="http://pic002.cnblogs.com/images/2012/157422/2012092418501755.png" alt=""></p>
+<p>如上图，朴素的Trie是按英文字母做边的，而拼音是声母和韵母作为单元。 </p>
+<p>比如“好”hao，“双”shuang， ==Tire的做法会使树中间节点冗余，影响查找效率，最重要的是导致内存浪费。== </p>
+<p>优化方法是将Trie对英文字母的映射改成声母和韵母的映射。 </p>
+<p>哈，这个说起来简单，实现起来还是有要注意的地方。 </p>
+<p>Trie对字母的映射，可以简单得开个数组，类似ptr[26]，然后映射就很简单，比如ptr[ch-‘a’]。 </p>
+<p>而声母和韵母的映射没这么简单，一般方法就是枚举、二分查找、map、hash，虽然集合不大，但或多或少都需要耗费些时间。 </p>
+<p>但这个是为减少空间浪费做的一点点时间牺牲，在工程实践上是完全值得的。</p>
+<p><img src="http://pic002.cnblogs.com/images/2012/157422/2012092419063236.png" alt=""></p>
+<p>有童鞋会说，既然声母和韵母还是要映射，为什么不直接映射中文？ </p>
+<p>==其实不映射中文的原因，在于中文处理本身有难度，字符集大，词组间相同前缀较短，容易给树结构的内存问题雪上加霜。== </p>
+<p>用拼音的方法，容易合并相关前缀，比如同音不同字的情况。 </p>
+<p>当然这些空间优势也需要付出一定的时间花费，就是在节点上保存相关词组。 </p>
+<p>比如图例中的shuang，它可能是“双”，也可能是“爽”。这在查询前缀较短的情况下，词组候选集过大，导致额外的性能瓶颈。 </p>
+<p>说到这里的时候，大家可能有点迷糊了，既然中文的查找树太费内存不可用，而拼音的查找树又会退化，那怎么解决才好？ </p>
+<p>在这，我想表明我自己的一个观点，就是特定的复杂的应用应该有量身定做的算法和数据结构，教科书上不可能有现成的方案。所以一个优秀程序员的必经之路，必须要能融会贯通，然后构建出自己的解决方案。</p>
+<p>概括下我的思路。对于有更新的在线处理，我们如果采用多路查找树的思想（我这不提Trie了，因为Trie已经被改造的面目全非），可以既照顾到数据集的更新也能兼顾查询效率，两者的时间复杂度都和操作的字符串长度有关，这已是极小的时间花费。 </p>
+<p>从汉字转为拼音，虽然无法直接映射汉字，导致同音词查询新子问题的出现，但换来了空间可用性。 </p>
+<p>因而打开了一种新的思路，在这里 ==拼音做了类似一级索引的工作，同音字的筛选就能在小数据集中操作。==</p>
+<p><img src="http://pic002.cnblogs.com/images/2012/157422/2012092514564342.png" alt=""></p>
+<p>上图中，红色表示一级索引，绿色表示二级索引，蓝色表示数据集（蓝色是冗余数据优化），不同的图形表示不同的数据结构。这样在工程上的好处是可以结合多个不同数据结构各自的优点。 </p>
+<p>一级索引查找方式类似Trie，二级索引可以使用set、map、hash等关联结构，数据集可以使用list、vector等顺序结构。 </p>
+<p>使用STL的童鞋可以在(资料)<a href="http://www.sgi.com/tech/stl/table_of_contents.html" title="SGI - the Standard Template Library" target="_blank" rel="external">3</a>中查询各种结构的用法。</p>
+<h4 id="3-3改造方案优化"><a href="#3-3改造方案优化" class="headerlink" title="3.3改造方案优化"></a>3.3改造方案优化</h4><p>我们来分析下复杂度，首先分析查询时间复杂度（不算蓝色优化部分）。 </p>
+<p>一级索引查找时间跟前缀拼音长度有关$T(Len(P))$。子树遍历跟其大小有关，最坏能到达$O(N)$。</p>
+<p>==遍历子树是多路查找树的通病，因为它的中间节点不保存子节点信息，当然你可以选择冗余保存（就是蓝色的功能）。==</p>
+<p>离线处理时我们说过，实践中结果集R会是一个常数值，所以别担心$O(N)$，这里我们换成$T(R)$来计算。 </p>
+<p>当一级索引节点有匹配时，进入二级索引，这里我们使用STL的set结构来分析。</p>
+<p>set使用iterator遍历时，它是字典序的，所以使用lower_bound + iterator就能搞定，时间复杂度是$O(logN) + T(R)$。 </p>
+<p>最坏情况下，每个有效节点（除去不完整的拼音节点）只有一个词，这样需要遍历R个有效节点。</p>
+<p>时间复杂度为$Len(P) + R<em>(O(logN) + R) = Len(P) + R</em>O(logN) + R*R$，<br>因为$Len(P)$和$R$都是常数值，所以最后查询的时间复杂度为$O(logN)$。 </p>
+<p>插入操作的流程跟查询类似，时间复杂度也相同，在这就略过了。 </p>
+<p>从这个角度讲，大家 ==不要太过于迷信大O分析，这只是很粗略的上界，它保证时间效率上的可用性，不代表它的实际运行效率。==</p>
+<p>所以，见到$O(logN)$跑的比$O(N^2)$都慢的程序也是很正常的，很多细节的优化，往往都是根据相关数据和特点在大O系数和常数间挣扎。</p>
+<h4 id="3-4-自平衡树"><a href="#3-4-自平衡树" class="headerlink" title="3.4 自平衡树"></a>3.4 自平衡树</h4><p>估计很多童鞋看上字典树的处理方案已经很头大了，有没有又方便又快捷的方案？ </p>
+<p>当然有，离线处理我们提到过自平衡树，如<code>std::set</code>, <code>std::map</code>。 </p>
+<p>在线处理中就很好的用到了它的插入特性，时间复杂度为$O(logN)$。 </p>
+<p>然后依然使用lower_bound + iterator方法查询。 </p>
+<p>这样它的插入和查询也都是$O(logN)$，那上面的方案跟平衡树方案效率是等同的？ </p>
+<p>此时，我希望大家能从字典树的复杂度分析过程中找到些灵感，这里我不详述红黑树理论，可<a href="http://en.wikipedia.org/wiki/Red%E2%80%93black_tree" title="Red–black tree - Wikipedia, the free encyclopedia" target="_blank" rel="external">参见资料</a>。</p>
+<h2 id="引用资料"><a href="#引用资料" class="headerlink" title="引用资料"></a>引用资料</h2><hr>
+<p>[1] <a href="http://zh.wikipedia.org/zh/%E5%A4%A7O%E7%AC%A6%E5%8F%B7" title="大O符号 - 维基百科，自由的百科全书" target="_blank" rel="external">大O符号 - 维基百科，自由的百科全书</a></p>
+<p>[2] <a href="http://zh.wikipedia.org/zh/Trie" title="Trie - 维基百科，自由的百科全书" target="_blank" rel="external">Trie - 维基百科，自由的百科全书</a></p>
+<p>[3] <a href="http://www.sgi.com/tech/stl/table_of_contents.html" title="SGI - the Standard Template Library" target="_blank" rel="external">SGI - the Standard Template Library</a></p>
+<p>[4] <a href="http://en.wikipedia.org/wiki/Red%E2%80%93black_tree" title="Red–black tree - Wikipedia, the free encyclopedia" target="_blank" rel="external">Red–black tree - Wikipedia, the free encyclopedia</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014-07/python-30-x/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          30 行 Python 代码搞定 X 算法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2010-11/winsockio/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Windows Socket IO 模型</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2012-09/baidu-suggestion/" data-title="百度面试题 - 搜索框的suggestion" data-url="http://huangwei.pro/2012-09/baidu-suggestion/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"huangweipro"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 HuangWei
+    	</div>
+      	<div class="footer-right">
+		<script src="http://s4.cnzz.com/z_stat.php?id=1257126202&web_id=1257126202" language="JavaScript"></script>
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: false,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		cdn: 'http://dn-huangweipro.qbox.me/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="http://dn-huangweipro.qbox.me/js/main.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-58636572-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+<!-- Baidu Analytics -->
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?37eed26af63c8a627a52667cb97cf2cf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Baidu Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>

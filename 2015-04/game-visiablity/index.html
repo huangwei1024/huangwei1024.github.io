@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>游戏中的 2D 可见性 | HuangWei&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="算法, 游戏开发, 2D, 可见性">
+  
+
+  <meta name="description" content="游戏中的 2D 可见性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="游戏中的 2D 可见性">
+<meta property="og:url" content="http://huangwei.pro/2015-04/game-visiablity/index.html">
+<meta property="og:site_name" content="HuangWei's blog">
+<meta property="og:description" content="游戏中的 2D 可见性">
+<meta property="og:image" content="http://huangwei.pro/static/2dvisibilitydemo/static-lightmap.png">
+<meta property="og:updated_time" content="2016-04-14T08:48:03.561Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="游戏中的 2D 可见性">
+<meta name="twitter:description" content="游戏中的 2D 可见性">
+<meta name="twitter:image" content="http://huangwei.pro/static/2dvisibilitydemo/static-lightmap.png">
+  
+    <link rel="alternative" href="/atom.xml" title="HuangWei&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://dn-huangweipro.qbox.me/static/favicon.ico">
+  
+  <link rel="stylesheet" href="http://dn-huangweipro.qbox.me/css/style.css">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">HuangWei</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/collections">好文收藏</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+					        
+								<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/2d/" style="font-size: 12px;">2d</a> <a href="/tags/acm/" style="font-size: 14px;">acm</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/bloom-filter/" style="font-size: 10px;">bloom_filter</a> <a href="/tags/concrete-mathematics/" style="font-size: 18px;">concrete_mathematics</a> <a href="/tags/dev-log/" style="font-size: 10px;">dev-log</a> <a href="/tags/distribution/" style="font-size: 12px;">distribution</a> <a href="/tags/doom/" style="font-size: 10px;">doom</a> <a href="/tags/effective/" style="font-size: 10px;">effective</a> <a href="/tags/encryption/" style="font-size: 10px;">encryption</a> <a href="/tags/game/" style="font-size: 18px;">game</a> <a href="/tags/go/" style="font-size: 10px;">go</a> <a href="/tags/graph-theory/" style="font-size: 10px;">graph_theory</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/number-theory/" style="font-size: 20px;">number_theory</a> <a href="/tags/opengl/" style="font-size: 16px;">opengl</a> <a href="/tags/pathfinding/" style="font-size: 10px;">pathfinding</a> <a href="/tags/permutation/" style="font-size: 10px;">permutation</a> <a href="/tags/pixi/" style="font-size: 10px;">pixi</a> <a href="/tags/random/" style="font-size: 12px;">random</a> <a href="/tags/reading-notes/" style="font-size: 18px;">reading_notes</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sight/" style="font-size: 10px;">sight</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/string/" style="font-size: 14px;">string</a> <a href="/tags/summary/" style="font-size: 14px;">summary</a> <a href="/tags/tree/" style="font-size: 12px;">tree</a> <a href="/tags/trie/" style="font-size: 14px;">trie</a> <a href="/tags/tutorials/" style="font-size: 16px;">tutorials</a> <a href="/tags/visibility/" style="font-size: 12px;">visibility</a> <a href="/tags/windows/" style="font-size: 10px;">windows</a> <a href="/tags/zen/" style="font-size: 10px;">zen</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">前网易码农<br>现苦逼创业<br>轻微完美主义强迫症<br>努力提升个人魅力，强化自身修养</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">HuangWei</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">HuangWei</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/collections">好文收藏</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+			        
+						<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-game-visiablity" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015-04/game-visiablity/" class="article-date">
+  	<time datetime="2015-04-27T16:00:00.000Z" itemprop="datePublished">2015-04-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      游戏中的 2D 可见性
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2d/">2d</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/game/">game</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visibility/">visibility</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <link rel="stylesheet" href="/static/2dvisibilitydemo/jquery-ui-1.8.19.custom.css">
+
+<p>这篇文章是在没有搭建这个Blog之前帮jobbole翻译的，现在只是复制回来自己做个存档，<a href="http://blog.jobbole.com/86268/" target="_blank" rel="external">jobbole链接在这</a>。</p>
+<hr>
+<p>2D的俯视图经常用于从给定点计算可视区域。例如，你可能想把某些东西隐藏在玩家看不见的地方，亦或你想知道点燃火炬后能看见什么地方。</p>
+<p>拖动圆点转一圈，看看玩家都能看到些什么：</p>
+<div id="maze"><p align="center"><img class="placeholder hx_lazyimg" src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" lazy-src="http://dn-huangweipro.qbox.me/static/2dvisibilitydemo/static-lightmap.png"></p></div>
+
+<p>这个算法也能计算出给定光源所照亮的区域。对每条光线，我们可以构建出被照亮区域的光线图。如果我们给上面的迷宫放上24个灯呢？见光线图。</p>
+<p>roguelike<span style="color: #888888;">（译注：类地下城RPG游戏统称）</span>社区已经收集了<a href="http://roguebasin.roguelikedevelopment.org/index.php/Category:FOV" target="_blank" rel="external">好几种算法</a>，尤其是网格类的。消减算法是从可见的一切区域开始，减去不可见区域；添加算法是从不可见区域开始，加上可见区域。我将描述一种可工作于线段的添加算法，不仅仅是固体分块或者网格。</p>
+<a id="more"></a>
+<h2 id="光线投射"><a href="#光线投射" class="headerlink" title="光线投射"></a>光线投射</h2><p>一个简单地方法是从中心点投射光线，这是得到一个近似解的合理的第一步：</p>
+<div id="diagram-raycast-interval" class="right"></div>
+
+<p>更聪明的是，让光线投射到所有墙体的开端和末端。这些光线所产生的三角形就是可见区域：</p>
+<div id="diagram-raycast-endpoints" class="right"></div>
+
+<p>就是这样！该算法如下：</p>
+<ol>
+<li>计算到墙体开始或结束的角度。</li>
+<li>从中心点沿各个角度投出光线。</li>
+<li>对这些光线所产生的三角形进行填充。</li>
+</ol>
+<h2 id="墙体跟踪"><a href="#墙体跟踪" class="headerlink" title="墙体跟踪"></a>墙体跟踪</h2><p>我们可以到此为止了，尤其是如果我们有一个快速光线投射算法，可使用空间哈希以避免与每一个墙体进行相交计算。然而，更有效的方法是将光线投射和墙体相交结合成一个算法。我将在这里描述了一种圆形扫描算法，对所有的击中点按角度进行排序; 它也可以扩展成圆形外扩算法，对所有的击中点按半径排序，但我还没有尝试过这种方法。</p>
+<p>位于连续几个射线之间的区域，我们需要找到最近的墙。这面墙就被照亮了; 所有其他墙面应该被隐藏。我们的策略是360°扫描，处理所有的墙端点。当运行时，我们会持续跟踪与扫描线相交的墙壁。点击观看端点扫描：</p>
+<div class="right"><div id="diagram-sweep-points"></div></div>
+
+<p>下一步骤是将跟踪哪些墙壁会被扫描线穿过。只有最近的壁是可见的。你如何找出哪些墙壁是最近的？最简单的方法是计算从中心到墙的距离。然而，如果墙壁大小不同，这种方法不能很好地工作，所以演示中使用一个稍微复杂的方法，这里我就不解释了。</p>
+<p>按PLAY可看到扫描中最近的墙面以白色绘制和其他墙面绘成黑色。</p>
+<div class="right"><div id="diagram-sweep-segments"></div></div>
+
+
+<p>每当最近的墙面终止，或者有新的墙面比其它的都近时，我们创建了一个三角形表示可见区域。这些三角形的并集就是所述中心点的可视区域。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var endpoints;      <span class="comment"># 端点列表，按角度排序</span></span><br><span class="line">var open = [];      <span class="comment"># 墙面列表，按距离排序</span></span><br><span class="line">loop over endpoints: <span class="comment">#遍历 endpoints</span></span><br><span class="line">    remember which wall <span class="keyword">is</span> nearest <span class="comment">#记住哪个墙面最近</span></span><br><span class="line">    add any walls that BEGIN at this endpoint to <span class="string">'walls'</span> <span class="comment"># 把所有以该端点开始的墙面添加到“墙面列表“中</span></span><br><span class="line">    remove any walls that END at this endpoint <span class="keyword">from</span> <span class="string">'walls'</span><span class="comment"># 把所有以该端点截止的墙面从“墙面列表“中删除</span></span><br><span class="line">    SORT the open list <span class="comment">#对open数组排序</span></span><br><span class="line"><span class="keyword">if</span> the nearest wall changed: <span class="comment">#假如最近的墙面改变:</span></span><br><span class="line">    fill the current triangle <span class="keyword">and</span> begin a new one<span class="comment">#填充当前三角形并且开始新的</span></span><br></pre></td></tr></table></figure>
+<p>需要注意的是创建一个三角形涉及到之前与扫描线相交的墙面。其结果是，三角形的新边缘可能长于或短于扫描线，并且该三角形最远的边缘比之前的墙面短。</p>
+<h2 id="试验场"><a href="#试验场" class="headerlink" title="试验场"></a>试验场</h2><p>这里有一块试验场，有很多可用的方块。可以拖拽方块到网格内。点击play/pause按钮可以查看算法运行，或者移动中心点查看哪些是可见的，就像玩家四处查看一样。</p>
+<div class="right"><div id="diagram-playground"></div></div><br><div id="haxe:trace"></div>
+
+
+
+<h2 id="组合输出"><a href="#组合输出" class="headerlink" title="组合输出"></a>组合输出</h2><p>我们可以使用集合运算以有趣的方式组合该算法的输出。这些也可被实现为用布尔运算分析输出，或者用位图操作渲染输出。</p>
+<h3 id="玩家视野"><a href="#玩家视野" class="headerlink" title="玩家视野"></a>玩家视野</h3><p>限制玩家的视野最简单的操作是将输出与有限的视野求交集。例如，相交算法使用圆圈来限制可见半径。与渐变填充圈相交，可使光按距离改变明暗。与圆锥相交可打造出“手电筒”效果，可以让你把前面看得更远，但没有相应视野在你身后（见随后<a href="http://www.tuaw.com/2012/04/16/phil-hasseys-anathema-mines-renamed-dynamite-jack-gets-a-trail/" target="_blank" rel="external">Dynamite Jack</a>的一个例子）。假如用双眼代替单点，玩家的视野也更好看。我希望你可以合并所有眼睛的可视区域，但我还没有试过。</p>
+<h3 id="地图物体"><a href="#地图物体" class="headerlink" title="地图物体"></a>地图物体</h3><p>可见性也可用于计算哪些区域被火炬点亮。在页面的顶部演示了首先对每个火炬所点亮的区域进行求并集，然后与玩家可以看见的区域相交。（请注意，此算法会产生硬阴影，你将不得不对输出进行后处理来获得软阴影。）</p>
+<p>同样的计算可用于确定哪些地区可被安全摄像头可以看到，有哪些被盾牌保护着，或者是否足够靠近某些魔法设施，使它赋予你属性加成或是诅咒。</p>
+<h3 id="AI行为"><a href="#AI行为" class="headerlink" title="AI行为"></a>AI行为</h3><p>可见性也可用于构建AI行为。例如，假设敌人的AI是想扔了一枚手榴弹击中玩家，也想站在玩家射击不到的地方。手榴弹需要足够近才能击中玩家，并且无法击中障碍物后面的。下图显示标注了AI单位的地图的可能计算：</p>
+<div class="right"><div id="grenade"></div></div>
+
+
+<p>手榴弹扔进紫色区域将成功击中一名玩家。黄色和紫色区域是危险区域; 玩家可以从那里攻击AI单位。AI需要站在一个安全的区域（深蓝色）并且投掷了一枚手榴弹到紫色区域，然后寻找掩体。如何计算掩体？在AI准备投掷手雷的地方再次运行可见性算法，让橱柜和桌子挡住视线。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>我已经用<a href="http://www.redblobgames.com/articles/visibility/Visibility.hx" target="_blank" rel="external">HAXE 3</a>来实现这个算法，使用Apache v2开源协议（类似MIT和BSD，它可以在商业项目中使用）。HAXE代码可以编译成JavaScript，ActionScript，C ++，Java，C#或PHP。我把它编译成JavaScript来制作这个网页，并为我的其他项目编译成Flash。我编译成以下语言：</p>
+<ul>
+<li><a href="http://www.redblobgames.com/articles/visibility/as3-version.zip" target="_blank" rel="external">Actionscript</a> ; 可读，因为Actionscript和Haxe并非截然不同</li>
+<li><a href="http://www.redblobgames.com/articles/visibility/output/_visibility.js" target="_blank" rel="external">Javascript</a>（用于此页面上的演示）; 大多是可读的。</li>
+<li><a href="http://www.redblobgames.com/articles/visibility/java-version.zip" target="_blank" rel="external">Java</a> ; 轻度可读，但不是很好。</li>
+<li><a href="http://www.redblobgames.com/articles/visibility/csharp-version.zip" target="_blank" rel="external">C#</a> ; 轻度可读，但不是很好。Roy Triesscheijn有一个更好的版本<a href="http://roy-t.nl/index.php/2014/02/27/2d-lighting-and-shadows-preview/" target="_blank" rel="external">在这里</a>。</li>
+</ul>
+<p>Wade Tritschler建议<a href="http://www.redblobgames.com/articles/visibility/#comment-850486470" target="_blank" rel="external">手工移植</a>，所产生的代码要比使用Haxe输出的代码更干净。我同意这个观点。如果你手写代码还可以更好得了解该算法。尽管该算法主要在CPU中进行，可以使用GPU为位图进行三角形渲染和合并位图输出。（布尔AND操作可变成位图乘法;布尔OR操作可变成位图添加和钳位。）在我的项目中该性能已经足够，所以我还没有构建GPU版本。如果你的游戏有CPU限制，可以考虑使用消减算法（而不是这里显示的添加算法），渲染四边形的每条线段的影子。它会增加GPU渲染负载，但它并不需要在CPU上排序。如果填充率是一个问题，考虑渲染一个比游戏画面分辨率低的光度图，然后扩大它。</p>
+<h2 id="相关内容"><a href="#相关内容" class="headerlink" title="相关内容"></a>相关内容</h2><p><a href="http://ncase.me/sight-and-light/" target="_blank" rel="external">视觉和光线</a>覆盖了可见性的问题; 在我的<a href="http://simblob.blogspot.com/2012/07/2d-visibility.html" target="_blank" rel="external">博客文章</a>有更多的链接。<a href="https://briangordon.github.io/2014/08/the-skyline-problem.html" target="_blank" rel="external">地平线问题</a>类似2D可见性问题，但它在直角坐标系中，而不是极坐标。另外还有<a href="http://en.wikipedia.org/wiki/Art_gallery_problem" target="_blank" rel="external">美术馆问题</a>，关于放置多少个警卫就可以看到地图的每一个区域。我正Trello上创建了一份列表，<a href="https://trello.com/c/m0yhEv6U/37-visibility-version-2" target="_blank" rel="external">未来可能更新这个页面</a>。</p>
+<script type="text/javascript" src="/static/2dvisibilitydemo/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/static/2dvisibilitydemo/jquery-ui-1.8.19.custom.min.js"></script>
+<script type="text/javascript" src="/static/2dvisibilitydemo/visibility.js"></script>
+<script type="text/javascript" src="/static/2dvisibilitydemo/demo-canvas.js"></script>
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015-05/modern-opengl1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          现代OpenGL教程 01 - 入门指南
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015-03/effective-living/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">高效率生活</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2015-04/game-visiablity/" data-title="游戏中的 2D 可见性" data-url="http://huangwei.pro/2015-04/game-visiablity/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"huangweipro"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 HuangWei
+    	</div>
+      	<div class="footer-right">
+		<script src="http://s4.cnzz.com/z_stat.php?id=1257126202&web_id=1257126202" language="JavaScript"></script>
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: false,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		cdn: 'http://dn-huangweipro.qbox.me/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="http://dn-huangweipro.qbox.me/js/main.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-58636572-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+<!-- Baidu Analytics -->
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?37eed26af63c8a627a52667cb97cf2cf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Baidu Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>

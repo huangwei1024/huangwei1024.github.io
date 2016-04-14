@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>超酷算法：字谜树 | HuangWei&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="算法, 字谜, 查找, 字符串">
+  
+
+  <meta name="description" content="超酷算法：字谜树">
+<meta property="og:type" content="article">
+<meta property="og:title" content="超酷算法：字谜树">
+<meta property="og:url" content="http://huangwei.pro/2015-01/anagram-Trees/index.html">
+<meta property="og:site_name" content="HuangWei's blog">
+<meta property="og:description" content="超酷算法：字谜树">
+<meta property="og:image" content="http://fanyi.jobbole.com/wp-content/uploads/sites/9/2014/10/Image_of_an_anatree1-300x197.png">
+<meta property="og:updated_time" content="2016-04-14T08:48:03.558Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="超酷算法：字谜树">
+<meta name="twitter:description" content="超酷算法：字谜树">
+<meta name="twitter:image" content="http://fanyi.jobbole.com/wp-content/uploads/sites/9/2014/10/Image_of_an_anatree1-300x197.png">
+  
+    <link rel="alternative" href="/atom.xml" title="HuangWei&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://dn-huangweipro.qbox.me/static/favicon.ico">
+  
+  <link rel="stylesheet" href="http://dn-huangweipro.qbox.me/css/style.css">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">HuangWei</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/collections">好文收藏</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+					        
+								<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/2d/" style="font-size: 12px;">2d</a> <a href="/tags/acm/" style="font-size: 14px;">acm</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/bloom-filter/" style="font-size: 10px;">bloom_filter</a> <a href="/tags/concrete-mathematics/" style="font-size: 18px;">concrete_mathematics</a> <a href="/tags/dev-log/" style="font-size: 10px;">dev-log</a> <a href="/tags/distribution/" style="font-size: 12px;">distribution</a> <a href="/tags/doom/" style="font-size: 10px;">doom</a> <a href="/tags/effective/" style="font-size: 10px;">effective</a> <a href="/tags/encryption/" style="font-size: 10px;">encryption</a> <a href="/tags/game/" style="font-size: 18px;">game</a> <a href="/tags/go/" style="font-size: 10px;">go</a> <a href="/tags/graph-theory/" style="font-size: 10px;">graph_theory</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/number-theory/" style="font-size: 20px;">number_theory</a> <a href="/tags/opengl/" style="font-size: 16px;">opengl</a> <a href="/tags/pathfinding/" style="font-size: 10px;">pathfinding</a> <a href="/tags/permutation/" style="font-size: 10px;">permutation</a> <a href="/tags/pixi/" style="font-size: 10px;">pixi</a> <a href="/tags/random/" style="font-size: 12px;">random</a> <a href="/tags/reading-notes/" style="font-size: 18px;">reading_notes</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sight/" style="font-size: 10px;">sight</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/string/" style="font-size: 14px;">string</a> <a href="/tags/summary/" style="font-size: 14px;">summary</a> <a href="/tags/tree/" style="font-size: 12px;">tree</a> <a href="/tags/trie/" style="font-size: 14px;">trie</a> <a href="/tags/tutorials/" style="font-size: 16px;">tutorials</a> <a href="/tags/visibility/" style="font-size: 12px;">visibility</a> <a href="/tags/windows/" style="font-size: 10px;">windows</a> <a href="/tags/zen/" style="font-size: 10px;">zen</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">前网易码农<br>现苦逼创业<br>轻微完美主义强迫症<br>努力提升个人魅力，强化自身修养</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">HuangWei</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">HuangWei</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/collections">好文收藏</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+			        
+						<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-anagram-Trees" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015-01/anagram-Trees/" class="article-date">
+  	<time datetime="2015-01-16T16:00:00.000Z" itemprop="datePublished">2015-01-17</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      超酷算法：字谜树
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/string/">string</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tree/">tree</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/trie/">trie</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这篇文章是在没有搭建这个Blog之前帮jobbole翻译的，现在只是复制回来自己做个存档，<a href="http://blog.jobbole.com/83217/" target="_blank" rel="external">jobbole链接在这</a>。</p>
+<hr>
+<p>我毫不犹豫的把这个算法称为“超酷”，虽然我自己发明了它，但我还是觉得它相当的酷，而且它很适合我算法系列的主题，所以无论如何要把它写下来。</p>
+<a id="more"></a>
+<p>当涉及到寻找单词字谜时，用的比较频繁的方法是字谜字典，简单得说，对单词的字母进行排序，以提供一个单词与所有字谜共同点的唯一索引。另外一种方法是为单词里的每个字母生成字母频率直方图。（这两种方法实际上或多或少相同。）这些方法查找确切的单字字谜字符串非常高效 - 如果使用哈希表，复杂度为O(1)。</p>
+<p>然而，如果问题是查找字谜的子集（包含一个字符串里字母的一个子集的单词），仍然是相当低效的，通常需要在O(n)时间内暴力搜索整个字典，或者查找每个有序字符串的子串，复杂度与输入字符串的字母长度有关，为O(2^l)。查找字谜子集显然更有趣，因为它能查找多字字谜，可以应用在拼字游戏上。</p>
+<p>不管怎样，我们先生成能唯一表示一组字母的直方图，再努力观察，我们可以生成一个树结构来更有效得查找字谜子集。为了构建这样的树，我们按照如下几个简单的步骤：</p>
+<p>假设我们有如下信息：</p>
+<ul>
+<li>一个词典或单词字典来填充树</li>
+<li>词典中单词的字母表</li>
+<li>一个正在构建的树</li>
+<li>当前节点</li>
+</ul>
+<p>词典里的每个单词：</p>
+<p> 1.为该单词生成字母频率直方图。</p>
+<p> 2.设当前节点为树的根节点。</p>
+<p> 3.每个字母表里的字符：</p>
+<p> 获取当前字符在当前单词里的频率，记为f</p>
+<p> 设置当前节点为当前节点的第f个子节点，如果它不存在的话就创建</p>
+<p> 4.将当前单词添加到当前（叶）节点上的单词列表</p>
+<p>以下是这个简单过程的结果，它是一棵固定高度的树，27个节点深，所有单词都在叶节点中，并且树的每个层级对应字母表里的字符。下面是个简略的例子（译注：原博客图片遗失，从WIKI上找了张替图）：</p>
+<p><a href="http://fanyi.jobbole.com/wp-content/uploads/sites/9/2014/10/Image_of_an_anatree1.png" target="_blank" rel="external"><img src="http://fanyi.jobbole.com/wp-content/uploads/sites/9/2014/10/Image_of_an_anatree1-300x197.png" alt="Image_of_an_anatree1"></a></p>
+<p>一旦树创建好后，我们可以如下方式查找输入字符串的字谜集合：</p>
+<p>假设我们有如下信息：</p>
+<p>由上述流程所构建的树</p>
+<p> 上面使用过的字母表</p>
+<p> 一个边界集合，初始化为空</p>
+<p>1.初始化时边界集合只包含树的根节点</p>
+<p> 2.生成输入字符串的字母频率直方图</p>
+<p> 3.对字母表中的每个字符：</p>
+<p> 1.获取当前字符在输入字符串里的频率，记为f</p>
+<p> 2.对边界集合里的每个节点，添加标号为0到f的子节点到新的边界集合中</p>
+<p> 4.当前边界集合中包含的叶节点，包含所有输入字符串的字谜子集</p>
+<p>至少对我来说，对该算法进行运行期分析比较困难。直观的看，它在实践中比任何一种蛮力算法要快很多，但我无法量化为大O表示法。作为一个上限，它不可能比O(n)的效率低，最坏也比蛮力算法少一个常数因子。作为下限值，边界集合中只有一个节点，那查找时间就与字母表长度成正比，为O(1)。平均情况下，依赖输入字符串所选择的字典的子集有多大。以输出的大小来量化的话，需要O(m)的操作。如果有人知道如何确定运行时更准确的范围的话，请在评论中让我知晓。</p>
+<p>这个算法有个缺点就是，需要大量的内存开销。我用python来实现，并导入/usr/share/dict/words，在本机上这大约是2MB的大小，但需要占用内存300MB。使用Pickle模块序列化到磁盘，输出文件的大小超过30MB，使用gzip压缩后下降到大约7MB。我怀疑内存大的部分原因是python字典的最小尺寸。我将使用列表来实现，如果我能够做到更高效，届时我会更新这篇文章。</p>
+<p>这里是上述所生成树的数据，可能你会感兴趣：</p>
+<p> 总单词数：234,936</p>
+<p> 叶节点：215,366</p>
+<p> 内部节点：1,874,748</p>
+<p>由此我们可以看出，内部节点的平均基数是非常低的，不会大于1。下面数据有助于澄清：</p>
+<table><tbody><tr><th>Tier</th><th>Number of nodes</th></tr><tr><td>0</td><td>1</td></tr><tr><td>1</td><td>7</td></tr><tr><td>2</td><td>25</td></tr><tr><td>3</td><td>85</td></tr><tr><td>4</td><td>203</td></tr><tr><td>5</td><td>707</td></tr><tr><td>6</td><td>1145</td></tr><tr><td>7</td><td>1886</td></tr><tr><td>8</td><td>3479</td></tr><tr><td>9</td><td>8156</td></tr><tr><td>10</td><td>8853</td></tr><tr><td>11</td><td>10835</td></tr><tr><td>12</td><td>19632</td></tr><tr><td>13</td><td>28470</td></tr><tr><td>14</td><td>47635</td></tr><tr><td>15</td><td>73424</td></tr><tr><td>16</td><td>92618</td></tr><tr><td>17</td><td>94770</td></tr><tr><td>18</td><td>125018</td></tr><tr><td>19</td><td>156406</td></tr><tr><td>20</td><td>182305</td></tr><tr><td>21</td><td>195484</td></tr><tr><td>22</td><td>200031</td></tr><tr><td>23</td><td>203923</td></tr><tr><td>24</td><td>205649</td></tr><tr><td>25</td><td>214001</td></tr></tbody></table>
+
+<p>靠近树的顶部节点的基数非常高，但树很快变平，最后四层树只占总结点的一半。这暗示了一个可能的空间优化：删除树的最后几层，将它们的叶子节点连在一起。当进行查找时，检查所选的节点，保证它们是输入字符串的字谜集合。</p>
+<ul>
+<li>我可能只是重新发现了计算机科学领域30年前就被提及的论文。但惊喜的是，通过搜索尚未找到谁正在使用该算法，或者有其它方法比蛮力算法更有效。</li>
+</ul>
+<p>修订：最初的实现<a href="http://blog.notdot.net/uploads/anagramfinder.pys" target="_blank" rel="external">代码</a>在这。</p>
+<p>修订：使用列表来重新实现我的python代码，几乎节约了一半内存。有机会我会贴出pickled后的树和源码。</p>
+<p>修订：更多更新<a href="http://blog.notdot.net/archives/39-Update-on-Anagram-Trees.html" target="_blank" rel="external">在这</a>。</p>
+<p>（译注：字谜问题可简化为字符串编码和索引问题，如Tea编码为A1E1T1，编码哈希后，同编码单词有Ate，Eat等。文章写于2007年，文中算法不是最优解，只是提供了一种使用多路查找树的思路，类似数据结构有Trie，DAG，Suffix Tree等等。）</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015-01/startup1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          创业小结（一）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015-01/secure-permutations-with-block-ciphers/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">超酷算法：分组密码与安全排列</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2015-01/anagram-Trees/" data-title="超酷算法：字谜树" data-url="http://huangwei.pro/2015-01/anagram-Trees/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"huangweipro"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 HuangWei
+    	</div>
+      	<div class="footer-right">
+		<script src="http://s4.cnzz.com/z_stat.php?id=1257126202&web_id=1257126202" language="JavaScript"></script>
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: false,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		cdn: 'http://dn-huangweipro.qbox.me/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="http://dn-huangweipro.qbox.me/js/main.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-58636572-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+<!-- Baidu Analytics -->
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?37eed26af63c8a627a52667cb97cf2cf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Baidu Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>

@@ -1,0 +1,74 @@
+<!doctype>
+<html>
+    <head>
+        <style>
+        body{
+            margin:0;
+            background: #eee;
+        }
+        #canvas{
+            background: #1099bb;
+        }
+        </style>
+        <script src="pixi.min.js"></script>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+
+<script>
+// DRAWING
+// 将默认的缩放模式定义为 Nearest
+PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
+
+var canvas = document.getElementById("canvas");
+var mouse = {
+	x: canvas.width/2,
+	y: canvas.height/2
+};
+var renderer = PIXI.autoDetectRenderer(800, 400, {view: canvas});
+// var renderer = PIXI.autoDetectRenderer(800, 400, {backgroundColor : 0x1099bb});
+// document.body.appendChild(renderer.view);
+
+// 创建舞台 Container
+var stage = new PIXI.Container();
+// 创建背景精灵
+var background = new PIXI.Sprite.fromImage('./01.png');
+stage.addChild(background);
+
+var basicText = new PIXI.Text('text in pixi, mouse' + mouse.x + ', ' + mouse.y);
+basicText.x = 30;
+basicText.y = 90;
+stage.addChild(basicText);
+
+function drawUpdate() {
+    basicText.text = 'text in pixi, mouse' + mouse.x + ', ' + mouse.y;
+}
+
+// DRAW LOOP
+window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
+var updateCanvas = true;
+function drawLoop(){
+    requestAnimationFrame(drawLoop);
+    if(updateCanvas){
+    	drawUpdate();
+    	// render the container
+    	renderer.render(stage);
+    	updateCanvas = false;
+    }
+}
+window.onload = function() {
+	drawLoop();
+	console.log("onload drawLoop");
+}
+
+// MOUSE
+canvas.onmousemove = function(event){	
+	mouse.x = event.clientX;
+	mouse.y = event.clientY;
+	updateCanvas = true;
+};
+</script>
+
+
+</body>
+</html>

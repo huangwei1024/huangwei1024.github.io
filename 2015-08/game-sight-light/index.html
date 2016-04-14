@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>视线和光线：如何给游戏添加 2D 可见性和阴影效果 | HuangWei&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="算法, 游戏开发, 阴影, 可见性">
+  
+
+  <meta name="description" content="视线和光线：如何给游戏添加 2D 可见性和阴影效果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="视线和光线：如何给游戏添加 2D 可见性和阴影效果">
+<meta property="og:url" content="http://huangwei.pro/2015-08/game-sight-light/index.html">
+<meta property="og:site_name" content="HuangWei's blog">
+<meta property="og:description" content="视线和光线：如何给游戏添加 2D 可见性和阴影效果">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/7cc829d3gw1eux6hz1uofj20nc06y3zz.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/7cc829d3gw1eux6hyagcuj20nc0a0mxi.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/7cc829d3gw1eux6hxmtltj20nc0a0t98.jpg">
+<meta property="og:updated_time" content="2016-04-14T08:48:03.561Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="视线和光线：如何给游戏添加 2D 可见性和阴影效果">
+<meta name="twitter:description" content="视线和光线：如何给游戏添加 2D 可见性和阴影效果">
+<meta name="twitter:image" content="http://ww4.sinaimg.cn/large/7cc829d3gw1eux6hz1uofj20nc06y3zz.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="HuangWei&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://dn-huangweipro.qbox.me/static/favicon.ico">
+  
+  <link rel="stylesheet" href="http://dn-huangweipro.qbox.me/css/style.css">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">HuangWei</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/collections">好文收藏</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+					        
+								<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/2d/" style="font-size: 12px;">2d</a> <a href="/tags/acm/" style="font-size: 14px;">acm</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/bloom-filter/" style="font-size: 10px;">bloom_filter</a> <a href="/tags/concrete-mathematics/" style="font-size: 18px;">concrete_mathematics</a> <a href="/tags/dev-log/" style="font-size: 10px;">dev-log</a> <a href="/tags/distribution/" style="font-size: 12px;">distribution</a> <a href="/tags/doom/" style="font-size: 10px;">doom</a> <a href="/tags/effective/" style="font-size: 10px;">effective</a> <a href="/tags/encryption/" style="font-size: 10px;">encryption</a> <a href="/tags/game/" style="font-size: 18px;">game</a> <a href="/tags/go/" style="font-size: 10px;">go</a> <a href="/tags/graph-theory/" style="font-size: 10px;">graph_theory</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/number-theory/" style="font-size: 20px;">number_theory</a> <a href="/tags/opengl/" style="font-size: 16px;">opengl</a> <a href="/tags/pathfinding/" style="font-size: 10px;">pathfinding</a> <a href="/tags/permutation/" style="font-size: 10px;">permutation</a> <a href="/tags/pixi/" style="font-size: 10px;">pixi</a> <a href="/tags/random/" style="font-size: 12px;">random</a> <a href="/tags/reading-notes/" style="font-size: 18px;">reading_notes</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sight/" style="font-size: 10px;">sight</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/string/" style="font-size: 14px;">string</a> <a href="/tags/summary/" style="font-size: 14px;">summary</a> <a href="/tags/tree/" style="font-size: 12px;">tree</a> <a href="/tags/trie/" style="font-size: 14px;">trie</a> <a href="/tags/tutorials/" style="font-size: 16px;">tutorials</a> <a href="/tags/visibility/" style="font-size: 12px;">visibility</a> <a href="/tags/windows/" style="font-size: 10px;">windows</a> <a href="/tags/zen/" style="font-size: 10px;">zen</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">前网易码农<br>现苦逼创业<br>轻微完美主义强迫症<br>努力提升个人魅力，强化自身修养</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">HuangWei</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://dn-huangweipro.qbox.me/images/default_avatar.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">HuangWei</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">That depends a good deal on where you want to get to</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/collections">好文收藏</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/huangwei1024" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/hwiskey" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="http://www.zhihu.com/people/huang-wei-1gb" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="http://www.douban.com/people/WisKey/" title="douban">douban</a>
+			        
+						<a class="mail" target="_blank" href="mailto:164305264@qq.com?subject=huangwei.pro读者来信" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-game-sight-light" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015-08/game-sight-light/" class="article-date">
+  	<time datetime="2015-08-10T16:00:00.000Z" itemprop="datePublished">2015-08-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      视线和光线：如何给游戏添加 2D 可见性和阴影效果
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2d/">2d</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/game/">game</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sight/">sight</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visibility/">visibility</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这篇文章是在没有搭建这个Blog之前帮jobbole翻译的，现在只是复制回来自己做个存档，<a href="http://blog.jobbole.com/89193/" target="_blank" rel="external">jobbole链接在这</a>。</p>
+<hr>
+<p>各位好！今天，我将告诉你如何做这样的事情：（在框中四处移动你的鼠标）</p>
+<iframe src="http://ncase.me/sight-and-light/draft7.html" height="370" width="850"></iframe>
+
+<p>这种效果用于我新开发的开源游戏《<a href="http://nothingtohide.cc/" target="_blank" rel="external">Nothing To Hide</a>》。许多其他的 2D 游戏（如Monaco，Gish）也都有。如果按着本教程来实现……也许下个就是你的游戏！</p>
+<a id="more"></a>
+<p><img src="http://ww4.sinaimg.cn/large/7cc829d3gw1eux6hz1uofj20nc06y3zz.jpg" alt=""></p>
+<p>我将展示我在学习如何实现这种效果过程中的步骤和所发生的错误。首先，给一些样板代码。下面只是演示绘制了一堆线段并跟踪鼠标位置。（注：有四个线段为边框）</p>
+<iframe src="http://ncase.me/sight-and-light/draft0.html" height="370" width="650"></iframe>
+
+<p>接下来介绍数学知识。别担心，这里只是复习下入门的代数而已。</p>
+<p>我们需要找出射线和所有线段的最近交叉点。任何线段可以被写成参数形式：</p>
+<pre class="brush: c; gutter: false">点 + 方向 * T</pre>
+
+<p>这儿我们给出 4 组方程来描述射线和线段的 x 和 y 变量：</p>
+<pre class="brush: c; gutter: false">射线 X = r_px+r_dx*T1
+
+射线 Y = r_py+r_dy*T1
+
+线段 X = s_px+s_dx*T2
+
+线段 Y = s_py+s_dy*T2</pre>
+
+<p>注：在我们做任何事情之前，请检查以确保射线和线段不是平行的，也就是说，它们的方向是不一样的。如果它们是平行的，那就没有交集。好了，继续。</p>
+<p>如果射线和线段相交，其 x 和 y 变量是相同的：</p>
+<pre class="brush: c; gutter: false">r_px+r_dx*T1 = s_px+s_dx*T2
+
+r_py+r_dy*T1 = s_py+s_dy*T2</pre>
+
+<p>我们做个小小的符号移位来求解 T1 和 T2</p>
+<pre class="brush: c; gutter: false">// Isolate T1 for both equations, getting rid of T1
+
+// 从两个等式中独立出T1，移去T1
+
+ T1 = (s_px+s_dx*T2-r_px)/r_dx = (s_py+s_dy*T2-r_py)/r_dy
+
+// Multiply both sides by r_dx * r_dy
+
+// 两边同乘上 r_dx * r_dy
+
+s_px*r_dy + s_dx*T2*r_dy - r_px*r_dy = s_py*r_dx + s_dy*T2*r_dx - r_py*r_dx
+
+// Solve for T2!
+
+// 解出T2！
+
+T2 = (r_dx*(s_py-r_py) + r_dy*(r_px-s_px))/(s_dx*r_dy - s_dy*r_dx)
+
+// Plug the value of T2 to get T1
+
+// 代入T2，解出T1
+
+T1 = (s_px+s_dx*T2-r_px)/r_dx</pre>
+
+<p>确保 T1&gt;0 并且 0&lt;T2&lt;1。如果不是，则可认为射线和线段没有交点，不可能有交集。但如果是，那太好了！你已经找到了一个交点。现在只要使用同一条射线与其它线段进行计算，就能找到最近的交点。（这个值就是最小T1值）</p>
+<p>这就是所有的数学知识了：（将鼠标移到下面的框里）</p>
+<iframe src="http://ncase.me/sight-and-light/draft1.html" height="370" width="650"></iframe>
+
+<p>哇！现在用这些东西让我们找一些乐子！我投了50条向各个方向的光线：</p>
+<iframe src="http://ncase.me/sight-and-light/draft2.html" height="370" width="650"></iframe>
+
+<p>于是我想，我可以简单地连接这些射线与线段的点，就能获得不错的可见性多边形。但是，最终它看起来像……</p>
+<iframe src="http://ncase.me/sight-and-light/draft3.html" height="370" width="650"></iframe>
+
+<p>织网。但这并不重要，即使我使用360条射线来模拟360度，它仍然看上去很不靠谱。这是我最大的绊脚石，直到我意识到我不可能四面八方都投射到。我只需投射到线段的两端点。对每一个（唯一的）线段端点，朝它直接投射射线，再加上两条偏移为+/- 0.00001弧度的射线。这两条额外的射线会打在给定线段后面的墙上。</p>
+<iframe src="http://ncase.me/sight-and-light/draft4.html" height="370" width="650"></iframe>
+
+<p>接下来，按照射线的角度对交点进行排序。这让我可以简单地按顺时针方向连接各个点，并绘制出平滑的可见性多边形，比如这样的：</p>
+<iframe src="http://ncase.me/sight-and-light/draft5.html" height="370" width="650"></iframe>
+
+<p>终于来了！为了实际上看起来更好些。为了绘制额外的可见性多边形，我们再在位置上稍微偏移投射射线，可以创造出“模糊”阴影，像下面一样。红点表示11原点 - 是的，这有11个可见性多边形！</p>
+<iframe src="http://ncase.me/sight-and-light/draft6.html" height="370" width="650"></iframe>
+
+<p>当这一切完成后，我画了这两张图像…</p>
+<p><img src="http://ww4.sinaimg.cn/large/7cc829d3gw1eux6hyagcuj20nc0a0mxi.jpg" alt=""></p>
+<p><img src="http://ww3.sinaimg.cn/large/7cc829d3gw1eux6hxmtltj20nc0a0t98.jpg" alt=""></p>
+<p>…并混合在一起，利用模糊阴影作为一个alpha遮罩。我已经向您展示了跟页面顶部相似的令人毛骨悚然的画面，只不过这里是一个不同的迭代，用了多个光源。</p>
+<iframe src="http://ncase.me/sight-and-light/draft8.html" height="370" width="850"></iframe>
+
+<p>多个光源。投射阴影。一个巨大的激光炸弹。显示出你的主角/敌人看的到或看不到的区域。2D可见性/照明效果可以非常灵活得进行合适的创意，可以为您的游戏增加很多额外的魅力。</p>
+<h3 id="要有光"><a href="#要有光" class="headerlink" title="要有光"></a>要有光</h3><p>*完全是一个技术术语 （译者注：原本是圣经创世纪里的一句话）</p>
+<p>作者的开源地址：<a href="https://github.com/ncase/sight-and-light" target="_blank" rel="external">https://github.com/ncase/sight-and-light</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015-08/modern-opengl3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          现代OpenGL教程 03 - 矩阵，深度缓冲，动画
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015-08/modern-opengl2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">现代OpenGL教程 02 - 贴图</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="/2015-08/game-sight-light/" data-title="视线和光线：如何给游戏添加 2D 可见性和阴影效果" data-url="http://huangwei.pro/2015-08/game-sight-light/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"huangweipro"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 HuangWei
+    	</div>
+      	<div class="footer-right">
+		<script src="http://s4.cnzz.com/z_stat.php?id=1257126202&web_id=1257126202" language="JavaScript"></script>
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: false,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		cdn: 'http://dn-huangweipro.qbox.me/'
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="http://dn-huangweipro.qbox.me/js/main.js"></script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-58636572-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+<!-- Baidu Analytics -->
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?37eed26af63c8a627a52667cb97cf2cf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<!-- End Baidu Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
