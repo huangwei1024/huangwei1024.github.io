@@ -74,8 +74,8 @@ theme: yilia
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
 - type: git
-  repo: https://gitcafe.com/huangwei1024/huangwei1024.git
-  branch: gitcafe-pages
+  repo: https://git.coding.net/huangwei1024/huangwei1024.git
+  branch: coding-pages
 - type: git
   repo: https://github.com/huangwei1024/huangwei1024.github.io.git
   branch: gh-pages
