@@ -14,12 +14,13 @@ function lazyloadImg(source) {
     $("#container").find('img').each(function(index, element) {
         oldsrc = $(element).attr('src');
         if (oldsrc && stringStartsWith(oldsrc, baseUrl) && !$(element).hasClass('hx_lazyimg')) {
-            $(element).addClass('hx_lazyimg');
+            //$(element).addClass('hx_lazyimg');
             $(element).attr({
-                src: loading,
-                'lazy-src': cdnUrl + oldsrc
+                //src: loading,
+                //'lazy-src': cdnUrl + oldsrc
+                src: cdnUrl + oldsrc
             });
-			$(element).wrap('<p align="center"></p>');
+            $(element).wrap('<p align="center"></p>');
         }
     });
     return $.html();
