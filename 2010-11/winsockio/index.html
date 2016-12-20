@@ -238,7 +238,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="套接字架构"><a href="#套接字架构" class="headerlink" title="套接字架构"></a>套接字架构</h2><hr>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="图1" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/winsock1.gif"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/winsock1.gif" alt="图1"></p></p>
 <p>应用程序使用Winsock与传输协议驱动沟通时AFD.SYS负责缓冲区的管理。这就意味着当一个程序调用send或者WSASend发送数据时，数据将被复制到AFD.SYS它自己的内部缓冲区中（依赖SO_SNDBUF的设置）WSASend调用立即返回。然后AFD.SYS在程序后台将数据发送出去。当然，如果程序想要处理一个比SO_SNDBUF设置的缓冲区需求更大的发送请求，WSASend的调用就会阻塞直到所有的数据都被发送出去。</p>
 <p>类似的，从远程客户端接收数据时，只要SO_RCVBUF设置的缓冲区还没有满，AFD.SYS就会将数据复制进它自己的缓冲区直到所有的发送都已完成。当程序调用recv或者是WSARecv，数据就从AFD.SYS的缓冲区复制到了程序提供的缓冲区中了。</p>
 <a id="more"></a>
@@ -388,7 +388,7 @@
 <p>以下五个函数能够使线程进入告警状态：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SleepEx</span><br><span class="line">WaitForSingleObjectEx</span><br><span class="line">WaitForMultipleObjectsEx</span><br><span class="line">SignalObjectAndWait</span><br><span class="line">MsgWaitForMultipleObjectsEx</span><br></pre></td></tr></table></figure>
 <p>线程进入告警状态时，内核将会检查线程的APC队列，如果队列中有APC，将会按FIFO方式依次执行。如果队列为空，线程将会挂起等待事件对象。以后的某个时刻，一旦APC进入队列，线程将会被唤醒执行APC，同时等待函数返回WAIT_IO_COMPLETION。</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="图2" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/winsock2.jpg"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/winsock2.jpg" alt="图2"></p></p>
 <p>回到完成例程的话题上。</p>
 <p>需要一个辅助线程，辅助线程的工作是判断有没有新的客户端连接被建立，如果有，就为那个客户端套接字激活一个异步的WSARecv操作，然后调用SleepEx使线程处于一种可警告的等待状态，以使得I/O完成后 CompletionROUTINE可以被内核调用，而CompletionROUTINE会在当初激活WSARecv异步操作的代码的同一个线程之内！而且调用SleepEx时，需要把bAlertable参数设为TRUE，这样当有APC唤醒时立即调用完成例程，否则例程就不会被执行。当然也可以使用WSAWaitForMultipleEvents函数，但这样就需要一个事件对象。</p>
 <p>从图中就能看到CompletionROUTINE是在辅助线程（调用过WSARecv）里执行的。</p>
@@ -398,7 +398,7 @@
 <p>要记住的一个基本准则是，假如要为Windows NT或Windows 2000开发高性能的服务器应用，同时希望为大量套接字I/O请求提供服务（Web服务器便是这方面的典型例子），那么I/O完成端口模型便是最佳选择！</p>
 <p>完成端口是一种WINDOWS内核对象。完成端口用于异步方式的重叠I/O。简单地，可以把完成端口看成系统维护的一个队列，操作系统把重叠IO操作完成的事件通知放到该队列里，由于是暴露 “操作完成”的事件通知，所以命名为“完成端口”（Completion Ports）。</p>
 <p>完成端口内部提供了线程池的管理，可以避免反复创建线程的开销，同时可以根据CPU的个数灵活的决定线程个数，而且可以让减少线程调度的次数从而提高性能。</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="图3" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/winsock3.gif"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/winsock3.gif" alt="图3"></p></p>
 <p>它需要以下函数的支持，CreateIoCompletionPort函数用于创建和绑定完成端口。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HANDLE <span class="title">CreateIoCompletionPort</span><span class="params">(</span><br><span class="line">HANDLE FileHandle, <span class="comment">// [in] IO句柄对象，这里是套接字</span></span><br><span class="line">HANDLE ExistingCompletionPort, <span class="comment">// [in] 完成端口</span></span><br><span class="line">ULONG_PTR CompletionKey, <span class="comment">// [in] 自定义数据指针</span></span><br><span class="line">DWORD NumberOfConcurrentThreads <span class="comment">// [in] 最大线程数，0为自动</span></span><br><span class="line">)</span></span>;</span><br></pre></td></tr></table></figure>
 <p>我们还需要类似WSAGetOverlappedResult的函数来获取完成端口的状态。</p>
@@ -409,7 +409,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 参数设空，就能创建完成端口</span></span><br><span class="line">HANDLE CompletionPort = CreateIoCompletionPort(INVALID_HANDLE_VALUE,NULL,NULL,<span class="number">0</span>);</span><br><span class="line"><span class="comment">// 2. 创建工作线程</span></span><br><span class="line">DWORD dwThreadId;</span><br><span class="line">SYSTEM_INFO sysinfo;</span><br><span class="line">GetSystemInfo(&amp;sysinfo);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; sysinfo.dwNumberOfProcessors; i++)</span><br><span class="line">    CreateThread(<span class="literal">NULL</span>, <span class="number">0</span>, iocp_work_thread, CompletionPort, <span class="number">0</span>, &amp;dwThreadId);</span><br><span class="line"><span class="comment">// 3. 建立并初始化buf和overlap（参照重叠IO）</span></span><br><span class="line"><span class="comment">// 4. 将套接字绑定到完成端口</span></span><br><span class="line">CreateIoCompletionPort((HANDLE)Sock,CompletionPort,Sock,<span class="number">0</span>);</span><br><span class="line"><span class="comment">// 5. 在套接字上投递WSARecv请求（参照重叠IO）</span></span><br><span class="line"><span class="comment">// 6. 在工作线程中取本次I/O的相关信息</span></span><br><span class="line">GetQueuedCompletionStatus(CompletionPort,&amp;dwBytesTransferred,</span><br><span class="line">(DWORD*)&amp;Sock,(LPOVERLAPPED*)&amp;lpPerIOData,INFINITE);</span><br><span class="line"><span class="keyword">if</span> (dwBytesTransferred == <span class="number">0</span>)</span><br><span class="line">    closesocket(Sock);</span><br><span class="line">dosomething(…);</span><br></pre></td></tr></table></figure>
 <h2 id="测试图例"><a href="#测试图例" class="headerlink" title="测试图例"></a>测试图例</h2><hr>
 <p>来自于《Windows网络编程》的数据。</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="图4" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/winsock4.jpg"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/winsock4.jpg" alt="图4"></p></p>
 <p>阻塞模型难以应对大规模的客户连接，因为它在创建线程上耗费了太多的系统资源。因此，服务器创建太多的线程后，再调用CreateThread函数时，将返回ERROR_NOT_ENOUGH_MEMORY的错误，那些发出连接请求的客户则收到WSAECONNREFUSED的错误提示，表示连接的尝试被拒绝。其并发处理量是极难突破的。</p>
 <p>非阻塞模型和Select模型的性能要比阻塞模式稍好，但是占用了太多的CPU处理时间。瓶颈在于，fd_set集合的线性扫描上。还需要注意的一个问题就是，非分页池（即直接在物理内存中分配的内存）的使用极高。这是因为AFD（Ancillary Function Driver,由afd.sys提供的支持Windows Sockets应用程序的底层驱动程序，其中运行在内核模式下afd.sys驱动程序主要管理Winsock TCP/IP通信）和TCP都将使用I/O缓存，因为服务器读取数据的速度是有限的，相对于CPU的处理速度而言，I/O基本是零字节的吞吐量。</p>
 <p>基于Windows消息机制的WSAAsyncSelect模型能够处理一定的客户连接量，但是扩展性也不是很好。因为消息泵很快就会阻塞，降低了消息处理的速度。在几次测试中，服务器只能处理大约1/3的客户端连接。过多的客户端连接请求都将返回错误提示码WSAECONNREFUSED。上表中的数据可以发现，对那些已经建立的连接，其平均吞吐量也是极低的。</p>
@@ -517,6 +517,7 @@
     		&copy; 2016 HuangWei
     	</div>
       	<div class="footer-right">
+    <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=cd675bc111a203d3ae8b7f069037bf1cb3127d6d6d431851d7acbbbe76d3962c"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="游戏开发者俱乐部" title="游戏开发者俱乐部"></a>
 		<script src="http://s4.cnzz.com/z_stat.php?id=1257126202&web_id=1257126202" language="JavaScript"></script>
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
       	</div>

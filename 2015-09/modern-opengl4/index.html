@@ -238,7 +238,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="60%" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/modern-opengl-04.png"></p></p>
+        <p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/modern-opengl-04.png" width="60%"></p></p>
 <p>本篇教程中，我们会巩固上一篇所提到的矩阵和相机知识，并使用<code>tdogl::Camera</code>类来实现第一人称射击类型的相机。然后，我们会将相机与键盘和鼠标挂钩，使得我们可以移动和浏览3D场景。这里会学一些向量数学，还有上一篇没提到的逆矩阵。</p>
 <a id="more"></a>
 <h2 id="获取代码"><a href="#获取代码" class="headerlink" title="获取代码"></a>获取代码</h2><p>所有例子代码的zip打包可以从这里获取：<a href="https://github.com/tomdalling/opengl-series/archive/master.zip" target="_blank" rel="external">https://github.com/tomdalling/opengl-series/archive/master.zip</a>。</p>
@@ -257,7 +257,7 @@
 <p>你可能注意到了上面所提的一些概念都是通常是用来实现物理引擎的。我们在本文中不会实现所有的物理，但为了更好的理解向量，第一步让我们来一些物理教学。</p>
 <p>什么是向量？<mark>一种伪数学的定义上来说，一个向量(vector)就是<em>幅度(magnitude)</em>加上<em>方向</em>。</mark>它能向上，向下，往左，往右，朝北，朝西南等等。你能用3D向量来表示任何一个你指向的方向。向量的另一部分，幅度，表示向量的长度或者大小。</p>
 <p>向量最简单的可视化方式就是绘制它，一般向量都会被绘制为箭头。箭头所指的方向就是向量的方向，箭头的长度就是幅度。下面的图是一个2D向量，但2D的理论同样能应用到3D上。</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/visual_rep_of_vector.gif"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/visual_rep_of_vector.gif" alt=""></p></p>
 <p><br></p>
 <p>下面用例子来说明向量代表的不同含义。</p>
 <table>
@@ -302,20 +302,20 @@
 <p>3D向量表示顶点，坐标或者位置相当简单。<mark>3D向量的3个维度分别是X，Y，Z的值。</mark>当向量表示位置，方向和幅度时，都是从原点(0,0,0)开始计算的。比如，假设一个物体的XYZ坐标为(0,2,0)，则它的幅度是2，方向为“沿Y轴向上”。</p>
 <h2 id="负向量"><a href="#负向量" class="headerlink" title="负向量"></a>负向量</h2><p><mark>当你要将向量取负时，就是保持相同的幅度，但变成了反方向。</mark></p>
 <p>比如：</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/vector_negation.gif"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/vector_negation.gif" alt=""></p></p>
 <p align="center"><br><br>A=向北5千米<br><br><br>-A=向南5千米<br><br><br></p>
 
 <p>如果相机的方向是往右的，我们可以使用负向量来算出相机往左的方向。就像这样：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glm::vec3 rightDirection = gCamera.right();</span><br><span class="line">glm::vec3 leftDirection = -rightDirection; <span class="comment">//vector negation</span></span><br></pre></td></tr></table></figure>
 <h2 id="标量乘法"><a href="#标量乘法" class="headerlink" title="标量乘法"></a>标量乘法</h2><p><mark>当你将向量乘上一个数值时，新向量的结果表示相同的方向，但幅度被扩大了相应倍数。</mark>这个数值被称为“标量”，这就是为何该乘法被称为“标量乘法”。</p>
 <p>比如：</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/scalar_mult.gif"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/scalar_mult.gif" alt=""></p></p>
 <p align="center"><br><br>A=向北5千米<br><br><br>0.5 × A=向北2.5千米<br><br><br>2 × A=向北10千米<br><br><br></p>
 
 <p>我们可以使用标量乘法来计算基于“移动速度”的相机位置，像这样：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">float</span> moveSpeed = <span class="number">2.0</span>; <span class="comment">//units per second</span></span><br><span class="line"><span class="keyword">float</span> distanceMoved = moveSpeed * secondsElapsed;</span><br><span class="line">glm::vec3 forwardDirection = gCamera.forward();</span><br><span class="line">glm::vec3 displacement = distanceMoved * forwardDirection; <span class="comment">//scalar multiplication</span></span><br></pre></td></tr></table></figure>
 <h2 id="向量加法"><a href="#向量加法" class="headerlink" title="向量加法"></a>向量加法</h2><p>向量加法在2D图形表现下最容易理解。对两个向量进行加法，就是将它们的头部（箭头一段）连接尾部（非箭头一段）。加法顺序不重要。它的结果就是，从第一个向量尾部走向另外一个向量的头部。</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/vector-addition.gif"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/vector-addition.gif" alt=""></p></p>
 <p>注意，即使这些向量看上去是在不同的位置上，但结果向量的幅度（长度）和方向不会改变。请记住，向量<em>只有</em>一个方向和一个幅度。它们没有起始点，所以它们可以在任意不同位置上，但还是相等的。</p>
 <p>比如：</p>
 <blockquote>
@@ -519,6 +519,7 @@
     		&copy; 2016 HuangWei
     	</div>
       	<div class="footer-right">
+    <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=cd675bc111a203d3ae8b7f069037bf1cb3127d6d6d431851d7acbbbe76d3962c"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="游戏开发者俱乐部" title="游戏开发者俱乐部"></a>
 		<script src="http://s4.cnzz.com/z_stat.php?id=1257126202&web_id=1257126202" language="JavaScript"></script>
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
       	</div>

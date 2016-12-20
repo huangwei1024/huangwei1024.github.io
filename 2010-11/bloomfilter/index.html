@@ -259,16 +259,16 @@
 <a id="more"></a>
 <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><hr>
 <p>Bloom Filter是一个有m位的位数组，初始全为0，并有k个各自独立的哈希函数。</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="图1" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/bloom1.jpg"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/bloom1.jpg" alt="图1"></p></p>
 <p>图1</p>
 <h3 id="添加操作"><a href="#添加操作" class="headerlink" title="添加操作"></a>添加操作</h3><p>每个元素，用k个哈希函数计算出大小为k的哈希向量 $ (H<em> {1},H</em> {2}\cdots,H<em> {k}) $，将向量里的每个哈希值对应的位设置为1。时间复杂度为 $ k\cdot O(F</em>{H}) $，一般字符串哈希函数的时间复杂度也就是 $ O(n) $。</p>
 <h3 id="查询操作"><a href="#查询操作" class="headerlink" title="查询操作"></a>查询操作</h3><p>和添加类似，先计算出哈希向量，如果每个哈希值对应的位都为1，则该元素存在。时间复杂度与添加操作相同。</p>
 <h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>图2表示m=16，k=2的Bloom Filter， 和 的哈希值分别为(3, 6)和(10, 3)。</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="图2" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/bloom2.jpg"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/bloom2.jpg" alt="图2"></p></p>
 <p>图2</p>
 <h2 id="False-Position"><a href="#False-Position" class="headerlink" title="False Position"></a>False Position</h2><hr>
 <p>如果某元素不在Bloom Filter中，但是它所有哈希值的位置均被设为1。这种情况就是False Position，也就是误判。<br>借用示例，如下：</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="图3" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/bloom3.jpg"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/bloom3.jpg" alt="图3"></p></p>
 <p>图3</p>
 <p>这个问题其实和哈希表中的冲突是相同的道理，哈希表中可以使用开散列和闭散列的方法，而Bloom Filter则允许这样的情况发生，它更关心于误判的发生概率。</p>
 <h3 id="概率"><a href="#概率" class="headerlink" title="概率"></a>概率</h3><p>宏观上，我们能得出以下结论：</p>
@@ -305,7 +305,7 @@
 </table>
 <p><br></p>
 <p>False Position的概率为 $ F=(1-e^{-\frac{kn}{m}})^{k} $。<br>假设m和n已知，为了最小化False Position，则 $ k=[ \ln 2\cdot \frac{m}{n} ] $。<br>数据</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="图4" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/bloom4.jpg"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/bloom4.jpg" alt="图4"></p></p>
 <p>图4</p>
 <h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><hr>
 <h3 id="Counter-Bloom-Filter"><a href="#Counter-Bloom-Filter" class="headerlink" title="Counter Bloom Filter"></a>Counter Bloom Filter</h3><p>Bloom Filter有个缺点，就是不支持删除操作，因为它不知道某一个位从属于哪些向量。</p>
@@ -315,7 +315,7 @@
 <p>将元素全部添加入Bloom Filter后，我们能得到真实的空间使用率，用这个值代入公式计算出一个比m小的值，重新构造Bloom Filter，对原先的哈希值进行求余处理，在误判率不变的情况下，使得其内存大小更合适。</p>
 <h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><hr>
 <h3 id="加速查询"><a href="#加速查询" class="headerlink" title="加速查询"></a>加速查询</h3><p>适用于一些key-value存储系统，当values存在硬盘时，查询就是件费时的事。<br>将Storage的数据都插入Filter，在Filter中查询都不存在时，那就不需要去Storage查询了。<br>当False Position出现时，只是会导致一次多余的Storage查询。</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="图5" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/bloom5.jpg"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/bloom5.jpg" alt="图5"></p></p>
 <p>图5</p>
 <ul>
 <li>Google的BigTable也使用了Bloom Filter，以减少不存在的行或列在磁盘上的查询，大大提高了数据库的查询操作的性能。</li>
@@ -423,6 +423,7 @@
     		&copy; 2016 HuangWei
     	</div>
       	<div class="footer-right">
+    <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=cd675bc111a203d3ae8b7f069037bf1cb3127d6d6d431851d7acbbbe76d3962c"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="游戏开发者俱乐部" title="游戏开发者俱乐部"></a>
 		<script src="http://s4.cnzz.com/z_stat.php?id=1257126202&web_id=1257126202" language="JavaScript"></script>
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
       	</div>

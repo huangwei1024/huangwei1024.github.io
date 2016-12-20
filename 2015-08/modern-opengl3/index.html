@@ -257,9 +257,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="60%" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/modern-opengl-03.png"></p></p>
+        <p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/modern-opengl-03.png" width="60%"></p></p>
 <p>本文中，我会将不会动的2D三角形替换为旋转的3D立方体。你会看到这样的效果：</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/rotating-crate.gif"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/rotating-crate.gif" alt=""></p></p>
 <p>现在我们终于能在屏幕上搞点有趣的东西了，我放了更多的动图在这里：<a href="http://imgur.com/a/x8q7R" target="_blank" rel="external">http://imgur.com/a/x8q7R</a></p>
 <p>为了生成旋转立方体，我们需要学些关于矩阵的数学，用于创建透视投影，旋转，平移和“相机”概念。我们还有必要学习些深度缓冲，和典型的随时间改变的3D应用，比如动画。</p>
 <a id="more"></a>
@@ -276,7 +276,7 @@
 <li><a href="http://imgur.com/a/x8q7R#0" target="_blank" rel="external">透视/正交 投影</a>（后面会解释）</li>
 </ul>
 <p>一个矩阵是一个数字表格，像这样：</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/mat4x4.png"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/mat4x4.png" alt=""></p></p>
 <p>矩阵英文matrix的复数形式是matrices。</p>
 <p>不同的数值的能产生不同类型的变换。上面的那个矩阵会绕着Z轴旋转90°。我们会使用GLM来创建矩阵，所以我们不用理解如何计算出这些数值。</p>
 <p>矩阵可以有任意行和列，但3D变换使用4×4矩阵，就像上面看到的那样。无论我在那说到“矩阵”，指的就是4×4矩阵。</p>
@@ -288,22 +288,22 @@
 </ul>
 <h2 id="矩阵-×-矩阵"><a href="#矩阵-×-矩阵" class="headerlink" title="矩阵 × 矩阵"></a>矩阵 × 矩阵</h2><p>当你要对两个矩阵进行相乘时，它们的乘积是一个包含两者变换的新矩阵。</p>
 <p>比如，你将一个旋转矩阵乘以一个平移矩阵，得到的结果就是“组合”矩阵，即先旋转然后平移。下面的例子展示这类矩阵相乘。</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/mat-x-mat.png"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/mat-x-mat.png" alt=""></p></p>
 <p><mark>不像普通的乘法，矩阵乘法中顺序很重要。</mark> 比如，<code>A</code>和<code>B</code>是矩阵，<code>A*B</code>不一定等于<code>B*A</code>。下面我们会使用相同的矩阵，但改变下乘法顺序：</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/mat-x-mat-commutative.png"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/mat-x-mat-commutative.png" alt=""></p></p>
 <p>注意不同的顺序，结果也不同。下面动画说明顺序有多重要。相同的矩阵，不同的顺序。两个变换分别是沿Y轴上移，和旋转45°。</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/rotate-translate.gif"></p></p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/translate-rotate.gif"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/rotate-translate.gif" alt=""></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/translate-rotate.gif" alt=""></p></p>
 <p>当你编码的时候，假如看到变换出错，请回头检查下你的矩阵运算是否是正确的顺序。</p>
 <h2 id="矩阵-×-坐标"><a href="#矩阵-×-坐标" class="headerlink" title="矩阵 × 坐标"></a>矩阵 × 坐标</h2><p>当你用矩阵乘以一个坐标时，它们的乘积就是一个变换后的新坐标。</p>
 <p>比如，你有上面提到的旋转矩阵，乘上坐标(1,1,0)，它的结果就是(-1,1,0)。变换后的坐标就是原始坐标绕着Z周旋转90°。下面是该乘法的图例：</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/mat-x-vec.png"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/mat-x-vec.png" alt=""></p></p>
 <h2 id="为何我们会使用4D坐标"><a href="#为何我们会使用4D坐标" class="headerlink" title="为何我们会使用4D坐标"></a>为何我们会使用4D坐标</h2><p>你可能注意到了上面的坐标是4D的，而非3D。它的格式是这样的：</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/homo-coord-letters.png"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/homo-coord-letters.png" alt=""></p></p>
 <p>为何我们会使用4D坐标？因为我们需要用4x4的矩阵完成所有我们需要的3D变换。不管怎样，矩阵乘法需要左边的列数等于右边的行数。这就意味着4x4矩阵无法与3D坐标相乘，因为矩阵有4列，但坐标只有3行。<mark>我们需要使用4D坐标，因为4x4的矩阵<em>需要</em>用它们来完成矩阵运算。</mark></p>
 <p>一些变换，比如旋转，缩放，只需要3x3矩阵。对于这些变换，我们不需要4D坐标，因为3D坐标就能运算。但无论如何，变换需要至少是4x3的矩阵，而透视投影矩阵需要4x4矩阵，而我们两者都会用到，所以我们强制使用4D。</p>
 <p>这些被称为<a href="http://en.wikipedia.org/wiki/Homogeneous_coordinates" target="_blank" rel="external">齐次坐标</a>。在后续的教程里，我们会讲到有向光照，那里我们会学到有关“W”维度的表示。在这里，我们只需要将3D转换为4D。3D转换为4D只要将第四维坐标“W”设为1即可。比如，坐标(22,33,44)转换为：</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/homo-coord.png"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/homo-coord.png" alt=""></p></p>
 <p>当需要将4D坐标变为3D时，假如“W”维度是1，你可以直接忽略它，使用X，Y，Z的值即可。如果你发现“W”的值不为1，好吧，你就需要做些额外处理，或者这里出了个bug。</p>
 <h2 id="构造一个立方体"><a href="#构造一个立方体" class="headerlink" title="构造一个立方体"></a>构造一个立方体</h2><p>代码上第一个变动就是用立方体替换之前的三角形。</p>
 <p>我们用三角形来构造立方体，用两个三角形表示6个面的每个面。在旧版本的OpengGL中，我们可以使用1个正方形（<code>GL_QUADS</code>）来替代2个三角表示每个面，但<code>GL_QUADS</code>已经被现代版本的OpenGL给移除了。X，Y，Z坐标值域为-1到1，这意味着立方体是两个单位宽，立方体中心点在原点（原点坐标(0,0,0)）。我们将使用256×256的贴图给立方体每个面贴上。后序文章中都会使用这个数据，我们不需要改变太多。这里有立方体数据：</p>
@@ -313,7 +313,7 @@
 <p>最后，我们使用新的贴图“wooden-crate.jpg”，我们更改<code>LoadTexture</code>中的文件名，如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tdogl::Bitmap bmp = tdogl::Bitmap::bitmapFromFile(ResourcePath(<span class="string">"wooden-crate.jpg"</span>));</span><br></pre></td></tr></table></figure>
 <p>就是这样！我们已经提供了所有绘制带贴图立方体的需要用到的数据。假如你运行程序，你可以看到这样的：</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/crate-stretched.jpg"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/crate-stretched.jpg" alt=""></p></p>
 <p>此时此刻，我们有两个问题。第一，这个立方体看上去非常2D，因为我们只看到了一个面。我们需要“移动相机”，以不同角度观察这个立方体。第二，上面有些问题，因为立方体宽和高应该相等，但从截图看上去宽度明显比高度大。为了修复这两个问题，我们需要学习更多的矩阵知识，和如何应用到3D程序中。</p>
 <h2 id="裁剪体-默认相机"><a href="#裁剪体-默认相机" class="headerlink" title="裁剪体 - 默认相机"></a>裁剪体 - 默认相机</h2><p>为了理解3D中的“相机”，我们首先得理解裁剪体。</p>
 <p><mark>裁剪体是一个立方体。无论什么东西在裁剪体中的都会显示在屏幕上，任何在裁剪体之外的都不会显示。</mark>裁剪体跟我们上面的立方体是相同大小，它的X，Y，Z坐标值域也是从-1到+1。-X表示左边，+X表示右边，-Y是底部，+Y是顶部，+Z是远离相机，-Z是朝着相机。</p>
@@ -345,9 +345,9 @@
 <p>假如你使用的是旧版本OpenGL，你可以使用<code>gluPerspective</code>来设置投影矩阵，同样<code>gluPerspective</code>函数在最近版本的OpenGL中也被移除了。幸运的是你可以使用<code>glm::perspective</code>来替代。</p>
 <p><code>glm::perspective</code>第一个参数是“可视区域”参数。这个参数是个弧度，用来说明相机视野有多宽。弧度换算我们可以用<code>glm::radians</code>函数来将50度转换为弧度。大的可视区域意味着我们的相机可以看到更多场景，看上去就像是缩小了。小的可视区域意味着相机只能看到场景的一小部分，看上去像是放大了。第二个参数是“纵横比”，该参数表示可视区域的纵横比率。一般该参数设置为窗口的<code>width/height</code>，倒数第二个参数是“近平面”，近平面是裁剪体的前面，<code>0.1</code>表示近平面离相机是0.1单位远。任何离相机小于<code>0.1</code>单位的物体均不可见。近平面的值必须大于0。最后一个参数是“远平面”，远平面是裁剪体的后面。<code>10.0</code>表示相机所显示的物体均离相机10个单位之内。任何大于10单位的物体均不可见。我们的立方体是3单位远，所以它能被看见。</p>
 <p><code>glm::perspective</code>对将<a href="http://en.wikipedia.org/wiki/Viewing_frustum&quot;" target="_blank" rel="external">可视锥体</a>对应到裁剪体中非常有用。一个锥体像是一个金字塔被砍掉了顶端。金字塔的底部就是远平面，顶部就是近平面。可视区域就是该锥体胖瘦。任何在锥体里的物体都会被显示，而不再内的就隐藏。</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/frustum.png"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/frustum.png" alt=""></p></p>
 <p>有了相机矩阵和投影矩阵的组合，我们就可以看到立方体了。运行程序你会看到：</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/depth-buffer-disabled.png"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/depth-buffer-disabled.png" alt=""></p></p>
 <p>这看上去。。。几乎是对的。</p>
 <p>这个立方体看上去已经是正方形了，不再是矩形。这是因为<code>glm::perspective</code>中的“纵横比”参数，能够基于窗口的宽和高进行正确的调整比例。</p>
 <p>不幸的是，截图看上去立方体的背面渲染并覆盖到前面来了。我们当然不希望发生这样的事，我们需要开启<strong>深度缓冲</strong>来解决。</p>
@@ -358,7 +358,7 @@
 <p>这告诉OpenGL开启深度测试。调用<code>glDepthFunc</code>是表明假如像素离相机的距离<em>小于</em>之前的像素距离时应该被重写。</p>
 <p>最后一步我们需要在渲染每帧之后清理深度缓冲。假如我们不清理，旧的像素距离会保存在缓冲中，这样会影响到绘制新的一帧。在<code>Render</code>函数里，我们改变<code>glClear</code>来实现它：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);</span><br></pre></td></tr></table></figure>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/depth-buffer-correct.png"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/depth-buffer-correct.png" alt=""></p></p>
 <h2 id="旋转立方体"><a href="#旋转立方体" class="headerlink" title="旋转立方体"></a>旋转立方体</h2><p>假如你完成了上述例子，祝贺你走了这么远！最后我们来实现会旋转的立方体动画。</p>
 <p>如何实现旋转？你会猜到：另外一个矩阵。这与之前的矩阵不同的是，这个矩阵是每帧都在改变，之前的矩阵都是常量。</p>
 <p>我需要新建一个“模型”矩阵。在常见的3D引擎中，每个物体都有一个模型矩阵。相机和投影矩阵对整个场景来说是一样的，但模型矩阵是每个物体都不同。模型矩阵用来摆放每个物体在正确的位置上（平移），设置正确的面向（旋转），或者改变物体大小（缩放）。我们只有一个物体在当前3D场景上，所以，我们只需要一个模型矩阵。</p>
@@ -369,7 +369,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gProgram-&gt;setUniform(<span class="string">"model"</span>, glm::rotate(glm::mat4(), glm::radians(<span class="number">45.0f</span>), glm::vec3(<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>)));</span><br></pre></td></tr></table></figure>
 <p>我们使用<code>glm::rotate</code>函数创建一个旋转矩阵。第一个参数是一个已存在的需要进行旋转的矩阵。在这我们不需要对已存在的矩阵进行旋转，所以我们传个新的<code>glm::mat4</code>对象就可以了。下一个参数是旋转的角度，或者说是要旋转多少度。现在让我给它设置个45°。最后一个参数是旋转的轴。想象下旋转像是将物体插在叉子上，然后转动叉子。叉子就是轴，角度就是你的转动。在我们的例子中，我们使用垂直的叉子，所以立方体像在一个平台上旋转。</p>
 <p>运行程序，你们看到立方体被旋转：</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/not-animated.png"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/not-animated.png" alt=""></p></p>
 <p>它还没有转动，因为矩阵没有被更改-它永远是旋转了45°。最后一步就是让它每帧都旋转一下。</p>
 <h2 id="动画"><a href="#动画" class="headerlink" title="动画"></a>动画</h2><p>首先，添加一个新的全局变量叫<code>gDegreesRotated</code>。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GLfloat gDegreesRotated = <span class="number">0.0f</span>;</span><br></pre></td></tr></table></figure>
@@ -485,6 +485,7 @@
     		&copy; 2016 HuangWei
     	</div>
       	<div class="footer-right">
+    <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=cd675bc111a203d3ae8b7f069037bf1cb3127d6d6d431851d7acbbbe76d3962c"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="游戏开发者俱乐部" title="游戏开发者俱乐部"></a>
 		<script src="http://s4.cnzz.com/z_stat.php?id=1257126202&web_id=1257126202" language="JavaScript"></script>
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
       	</div>

@@ -246,7 +246,7 @@
 <a id="more"></a>
 <h2 id="5-概率？20次出现一次？"><a href="#5-概率？20次出现一次？" class="headerlink" title="5%概率？20次出现一次？"></a>5%概率？20次出现一次？</h2><p>大部分游戏策划使用权值来配置随机概率，因为权值有个好处就是可以在增加随机物品时，可以不对之前的配置进行更改，比如：白卡 30，蓝卡 10，紫卡 10，转为概率即是：白卡 60%，蓝卡 20%，紫卡 20%。</p>
 <p>而上述限时抽卡的例子中，我们的权值配置是5和95，模拟50000次随机（使用系统随机函数，如C的rand函数，Python的random库）得到如下结果：</p>
-<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="80%" alt="按权值随机50000次" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/rnd1.png"></p><br></p>
+<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/rnd1.png" width="80%" alt="按权值随机50000次"></p><br></p>
 
 <p>上图绘制的是权值为5的卡牌的随机状态，红色的图是分布图，X轴是出现的次数，Y轴是相同卡牌再次出现的间隔，简单得说就是，第x次卡牌出现时离上次该卡牌出现间隔了y次随机。绿色的图是分布概率图，X轴是间隔数，Y轴是概率。按策划的想法，<strong>5%概率</strong>应该等同于<strong>20次出现一次</strong>，那上图很明显并不满足<strong>20次出现一次</strong>出现规则，实际间隔从近到远呈下坡形状分布，就是说相邻的概率最大，间隔最大超过160，这与玩家所吐槽的抽卡体验是一致的。但50000次随机总共出现了2508次，从统计的意义上来说又是符合<strong>5%概率</strong>的。所以这个问题，究其原因就是所谓的概率是统计意义上的还是分布意义上的问题。</p>
 <h2 id="最原始的实现"><a href="#最原始的实现" class="headerlink" title="最原始的实现"></a>最原始的实现</h2><p>我用列表里取元素的方式来模拟<strong>20次出现一次</strong>，为了方便比较异同，直接随机的方式我也贴上相关代码。</p>
@@ -254,7 +254,7 @@
 <p>上面是直接随机的方式，只保证<strong>5%概率</strong>。</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pool = []</span><br><span class="line">result = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(N):</span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> pool:</span><br><span class="line">		pool = [<span class="number">0</span>]*<span class="number">1</span> + [<span class="number">1</span>]*<span class="number">19</span></span><br><span class="line">		random.shuffle(pool)</span><br><span class="line">	result.append(pool[<span class="number">-1</span>])</span><br><span class="line">	<span class="keyword">del</span> pool[<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
 <p>上面是打乱列表，然后依次取元素的方式，保证<strong>20次出现一次</strong>，而<strong>5%概率</strong>则是隐含在内的，生成效果如下图。</p>
-<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="80%" alt="使用第二种实现的随机分布" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/rnd2.png"></p><br></p>
+<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/rnd2.png" width="80%" alt="使用第二种实现的随机分布"></p><br></p>
 
 <p>该图明显跟第一个实现的图不一样，上图表明了间隔基本上是落在[0, 40]的区间内，并且均匀分布在20那条蓝色对称线附近。这个才是最终想要的随机的效果。红色的线是正态分布曲线，是不是很相似？后面我会讲到。</p>
 <p>眼尖的会发现在第一个实现中我用的pool是<code>[0]*5 + [1]*95</code>，而第二个实现中我用的是<code>[0]*1 + [1]*19</code>。</p>
@@ -263,17 +263,17 @@
 <p>但这里有个问题，一般策划配置的随机库中肯定有多个物品。权值如果配置的比较随意的话，很可能就导致GCD为1，这样想要实现<strong>XX次出现一次</strong>就不可行了。比如刚才的权值配置5和95，再加一个权值为11的话，就只能实现<strong>111次出现5次</strong>。</p>
 <p>所以这两种依赖列表的随机方式并不适用，一是需要维护的列表内存会比较大，二是对策划配置方式有过多约束。</p>
 <h2 id="更通用更优美的实现"><a href="#更通用更优美的实现" class="headerlink" title="更通用更优美的实现"></a>更通用更优美的实现</h2><p><strong>20次出现一次</strong>是以20为标准周期，当然不能每次都是间隔20出现，这样就太假了，根本没有随机感受可言，为了模拟随机并可以控制一定的出现频率，我选择正态分布来进行伪随机分布生成，原因是分布会更自然一些。</p>
-<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="60%" alt="正态分布" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/rnd3_Normal_distribution.png"></p><br></p>
+<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/rnd3_Normal_distribution.png" width="60%" alt="正态分布"></p><br></p>
 
 <p>关于正态分布这里就不详细描述了，只需关心分布的两个参数即可，位置参数为$\mu$、尺度参数为$\sigma$。根据正态分布，两个标准差之内的比率合起来为95%；三个标准差之内的比率合起来为99%。</p>
-<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="60%" alt="根据正态分布，两个标准差之内的比率合起来为95%；三个标准差之内的比率合起来为99%" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/rnd4_normal_sigma.png"></p><br></p>
+<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/rnd4_normal_sigma.png" width="60%" alt="根据正态分布，两个标准差之内的比率合起来为95%；三个标准差之内的比率合起来为99%"></p><br></p>
 
 
 <p>用上面的例子来定下参数，$\mu=20, \sigma=20/3$，这样每次按正态分布随机，就能得到一个理想的随机分布和概率区间。</p>
 <p>C语言标准函数库中只有rand，如何生成符合正态分布的随机数可以参见<a href="https://zh.wikipedia.org/wiki/%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83" target="_blank" rel="external">WiKi上的介绍</a>。这里我直接使用Python中random库中的normalvariate函数，当然gauss函数也是一样的，<a href="https://docs.python.org/2/library/random.html" target="_blank" rel="external">官方文档</a>上说gauss函数会快些，<a href="http://stackoverflow.com/questions/27749133/what-is-the-difference-between-random-normalvariate-and-random-gauss-in-pyth" target="_blank" rel="external">StackOverFlow</a>上说gauss是非线程安全函数，所以会快。我自己简单测试了下，在单线程情况下，gauss是会快些，但只是快了一点点而已。</p>
 <p>首先，我直接生成权值为5的卡牌的间隔，检验下正态分布的随机效果。</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NN = int(N*<span class="number">0.05</span>)</span><br><span class="line">mu, sigma = <span class="number">20</span>, <span class="number">20</span>/<span class="number">3.</span></span><br><span class="line">delta = [int(random.normalvariate(mu, sigma)) <span class="keyword">for</span> i <span class="keyword">in</span> xrange(NN)]</span><br></pre></td></tr></table></figure>
-<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="80%" alt="模拟正态分布的伪随机" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/rnd3.png"></p><br></p>
+<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/rnd3.png" width="80%" alt="模拟正态分布的伪随机"></p><br></p>
 
 <p>这图是不是比第二个实现的图更好看一些，分布也更平滑一些呢。OK，接下来就是替换旧的随机算法了。</p>
 <h2 id="细节和优化"><a href="#细节和优化" class="headerlink" title="细节和优化"></a>细节和优化</h2><p>刚才说了随机库中会有很多物品，都需要按照各自的权值随机，并各自出现频率符合正态分布。下面我们来说说细节。</p>
@@ -287,13 +287,13 @@
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wtp = [<span class="number">1.</span>*x/sum(wt) <span class="keyword">for</span> x <span class="keyword">in</span> wt]</span><br><span class="line">result = []</span><br><span class="line">p = [(random[i].normalvariate(<span class="number">1.</span>/x, <span class="number">1.</span>/x/<span class="number">3.</span>), i) <span class="keyword">for</span> x <span class="keyword">in</span> wtp]</span><br><span class="line">heapq.heapify(p)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(N):</span><br><span class="line">	minp, minj = heapq.heappop(p)</span><br><span class="line">	result.append(minj)</span><br><span class="line">	heapq.heappush(p, (random[minj].normalvariate(<span class="number">1.</span>/wtp[minj], <span class="number">1.</span>/wtp[minj]/<span class="number">3.</span>)+minp, minj))</span><br></pre></td></tr></table></figure>
 <h2 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h2><p>问题分析和算法实现就到这了，替换进我的游戏里看看什么效果，我已经迫不及待了。</p>
 <p>物品测试权值序列[10, 30, 50, 110, 150, 200, 250, 500]，随机测试500万次。</p>
-<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="80%" alt="第一个随机实现" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/rnd_rand.png"></p><br>    <br>第一个随机实现<br></p>
+<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/rnd_rand.png" width="80%" alt="第一个随机实现"></p><br>    <br>第一个随机实现<br></p>
 
 <p>第一个实现是只符合统计要求，不符合分布要求。</p>
-<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="80%" alt="第二个随机实现" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/rnd_weight.png"></p><br>    <br>第二个随机实现<br></p>
+<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/rnd_weight.png" width="80%" alt="第二个随机实现"></p><br>    <br>第二个随机实现<br></p>
 
 <p>第二个实现中对权值序列进行了GCD，可以看到只有绿色是符合分布要求的，而蓝色和青色退化成第一种实现。</p>
-<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="80%" alt="基于正态分布的随机实现" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/rnd_normal.png"></p><br>    <br>基于正态分布的随机实现<br></p>
+<p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/rnd_normal.png" width="80%" alt="基于正态分布的随机实现"></p><br>    <br>基于正态分布的随机实现<br></p>
 
 <p>完美！</p>
 <h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p>当然，实现<strong>20次出现一次</strong>这样的分布伪随机还有其它方法，比如保存一个计数器，每随机一次就加到计数器上，当计数器的值大于或等于1，即必然出现。但这种实现需要计数器，每个玩家每个随机库每个物品都需要这么一个计数器字段，空间上实在太大了。</p>
@@ -382,6 +382,7 @@
     		&copy; 2016 HuangWei
     	</div>
       	<div class="footer-right">
+    <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=cd675bc111a203d3ae8b7f069037bf1cb3127d6d6d431851d7acbbbe76d3962c"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="游戏开发者俱乐部" title="游戏开发者俱乐部"></a>
 		<script src="http://s4.cnzz.com/z_stat.php?id=1257126202&web_id=1257126202" language="JavaScript"></script>
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
       	</div>

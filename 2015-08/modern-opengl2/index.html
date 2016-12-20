@@ -236,7 +236,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="60%" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/modern-opengl-02.png"></p></p>
+        <p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/modern-opengl-02.png" width="60%"></p></p>
 <p>在本文中，我们将给三角形加一个贴图，这需要在顶点和片段着色器中加入一些新变量，创建和使用贴图对象，并且学习一点贴图单元和贴图坐标的知识。</p>
 <p>本文会使用两个新的类到<code>tdogl</code>命名空间中：<code>tdogl:Bitmap</code>和<code>tdogl:Texture</code>。这些类允许我们将jpg，png或bmp图片上传到显存并用于着色器。<code>tdogl:Program</code>类也增加一些相关接口。</p>
 <a id="more"></a>
@@ -251,12 +251,12 @@
 <h2 id="贴图"><a href="#贴图" class="headerlink" title="贴图"></a>贴图</h2><p><mark>贴图，大体上来说就是你应用在3D物体上的2D图像。</mark>它有其它用途，但显示2D图像在3D几何上是最常用的。有1D，2D，3D贴图，但本文只讲2D贴图。更深入阅读，请参见<a href="http://www.arcsynthesis.org/gltut/" target="_blank" rel="external">Learning Modern 3D Graphics Programming</a>书中的<a href="http://www.arcsynthesis.org/gltut/Texturing/Tutorial%2014.html" target="_blank" rel="external">Textures are not Pictures</a>章节。</p>
 <p>贴图是存放在显存里的。那就是说，你需要在使用之前上传你的贴图数据给显卡。这类似VBO在前文的作用-VBO也是在使用之前需要存放到显存上。</p>
 <p><mark>贴图的高和宽需要是2的幂次方。</mark>比如16，32，64，128，256，512。本文中使用的是256*256的图像作为贴图，如下图所示。</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="hazard.png" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/hazard.png"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/hazard.png" alt="hazard.png"></p></p>
 <p>我们使用<code>tdogl:Bitmap</code>来加载“hazard.png”的原始像素数据到内存中，参见<a href="https://github.com/nothings/stb" target="_blank" rel="external">stb_image</a>帮助文档。然后我们使用<code>tdogl:Texture</code>上传原始像素数据给OpenGL贴图对象。幸运的是OpenGL中的贴图创建方法从面世到现在都没有实质性的变化，所以网上有大量的创建贴图的好文章。虽然贴图坐标的传输方式有变化，但创建贴图还是跟以前一样。</p>
 <p>以下是<code>tdogl:Texture</code>的构造函数，用于OpenGL贴图创建。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Texture::Texture(<span class="keyword">const</span> Bitmap&amp; bitmap, GLint minMagFiler, GLint wrapMode) :</span><br><span class="line">    _originalWidth((GLfloat)bitmap.width()),</span><br><span class="line">    _originalHeight((GLfloat)bitmap.height())</span><br><span class="line">&#123;</span><br><span class="line">    glGenTextures(<span class="number">1</span>, &amp;_object);</span><br><span class="line">    glBindTexture(GL_TEXTURE_2D, _object);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minMagFiler);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, minMagFiler);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);</span><br><span class="line">    glTexImage2D(GL_TEXTURE_2D,</span><br><span class="line">                 <span class="number">0</span>, </span><br><span class="line">                 TextureFormatForBitmapFormat(bitmap.format()),</span><br><span class="line">                 (GLsizei)bitmap.width(), </span><br><span class="line">                 (GLsizei)bitmap.height(),</span><br><span class="line">                 <span class="number">0</span>, </span><br><span class="line">                 TextureFormatForBitmapFormat(bitmap.format()), </span><br><span class="line">                 GL_UNSIGNED_BYTE, </span><br><span class="line">                 bitmap.pixelBuffer());</span><br><span class="line">    glBindTexture(GL_TEXTURE_2D, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="贴图坐标"><a href="#贴图坐标" class="headerlink" title="贴图坐标"></a>贴图坐标</h2><p>毫无疑问，贴图坐标就是贴图上的坐标。<mark>关于贴图坐标比较奇特的是它们不是以像素为单位。它们范围是从0到1，(0, 0)是左下角，(1, 1)是右上角。</mark>假如你上传到OpenGL的图像是颠倒的，那(0, 0)就是左上角，而非左下角。将像素坐标转换为贴图坐标，你必须除上贴图的宽和高。比如，在256*256的图像中，像素坐标(128, 256)的贴图坐标是(0.5, 1)。</p>
-<p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" alt="uv_coords.png" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/uv_coords.png"></p></p>
+<p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/uv_coords.png" alt="uv_coords.png"></p></p>
 <p>贴图坐标通常被称为UV坐标。你也可以叫它们是XY坐标，但是XYZ通常被用来表示顶点，我们不希望将这两者混淆。</p>
 <h2 id="贴图图像单元"><a href="#贴图图像单元" class="headerlink" title="贴图图像单元"></a>贴图图像单元</h2><p>贴图图像单元，亦或简称“贴图单元”，是在OpenGL中略怪异的一部分。<mark>你无法直接发送贴图给着色器。首先，你要绑定贴图到贴图单元，然后呢要发送<strong>贴图单元的索引</strong>给着色器</mark></p>
 <p>对于贴图单元是有数量限制的。在低端硬件上，如手机，它们只有两个贴图单元。既然如此，即使我们有许多的贴图，我们也只能同时使用两个贴图单元在着色器中。我们在本文中只用到了一个贴图，所以也只需要一个贴图单元，但它可以在多个不同的着色器中混合。</p>
@@ -377,6 +377,7 @@
     		&copy; 2016 HuangWei
     	</div>
       	<div class="footer-right">
+    <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=cd675bc111a203d3ae8b7f069037bf1cb3127d6d6d431851d7acbbbe76d3962c"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="游戏开发者俱乐部" title="游戏开发者俱乐部"></a>
 		<script src="http://s4.cnzz.com/z_stat.php?id=1257126202&web_id=1257126202" language="JavaScript"></script>
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
       	</div>

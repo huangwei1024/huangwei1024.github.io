@@ -285,7 +285,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="60%" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/modern-opengl-02.png"></p></p>
+        <p><p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/modern-opengl-02.png" width="60%"></p></p>
 <p>在本文中，我们将给三角形加一个贴图，这需要在顶点和片段着色器中加入一些新变量，创建和使用贴图对象，并且学习一点贴图单元和贴图坐标的知识。</p>
 <p>本文会使用两个新的类到<code>tdogl</code>命名空间中：<code>tdogl:Bitmap</code>和<code>tdogl:Texture</code>。这些类允许我们将jpg，png或bmp图片上传到显存并用于着色器。<code>tdogl:Program</code>类也增加一些相关接口。</p>
       
@@ -412,7 +412,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" width="60%" class="hx_lazyimg" lazy-src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/modern-opengl-01.png"></p><br></p>
+        <p align="center"><br>    <p align="center"><img src="http://dn-huangweipro.qbox.me/static/img/opengl-tutorials/modern-opengl-01.png" width="60%"></p><br></p>
 
 <h2 id="译序"><a href="#译序" class="headerlink" title="译序"></a>译序</h2><p>早前学OpenGL的时候还是1.x版本，用的都是<code>glVertex</code>，<code>glNormal</code>等固定管线API。后来工作需要接触DirectX9，shader也只是可选项而已，跟固定管线一起混用着。现在工作内容是手机游戏，又转到OpenGL ES，发现OpenGL的世界已经完全不同了，OpenGL ES 2.0版本开始就不再支持固定管线，只支持可编程管线。</p>
       
@@ -482,7 +482,7 @@
 <hr>
 <p>2D的俯视图经常用于从给定点计算可视区域。例如，你可能想把某些东西隐藏在玩家看不见的地方，亦或你想知道点燃火炬后能看见什么地方。</p>
 <p>拖动圆点转一圈，看看玩家都能看到些什么：</p>
-<div id="maze"><p align="center"><img class="placeholder hx_lazyimg" src="http://dn-huangweipro.qbox.me/images/loading_spinner.gif" lazy-src="http://dn-huangweipro.qbox.me/static/2dvisibilitydemo/static-lightmap.png"></p></div>
+<div id="maze"><p align="center"><img class="placeholder" src="http://dn-huangweipro.qbox.me/static/2dvisibilitydemo/static-lightmap.png"></p></div>
 
 <p>这个算法也能计算出给定光源所照亮的区域。对每条光线，我们可以构建出被照亮区域的光线图。如果我们给上面的迷宫放上24个灯呢？见光线图。</p>
 <p>roguelike<span style="color: #888888;">（译注：类地下城RPG游戏统称）</span>社区已经收集了<a href="http://roguebasin.roguelikedevelopment.org/index.php/Category:FOV">好几种算法</a>，尤其是网格类的。消减算法是从可见的一切区域开始，减去不可见区域；添加算法是从不可见区域开始，加上可见区域。我将描述一种可工作于线段的添加算法，不仅仅是固体分块或者网格。</p>
@@ -600,6 +600,7 @@
     		&copy; 2016 HuangWei
     	</div>
       	<div class="footer-right">
+    <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=cd675bc111a203d3ae8b7f069037bf1cb3127d6d6d431851d7acbbbe76d3962c"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="游戏开发者俱乐部" title="游戏开发者俱乐部"></a>
 		<script src="http://s4.cnzz.com/z_stat.php?id=1257126202&web_id=1257126202" language="JavaScript"></script>
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
       	</div>
