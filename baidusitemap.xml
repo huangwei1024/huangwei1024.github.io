@@ -91,6 +91,30 @@
 
     
   <url>
+    <loc>http://huangwei.pro/2015-01/secure-permutations-with-block-ciphers/</loc>
+    <lastmod>2016-04-14T08:48:03.566Z</lastmod>
+    <data>
+        <display>
+        <title>超酷算法：分组密码与安全排列</title>
+        <pubTime>2015-01-15T16:00:00.000Z</pubTime>
+        
+        <tag>security</tag>
+         
+        <tag>encryption</tag>
+         
+        <tag>permutation</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://huangwei.pro/2014-07/python-30-x/</loc>
     <lastmod>2016-04-14T08:48:03.566Z</lastmod>
     <data>
@@ -105,30 +129,6 @@
         <tag>distribution</tag>
          
         <tag>algorithm</tag>
-         
-         
-           
-             
-              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://huangwei.pro/2015-01/secure-permutations-with-block-ciphers/</loc>
-    <lastmod>2016-04-14T08:48:03.566Z</lastmod>
-    <data>
-        <display>
-        <title>超酷算法：分组密码与安全排列</title>
-        <pubTime>2015-01-15T16:00:00.000Z</pubTime>
-        
-        <tag>security</tag>
-         
-        <tag>encryption</tag>
-         
-        <tag>permutation</tag>
          
          
            
@@ -156,6 +156,30 @@
            
              
               <breadCrumb title="js" url="http://huangwei.pro/categories/js/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://huangwei.pro/2007-08/number-theory-relative-primality/</loc>
+    <lastmod>2016-04-14T08:48:03.565Z</lastmod>
+    <data>
+        <display>
+        <title>Number Theory 4.5 Relative Primality</title>
+        <pubTime>2007-08-23T16:00:00.000Z</pubTime>
+        
+        <tag>number_theory</tag>
+         
+        <tag>concrete_mathematics</tag>
+         
+        <tag>reading_notes</tag>
+         
+         
+           
+             
+              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
           
         </display>
     </data>
@@ -213,12 +237,12 @@
 
     
   <url>
-    <loc>http://huangwei.pro/2007-08/number-theory-relative-primality/</loc>
-    <lastmod>2016-04-14T08:48:03.565Z</lastmod>
+    <loc>http://huangwei.pro/2007-08/number-theory-divisibility/</loc>
+    <lastmod>2016-04-14T08:48:03.564Z</lastmod>
     <data>
         <display>
-        <title>Number Theory 4.5 Relative Primality</title>
-        <pubTime>2007-08-23T16:00:00.000Z</pubTime>
+        <title>Number Theory 4.1 Divisibility</title>
+        <pubTime>2007-08-17T16:00:00.000Z</pubTime>
         
         <tag>number_theory</tag>
          
@@ -265,30 +289,6 @@
         <display>
         <title>Number Theory 4.4 Factorial Factors</title>
         <pubTime>2007-08-22T16:00:00.000Z</pubTime>
-        
-        <tag>number_theory</tag>
-         
-        <tag>concrete_mathematics</tag>
-         
-        <tag>reading_notes</tag>
-         
-         
-           
-             
-              <breadCrumb title="algorithm" url="http://huangwei.pro/categories/algorithm/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://huangwei.pro/2007-08/number-theory-divisibility/</loc>
-    <lastmod>2016-04-14T08:48:03.564Z</lastmod>
-    <data>
-        <display>
-        <title>Number Theory 4.1 Divisibility</title>
-        <pubTime>2007-08-17T16:00:00.000Z</pubTime>
         
         <tag>number_theory</tag>
          
@@ -538,18 +538,16 @@
 
     
   <url>
-    <loc>http://huangwei.pro/2014-10/bktree/</loc>
+    <loc>http://huangwei.pro/2007-09/chinese-postman-problem/</loc>
     <lastmod>2016-04-14T08:48:03.559Z</lastmod>
     <data>
         <display>
-        <title>超酷算法：BK树</title>
-        <pubTime>2014-10-21T16:00:00.000Z</pubTime>
+        <title>关于中国邮递员问题和欧拉图应用</title>
+        <pubTime>2007-09-07T16:00:00.000Z</pubTime>
         
-        <tag>tree</tag>
+        <tag>graph_theory</tag>
          
-        <tag>trie</tag>
-         
-        <tag>string</tag>
+        <tag>acm</tag>
          
          
            
@@ -582,16 +580,18 @@
 
     
   <url>
-    <loc>http://huangwei.pro/2007-09/chinese-postman-problem/</loc>
+    <loc>http://huangwei.pro/2014-10/bktree/</loc>
     <lastmod>2016-04-14T08:48:03.559Z</lastmod>
     <data>
         <display>
-        <title>关于中国邮递员问题和欧拉图应用</title>
-        <pubTime>2007-09-07T16:00:00.000Z</pubTime>
+        <title>超酷算法：BK树</title>
+        <pubTime>2014-10-21T16:00:00.000Z</pubTime>
         
-        <tag>graph_theory</tag>
+        <tag>tree</tag>
          
-        <tag>acm</tag>
+        <tag>trie</tag>
+         
+        <tag>string</tag>
          
          
            
