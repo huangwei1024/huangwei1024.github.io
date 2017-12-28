@@ -2,28 +2,32 @@
 
 menu:
   主页: /
-  随笔: /tags/随笔/
+  所有文章: /archives
+  好文收藏: /collections
+  # 随笔: /tags/随笔
 
 # SubNav
 subnav:
-  github: "#"
-  weibo: "#"
-  rss: "#"
-  zhihu: "#"
-  #qq: "#"
+  github: "https://github.com/huangwei1024"
+  weibo: "http://weibo.com/hwiskey"
+  rss: "/atom.xml"
+  zhihu: "http://www.zhihu.com/people/huang-wei-1gb"
+  qq: "164305264"
   #weixin: "#"
   #jianshu: "#"
-  #douban: "#"
+  douban: "http://www.douban.com/people/WisKey/"
   #segmentfault: "#"
   #bilibili: "#"
   #acfun: "#"
-  #mail: "mailto:litten225@qq.com"
+  mail: "mailto:164305264@qq.com?subject=huangwei.pro读者来信"
   #facebook: "#"
   #google: "#"
   #twitter: "#"
   #linkedin: "#"
 
 rss: /atom.xml
+cdn: http://dn-huangweipro.qbox.me/
+keywords: huangwei1024, WisKey, 杭电acm, 网易游戏, 创业
 
 # 是否需要修改 root 路径
 # 如果您的网站存放在子目录中，例如 http://yoursite.com/blog，
@@ -37,7 +41,7 @@ excerpt_link: more
 # 文章卡片右下角常驻链接，不需要请设置为false
 show_all_link: '展开全文'
 # 数学公式
-mathjax: false
+mathjax: true
 # 是否在新窗口打开链接
 open_in_new: false
 
@@ -63,12 +67,12 @@ toc_empty_wording: '目录，不存在的…'
 top: true
 
 # Miscellaneous
-baidu_analytics: ''
-google_analytics: ''
-favicon: /favicon.png
+google_analytics: 'UA-58636572-1'
+baidu_analytics: '37eed26af63c8a627a52667cb97cf2cf'
+favicon: static/favicon.ico
 
 #你的头像url
-avatar:
+avatar: http://dn-huangweipro.qbox.me/images/default_avatar.jpg
 
 #是否开启分享
 share_jia: true
@@ -116,15 +120,9 @@ slider:
 #  friends: false
 smart_menu:
   innerArchive: '所有文章'
-  friends: '友链'
+  # friends: '友链'
   aboutme: '关于我'
 
-friends:
-  友情链接1: http://localhost:4000/
-  友情链接2: http://localhost:4000/
-  友情链接3: http://localhost:4000/
-  友情链接4: http://localhost:4000/
-  友情链接5: http://localhost:4000/
-  友情链接6: http://localhost:4000/
+friends: false
 
-aboutme: 很惭愧<br><br>只做了一点微小的工作<br>谢谢大家
+aboutme: '前网易码农<br/>现苦逼创业<br/>轻微完美主义强迫症<br/>努力提升个人魅力，强化自身修养'
