@@ -25,7 +25,7 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render: 
+skip_render:
   - '_drafts/**'
   - 'static/**'
 
@@ -81,7 +81,7 @@ deploy:
   branch: gh-pages
 
 
-# Sitemap 
+# Sitemap
 sitemap:
     path: sitemap.xml
 baidusitemap:
@@ -89,20 +89,20 @@ baidusitemap:
 
 
 jsonContent:
-	meta: false
-	pages: false
-	posts:
-	title: true
-	date: true
-	path: true
-	text: false
-	raw: false
-	content: false
-	slug: false
-	updated: false
-	comments: false
-	link: false
-	permalink: false
-	excerpt: false
-	categories: false
-	tags: true
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: false
+    tags: true
