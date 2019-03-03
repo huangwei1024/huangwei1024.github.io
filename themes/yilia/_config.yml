@@ -26,7 +26,7 @@ subnav:
   #linkedin: "#"
 
 rss: /atom.xml
-cdn: http://dn-huangweipro.qbox.me/
+cdn: http://huangwei.pro/
 keywords: huangwei1024, WisKey, 杭电acm, 网易游戏, 创业
 
 # 是否需要修改 root 路径
@@ -72,7 +72,7 @@ baidu_analytics: '37eed26af63c8a627a52667cb97cf2cf'
 favicon: static/favicon.ico
 
 #你的头像url
-avatar: http://dn-huangweipro.qbox.me/images/default_avatar.jpg
+avatar: http://huangwei.pro/images/default_avatar.jpg
 
 #是否开启分享
 share_jia: true
