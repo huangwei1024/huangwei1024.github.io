@@ -1,8 +1,8 @@
 'use strict';
 var cheerio = require('cheerio');
 var baseUrl = "/static"
-var cdnUrl = "http://dn-huangweipro.qbox.me";
-var loading = "http://dn-huangweipro.qbox.me/images/loading_spinner.gif";
+var cdnUrl = "http://huangwei.pro";
+var loading = "http://huangwei.pro/images/loading_spinner.gif";
 var oldsrc = '';
 function stringStartsWith(string, prefix) {
     return string.slice(0, prefix.length) == prefix;
